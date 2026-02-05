@@ -89,38 +89,35 @@
       color: var(--primary-teal);
     }
 
-    /* Navigation */
-    /* DELETED: .desktop-nav rule */
+    /* New Header Right Styles */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-left: auto;
+    }
 
-    .desktop-nav a {
+    .worker-cta {
+      background: #0FB9B1;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
       text-decoration: none;
-      color: var(--dark-text);
-      font-weight: 500;
-      transition: var(--transition);
+      transition: 0.3s;
+      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.3);
+    }
+
+    .worker-cta:hover {
+      transform: translateY(-2px);
+      background: #0da59e;
+    }
+
+    .language-wrap {
       position: relative;
-      padding: 6px 0;
-      font-size: 15px;
     }
 
-    .desktop-nav a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background: var(--primary-teal);
-      transition: var(--transition);
-    }
-
-    .desktop-nav a:hover {
-      color: var(--primary-teal);
-    }
-
-    .desktop-nav a:hover::after {
-      width: 100%;
-    }
-
+    /* Navigation */
     .nav-cta {
       background: var(--primary-teal);
       color: white;
@@ -223,20 +220,20 @@
     .mobile-nav {
       position: fixed;
       top: 0;
-      left: -100%;
-      width: 280px;
+      right: -100%;
+      width: 300px;
       height: 100vh;
-      background: var(--white);
-      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-      transition: var(--transition);
-      z-index: 1001;
+      background: #ffffff;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+      transition: 0.35s ease;
+      z-index: 2000;
       display: flex;
       flex-direction: column;
-      padding: 80px 24px 24px;
+      padding: 90px 24px 24px;
     }
 
     .mobile-nav.active {
-      left: 0;
+      right: 0;
     }
 
     .mobile-nav a {
@@ -1344,8 +1341,9 @@
         padding: 0 16px;
       }
       
-      /* This rule is now irrelevant since we removed .desktop-nav */
-      /* .desktop-nav { display: none; } */
+      .worker-cta {
+        display: none;
+      }
       
       .mobile-menu-btn {
         display: flex;
@@ -1483,24 +1481,27 @@
       Hirewale
     </a>
 
-    <div style="display:flex; align-items:center; gap:18px; margin-left:auto;">
+    <div class="header-right">
       
-      <div style="position: relative;">
+      <a href="worker/employee.html" class="worker-cta">
+        Become a Worker
+      </a>
+
+      <div class="language-wrap">
         <button class="language-selector" id="languageBtn">
-          <i class="fas fa-globe"></i>
-          English
-          <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+          <i class="fas fa-globe"></i> English
+          <i class="fas fa-chevron-down"></i>
         </button>
         <div class="language-dropdown" id="languageDropdown">
           <div data-lang="en">English</div>
-          <div data-lang="hi">हिन्दी (Hindi)</div>
-          <div data-lang="bn">বাংলা (Bengali)</div>
-          <div data-lang="ta">தமிழ் (Tamil)</div>
-          <div data-lang="te">తెలుగు (Telugu)</div>
+          <div data-lang="hi">हिन्दी</div>
+          <div data-lang="bn">বাংলা</div>
+          <div data-lang="ta">தமிழ்</div>
+          <div data-lang="te">తెలుగు</div>
         </div>
       </div>
 
-      <button class="mobile-menu-btn" id="menuBtn" aria-label="Open navigation menu">
+      <button class="mobile-menu-btn" id="menuBtn">
         <i class="fas fa-bars"></i>
       </button>
 
@@ -1557,6 +1558,8 @@
           </div>
         </div>
         
+      
+        
         <div class="trending-searches">
           <span>Trending now: </span>
           <div class="trending-tags">
@@ -1568,23 +1571,21 @@
         </div>
       </div>
     </section>
-    
     <!-- Hero Navigation Below Search -->
-    <div class="hero-nav">
-      <a href="#" class="hero-nav-btn active" data-target="services">
-        <i class="fas fa-star"></i>
-        Popular Services
-      </a>
-      <a href="#" class="hero-nav-btn" data-target="transportation">
-        <i class="fas fa-truck"></i>
-        Transportation
-      </a>
-      <a href="#" class="hero-nav-btn" data-target="bookings">
-        <i class="fas fa-calendar-check"></i>
-        Bookings
-      </a>
-    </div>
-
+        <div class="hero-nav">
+          <a href="#" class="hero-nav-btn active" data-target="services">
+            <i class="fas fa-star"></i>
+            Popular Services
+          </a>
+          <a href="#" class="hero-nav-btn" data-target="transportation">
+            <i class="fas fa-truck"></i>
+            Transportation
+          </a>
+          <a href="#" class="hero-nav-btn" data-target="bookings">
+            <i class="fas fa-calendar-check"></i>
+            Bookings
+          </a>
+        </div>
     <!-- Services Section -->
     <section class="services-section active" id="services-section">
       <h2>Popular Services</h2>
