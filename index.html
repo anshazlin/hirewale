@@ -98,19 +98,19 @@
     }
 
     .worker-cta {
-      background: #0FB9B1;
+      background: #FF9F43;
       color: white;
       padding: 10px 22px;
       border-radius: 8px;
       font-weight: 600;
       text-decoration: none;
       transition: 0.3s;
-      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.3);
+      box-shadow: 0 4px 12px rgba(255, 159, 67, 0.35);
     }
 
     .worker-cta:hover {
       transform: translateY(-2px);
-      background: #0da59e;
+      background: #e8892f;
     }
 
     .language-wrap {
@@ -502,6 +502,43 @@
       margin-right: auto;
     }
 
+    /* Transportation & Bookings Sections - HIDDEN BY DEFAULT */
+    .transportation-section,
+    .bookings-section {
+      display: none;   /* ADD THIS */
+      padding: 80px 20px;
+      background: var(--white);
+      text-align: center;
+      border-top: 1px solid var(--light-border);
+    }
+
+    /* Services should be visible first */
+    .services-section {
+      display: block;  /* ADD THIS */
+    }
+
+    .transportation-section h2,
+    .bookings-section h2 {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: var(--dark-text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .transportation-section h2::after,
+    .bookings-section h2::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-teal);
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 3px; /* ADD THIS TO MATCH SERVICES */
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -571,36 +608,6 @@
       font-size: 14px;
       color: var(--light-text);
       text-align: center;
-    }
-
-    /* Transportation & Bookings Sections */
-    .transportation-section,
-    .bookings-section {
-      padding: 80px 20px;
-      background: var(--white);
-      text-align: center;
-      border-top: 1px solid var(--light-border);
-    }
-
-    .transportation-section h2,
-    .bookings-section h2 {
-      font-size: 36px;
-      margin-bottom: 16px;
-      color: var(--dark-text);
-      position: relative;
-      display: inline-block;
-    }
-
-    .transportation-section h2::after,
-    .bookings-section h2::after {
-      content: '';
-      position: absolute;
-      width: 60px;
-      height: 3px;
-      background: var(--primary-teal);
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
     }
 
     /* Booking Card */
