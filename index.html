@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hirewale · Find Trusted Workers & Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-teal: #0FB9B1;
+      --primary-teal-dark: #0da59e;
+      --soft-mint: #E8F8F7;
+      --white: #FFFFFF;
+      --dark-text: #263238;
+      --light-text: #546E7A;
+      --light-border: #E0E0E0;
+      --cta-orange: #FF9F43;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --transition: all 0.3s ease;
+      --radius: 12px;
+      --header-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--white);
+      color: var(--dark-text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Accessibility */
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--primary-teal);
+      color: white;
+      padding: 8px;
+      z-index: 1000;
+      transition: top 0.3s;
+    }
+
+    .skip-to-content:focus {
+      top: 0;
+    }
+
+    /* Header Styles - Light Theme */
+    header {
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--header-height);
+      border-bottom: 1px solid var(--light-border);
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-teal);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .brand i {
+      font-size: 24px;
+      color: var(--primary-teal);
+    }
+
+    /* Navigation */
+    /* DELETED: .desktop-nav rule */
+
+    .desktop-nav a {
+      text-decoration: none;
+      color: var(--dark-text);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 0;
+      font-size: 15px;
+    }
+
+    .desktop-nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: var(--primary-teal);
+      transition: var(--transition);
+    }
+
+    .desktop-nav a:hover {
+      color: var(--primary-teal);
+    }
+
+    .desktop-nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--primary-teal);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary-teal-dark);
+      transform: translateY(-2px);
+    }
+
+    .nav-cta-outline {
+      background: transparent;
+      color: var(--primary-teal);
+      padding: 8px 20px;
+      border-radius: 6px;
+      border: 2px solid var(--primary-teal);
+      transition: var(--transition);
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .nav-cta-outline:hover {
+      background: rgba(15, 185, 177, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Language Selector */
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid var(--light-border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--light-text);
+      transition: var(--transition);
+    }
+
+    .language-selector:hover {
+      border-color: var(--primary-teal);
+      color: var(--primary-teal);
+    }
+
+    .language-dropdown {
+      display: none;
+      position: absolute;
+      background: white;
+      border: 1px solid var(--light-border);
+      border-radius: 6px;
+      box-shadow: var(--card-shadow);
+      margin-top: 8px;
+      min-width: 150px;
+      z-index: 100;
+    }
+
+    .language-dropdown.active {
+      display: block;
+    }
+
+    .language-dropdown div {
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .language-dropdown div:hover {
+      background: var(--soft-mint);
+      color: var(--primary-teal);
+    }
+
+    /* Mobile Navigation Button */
+    .mobile-menu-btn {
+      display: flex;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--dark-text);
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* Mobile Navigation Menu */
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 280px;
+      height: 100vh;
+      background: var(--white);
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      padding: 80px 24px 24px;
+    }
+
+    .mobile-nav.active {
+      left: 0;
+    }
+
+    .mobile-nav a {
+      padding: 14px 0;
+      text-decoration: none;
+      color: var(--dark-text);
+      font-weight: 500;
+      border-bottom: 1px solid var(--light-border);
+      transition: var(--transition);
+    }
+
+    .mobile-nav a:hover {
+      color: var(--primary-teal);
+      padding-left: 10px;
+    }
+
+    .mobile-nav-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--dark-text);
+      cursor: pointer;
+    }
+
+    /* Hero Section - Clean & Light */
+    .hero {
+      padding: 80px 20px 60px;
+      text-align: center;
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: var(--dark-text);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      color: var(--light-text);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Search Bar - Light Theme */
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .search-bar {
+      display: flex;
+      background: var(--white);
+      border-radius: 50px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+      border: 1px solid var(--light-border);
+    }
+
+    .search-bar:focus-within {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      border-color: var(--primary-teal);
+    }
+
+    .search-bar input {
+      flex: 1;
+      border: none;
+      padding: 18px 24px;
+      font-size: 16px;
+      outline: none;
+      background: transparent;
+      color: var(--dark-text);
+    }
+
+    .search-bar input::placeholder {
+      color: #90A4AE;
+    }
+
+    .search-bar button {
+      background: var(--primary-teal);
+      border: none;
+      color: var(--white);
+      padding: 0 28px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .search-bar button:hover {
+      background: var(--primary-teal-dark);
+    }
+
+    .search-suggestions {
+      background: var(--white);
+      border-radius: 12px;
+      margin-top: 8px;
+      box-shadow: var(--card-shadow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: var(--transition);
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto;
+      position: absolute;
+      width: 100%;
+      z-index: 100;
+      padding: 12px 0;
+      border: 1px solid var(--light-border);
+    }
+
+    .search-suggestions.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-suggestions div {
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--dark-text);
+    }
+
+    .search-suggestions div i {
+      color: var(--primary-teal);
+      width: 20px;
+    }
+
+    .search-suggestions div:hover {
+      background: var(--soft-mint);
+    }
+
+    /* Hero Navigation Below Search */
+    .hero-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .hero-nav-btn {
+      background: var(--white);
+      color: var(--dark-text);
+      border: 1px solid var(--light-border);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-nav-btn:hover {
+      background: var(--soft-mint);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-teal);
+      color: var(--primary-teal);
+    }
+
+    .hero-nav-btn.active {
+      background: var(--primary-teal);
+      border-color: transparent;
+      color: white;
+    }
+
+    .trending-searches {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .trending-searches span {
+      font-size: 14px;
+      color: var(--light-text);
+    }
+
+    .trending-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .trending-tag {
+      background: var(--soft-mint);
+      color: var(--primary-teal);
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid rgba(15, 185, 177, 0.2);
+    }
+
+    .trending-tag:hover {
+      background: rgba(15, 185, 177, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Services Section */
+    .services-section {
+      padding: 80px 20px;
+      background: var(--white);
+      text-align: center;
+    }
+
+    .services-section h2 {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: var(--dark-text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .services-section h2::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-teal);
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 3px;
+    }
+
+    .services-section > p {
+      color: var(--light-text);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Card Styling - Light Theme */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--light-border);
+      padding: 28px 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--primary-teal);
+    }
+
+    .card-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      background: var(--soft-mint);
+      transition: var(--transition);
+    }
+
+    .card:hover .card-icon-wrapper {
+      background: var(--primary-teal);
+      transform: scale(1.1);
+    }
+
+    .card i {
+      font-size: 28px;
+      color: var(--primary-teal);
+      transition: var(--transition);
+    }
+
+    .card:hover i {
+      color: white;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark-text);
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--light-text);
+      text-align: center;
+    }
+
+    /* Transportation & Bookings Sections */
+    .transportation-section,
+    .bookings-section {
+      padding: 80px 20px;
+      background: var(--white);
+      text-align: center;
+      border-top: 1px solid var(--light-border);
+    }
+
+    .transportation-section h2,
+    .bookings-section h2 {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: var(--dark-text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .transportation-section h2::after,
+    .bookings-section h2::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-teal);
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Booking Card */
+    .booking-card {
+      background: var(--white);
+      border: 1px solid var(--light-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      text-align: left;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .booking-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .booking-status {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-confirmed {
+      background: rgba(15, 185, 177, 0.1);
+      color: var(--primary-teal);
+    }
+
+    .status-pending {
+      background: rgba(255, 159, 67, 0.1);
+      color: var(--cta-orange);
+    }
+
+    /* How it works section */
+    .how-it-works {
+      padding: 80px 20px;
+      background: var(--soft-mint);
+      color: var(--dark-text);
+      text-align: center;
+      border-top: 1px solid var(--light-border);
+    }
+
+    .how-it-works h2 {
+      font-size: 36px;
+      margin-bottom: 40px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .step {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+      border: 1px solid var(--light-border);
+      box-shadow: var(--card-shadow);
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-teal);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .step h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: var(--dark-text);
+    }
+
+    .step p {
+      color: var(--light-text);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 80px 20px;
+      background: var(--white);
+      text-align: center;
+      border-top: 1px solid var(--light-border);
+    }
+
+    .testimonials h2 {
+      font-size: 36px;
+      margin-bottom: 40px;
+      color: var(--dark-text);
+    }
+
+    .testimonial-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .testimonial-track {
+      display: flex;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      gap: 30px;
+      padding: 10px;
+    }
+
+    .testimonial {
+      flex: 0 0 calc(33.333% - 20px);
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--light-border);
+    }
+
+    .testimonial:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .testimonial-text {
+      flex-grow: 1;
+      font-style: italic;
+      margin-bottom: 20px;
+      color: var(--light-text);
+      position: relative;
+    }
+
+    .testimonial-text::before,
+    .testimonial-text::after {
+      content: '"';
+      font-size: 40px;
+      color: rgba(15, 185, 177, 0.3);
+      line-height: 0;
+      position: absolute;
+    }
+
+    .testimonial-text::before {
+      top: 0;
+      left: -10px;
+    }
+
+    .testimonial-text::after {
+      bottom: -20px;
+      right: -10px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .author-details h4 {
+      text-align: left;
+      margin-bottom: 4px;
+      color: var(--dark-text);
+    }
+
+    .author-details p {
+      text-align: left;
+      color: var(--light-text);
+      font-size: 14px;
+    }
+
+    .testimonial-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .testimonial-nav button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: none;
+      background: var(--light-border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .testimonial-nav button.active {
+      background: var(--primary-teal);
+      transform: scale(1.2);
+    }
+
+    /* App Download CTA */
+    .app-cta {
+      padding: 80px 20px;
+      background: var(--soft-mint);
+      color: var(--dark-text);
+      text-align: center;
+      border-top: 1px solid var(--light-border);
+    }
+
+    .app-cta-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      justify-content: space-between;
+    }
+
+    .app-cta-text {
+      flex: 1;
+      text-align: left;
+    }
+
+    .app-cta-text h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: var(--dark-text);
+    }
+
+    .app-cta-text p {
+      margin-bottom: 30px;
+      color: var(--light-text);
+    }
+
+    .app-badges {
+      display: flex;
+      gap: 15px;
+    }
+
+    .app-badge {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dark-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      border: 1px solid var(--light-border);
+      box-shadow: var(--card-shadow);
+    }
+
+    .app-badge:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--primary-teal);
+    }
+
+    .app-badge i {
+      font-size: 24px;
+      color: var(--primary-teal);
+    }
+
+    .app-cta-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-mockup {
+      width: 280px;
+      height: 500px;
+      background: var(--white);
+      border-radius: 40px;
+      padding: 15px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--light-border);
+    }
+
+    .app-mockup::before {
+      content: 'Hirewale';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(232, 248, 247, 0.8), rgba(255, 255, 255, 0.9));
+      opacity: 0.1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-teal);
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: var(--radius);
+      color: var(--dark-text);
+      font-weight: 500;
+      box-shadow: var(--card-shadow);
+      transform: translateX(100px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 350px;
+      background: var(--white);
+      border: 1px solid var(--light-border);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--primary-teal);
+    }
+
+    .toast.error {
+      border-left: 4px solid #ff6b6b;
+    }
+
+    .toast.warning {
+      border-left: 4px solid var(--cta-orange);
+    }
+
+    .toast.info {
+      border-left: 4px solid #4dabf7;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      font-size: 20px;
+    }
+
+    .toast.success i {
+      color: var(--primary-teal);
+    }
+
+    .toast.error i {
+      color: #ff6b6b;
+    }
+
+    .toast.warning i {
+      color: var(--cta-orange);
+    }
+
+    .toast.info i {
+      color: #4dabf7;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(15, 185, 177, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary-teal);
+      animation: spin 1s ease-in-out infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Footer */
+    footer {
+      background: var(--white);
+      color: var(--dark-text);
+      padding: 60px 20px 30px;
+      text-align: center;
+      margin-top: auto;
+      border-top: 1px solid var(--light-border);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+      color: var(--dark-text);
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background: var(--primary-teal);
+      bottom: -8px;
+      left: 0;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: var(--light-text);
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-column a:hover {
+      color: var(--primary-teal);
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--light-border);
+      padding-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--soft-mint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-text);
+      transition: var(--transition);
+      border: 1px solid var(--light-border);
+    }
+
+    .social-links a:hover {
+      background: var(--primary-teal);
+      color: white;
+      border-color: var(--primary-teal);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Focus styles for accessibility */
+    button:focus,
+    input:focus,
+    a:focus {
+      outline: 2px solid var(--primary-teal);
+      outline-offset: 2px;
+    }
+
+    /* AI Chatbot Styles - Light Theme */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9998;
+    }
+
+    .chatbot-btn {
+      background: var(--primary-teal);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .chatbot-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(15, 185, 177, 0.4);
+    }
+
+    .chatbot-modal {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow-hover);
+      border: 1px solid var(--light-border);
+      overflow: hidden;
+      transform: translateY(20px) scale(0.9);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      z-index: 9997;
+    }
+
+    .chatbot-modal.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .chatbot-header {
+      background: var(--primary-teal);
+      padding: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chatbot-header i {
+      font-size: 24px;
+    }
+
+    .chatbot-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .chatbot-header p {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-left: auto;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .message.bot {
+      background: var(--soft-mint);
+      color: var(--dark-text);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.user {
+      background: var(--primary-teal);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chatbot-input {
+      padding: 20px;
+      border-top: 1px solid var(--light-border);
+      display: flex;
+      gap: 10px;
+      background: var(--white);
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      background: var(--soft-mint);
+      border: 1px solid var(--light-border);
+      border-radius: 25px;
+      padding: 12px 20px;
+      color: var(--dark-text);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .chatbot-input input:focus {
+      border-color: var(--primary-teal);
+    }
+
+    .chatbot-input button {
+      background: var(--primary-teal);
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chatbot-input button:hover {
+      background: var(--primary-teal-dark);
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 10px 16px;
+      background: var(--soft-mint);
+      border-radius: 18px;
+      align-self: flex-start;
+      width: 60px;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background: var(--primary-teal);
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-8px); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .testimonial {
+        flex: 0 0 calc(50% - 15px);
+      }
+      
+      .app-cta-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+      }
+      
+      .app-cta-text {
+        text-align: center;
+      }
+      
+      .app-badges {
+        justify-content: center;
+      }
+      
+      .chatbot-modal {
+        width: 320px;
+        height: 450px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0 16px;
+      }
+      
+      /* This rule is now irrelevant since we removed .desktop-nav */
+      /* .desktop-nav { display: none; } */
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      .hero {
+        padding: 60px 20px 40px;
+      }
+      
+      .hero h1 {
+        font-size: 32px;
+      }
+      
+      .hero p {
+        font-size: 16px;
+      }
+      
+      .search-bar input {
+        padding: 16px 20px;
+      }
+      
+      .search-bar button {
+        padding: 0 20px;
+      }
+      
+      .hero-nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      
+      .hero-nav-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      
+      .card {
+        padding: 20px 16px;
+      }
+      
+      .card-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 16px;
+      }
+      
+      .card i {
+        font-size: 24px;
+      }
+      
+      .testimonial {
+        flex: 0 0 100%;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .chatbot-modal {
+        width: calc(100% - 40px);
+        height: 400px;
+        bottom: 80px;
+        right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 20px;
+      }
+      
+      .hero h1 {
+        font-size: 28px;
+      }
+      
+      .services-section h2,
+      .how-it-works h2,
+      .testimonials h2 {
+        font-size: 28px;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .app-badges {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .app-badge {
+        width: 200px;
+      }
+      
+      .app-mockup {
+        width: 220px;
+        height: 400px;
+      }
+      
+      .chatbot-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .chatbot-modal {
+        height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header>
+    <a href="#" class="brand">
+      <i class="fas fa-hands-helping"></i>
+      Hirewale
+    </a>
+
+    <div style="display:flex; align-items:center; gap:18px; margin-left:auto;">
+      
+      <div style="position: relative;">
+        <button class="language-selector" id="languageBtn">
+          <i class="fas fa-globe"></i>
+          English
+          <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+        </button>
+        <div class="language-dropdown" id="languageDropdown">
+          <div data-lang="en">English</div>
+          <div data-lang="hi">हिन्दी (Hindi)</div>
+          <div data-lang="bn">বাংলা (Bengali)</div>
+          <div data-lang="ta">தமிழ் (Tamil)</div>
+          <div data-lang="te">తెలుగు (Telugu)</div>
+        </div>
+      </div>
+
+      <button class="mobile-menu-btn" id="menuBtn" aria-label="Open navigation menu">
+        <i class="fas fa-bars"></i>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileNavClose">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="#">Home</a>
+    <a href="#">How It Works</a>
+    <a href="#">Services</a>
+    <a href="#">About Us</a>
+    <a href="user/dashboard.html" class="nav-cta" style="margin-top: 20px; text-align: center;">Dashboard</a>
+    <a href="worker/employee.html" class="nav-cta-outline" style="margin-top: 10px; text-align: center;">Become a Worker</a>
+    
+    <div style="margin-top: 30px; padding: 15px; border-top: 1px solid var(--light-border);">
+      <p style="font-weight: 600; margin-bottom: 10px;">Select Language:</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="language-option" data-lang="en">English</button>
+        <button class="language-option" data-lang="hi">हिन्दी (Hindi)</button>
+        <button class="language-option" data-lang="bn">বাংলা (Bengali)</button>
+        <button class="language-option" data-lang="ta">தமிழ் (Tamil)</button>
+        <button class="language-option" data-lang="te">తెలుగు (Telugu)</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Find Trusted Workers & Services Near You</h1>
+        <p>Connect with skilled professionals for all your needs. Simple, reliable, and trusted by thousands.</p>
+        <div class="search-container">
+          <div class="search-bar">
+            <input type="text" placeholder="What service do you need? (e.g., Plumber, Electrician)..." id="searchInput" aria-label="Search for services">
+            <button id="searchBtn" aria-label="Search">
+              <i class="fas fa-search"></i>
+              Search
+              <div class="spinner" id="searchSpinner"></div>
+            </button>
+          </div>
+          <div class="search-suggestions" id="searchSuggestions">
+            <div><i class="fas fa-faucet"></i> Plumber</div>
+            <div><i class="fas fa-bolt"></i> Electrician</div>
+            <div><i class="fas fa-broom"></i> Cleaner</div>
+            <div><i class="fas fa-hammer"></i> Carpenter</div>
+            <div><i class="fas fa-paint-roller"></i> Painter</div>
+            <div><i class="fas fa-toolbox"></i> Mechanic</div>
+            <div><i class="fas fa-pencil-alt"></i> Tutor</div>
+            <div><i class="fas fa-seedling"></i> Gardener</div>
+          </div>
+        </div>
+        
+        <div class="trending-searches">
+          <span>Trending now: </span>
+          <div class="trending-tags">
+            <span class="trending-tag">AC Repair</span>
+            <span class="trending-tag">Home Cleaning</span>
+            <span class="trending-tag">Moving Help</span>
+            <span class="trending-tag">Salon at Home</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Hero Navigation Below Search -->
+    <div class="hero-nav">
+      <a href="#" class="hero-nav-btn active" data-target="services">
+        <i class="fas fa-star"></i>
+        Popular Services
+      </a>
+      <a href="#" class="hero-nav-btn" data-target="transportation">
+        <i class="fas fa-truck"></i>
+        Transportation
+      </a>
+      <a href="#" class="hero-nav-btn" data-target="bookings">
+        <i class="fas fa-calendar-check"></i>
+        Bookings
+      </a>
+    </div>
+
+    <!-- Services Section -->
+    <section class="services-section active" id="services-section">
+      <h2>Popular Services</h2>
+      <p>Browse our most requested service categories</p>
+      <div class="grid">
+        <a href="user/plumber.html" class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-faucet"></i>
+          </div>
+          <h3>Plumber</h3>
+          <p>Expert plumbing and pipe repair</p>
+        </a>
+        
+        <a href="user/electrician.html" class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>Electrician</h3>
+          <p>Electrical installation & repair</p>
+        </a>
+        
+        <a href="user/mechanics.html" class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-toolbox"></i>
+          </div>
+          <h3>Mechanic</h3>
+          <p>Vehicle repair & maintenance</p>
+        </a>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <h3>Health Care</h3>
+          <p>Nursing & medical assistance</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-wifi"></i>
+          </div>
+          <h3>IT Services</h3>
+          <p>Tech support & networking</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-car"></i>
+          </div>
+          <h3>Driving</h3>
+          <p>Personal & commercial drivers</p>
+        </div>
+
+        <a href="user/worker-list.html" class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-hammer"></i>
+          </div>
+          <h3>Construction</h3>
+          <p>Skilled laborers and contractors</p>
+        </a>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-broom"></i>
+          </div>
+          <h3>Cleaning</h3>
+          <p>Home and office cleaning</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-tools"></i>
+          </div>
+          <h3>Repair</h3>
+          <p>Fix and maintenance services</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-truck"></i>
+          </div>
+          <h3>Transport</h3>
+          <p>Moving and delivery help</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-child"></i>
+          </div>
+          <h3>Babysitting</h3>
+          <p>Child care professionals</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <h3>Catering</h3>
+          <p>Food preparation and service</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transportation Section -->
+    <section class="transportation-section" id="transportation-section">
+      <h2>Transportation Services</h2>
+      <p>Find reliable transportation services for your needs</p>
+      <div class="grid">
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-taxi"></i>
+          </div>
+          <h3>Taxi Service</h3>
+          <p>Local and intercity taxi services</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-truck-moving"></i>
+          </div>
+          <h3>Moving Truck</h3>
+          <p>House shifting and moving services</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-motorcycle"></i>
+          </div>
+          <h3>Bike Taxi</h3>
+          <p>Quick and affordable bike rides</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-shipping-fast"></i>
+          </div>
+          <h3>Delivery</h3>
+          <p>Package and goods delivery</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-bus"></i>
+          </div>
+          <h3>Bus Rental</h3>
+          <p>Group transportation services</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-ambulance"></i>
+          </div>
+          <h3>Ambulance</h3>
+          <p>Emergency medical transportation</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bookings Section -->
+    <section class="bookings-section" id="bookings-section">
+      <h2>Bookings & Reservations</h2>
+      <p>Book hotels, turfs, venues and more</p>
+      <div class="grid">
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-hotel"></i>
+          </div>
+          <h3>Hotel Rooms</h3>
+          <p>Book comfortable stays</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-futbol"></i>
+          </div>
+          <h3>Turf Booking</h3>
+          <p>Sports grounds & playgrounds</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <h3>Restaurant</h3>
+          <p>Table reservations</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>Movie Tickets</h3>
+          <p>Cinema & theater bookings</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-music"></i>
+          </div>
+          <h3>Event Tickets</h3>
+          <p>Concerts & shows</p>
+        </div>
+        
+        <div class="card" tabindex="0">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-concierge-bell"></i>
+          </div>
+          <h3>Venue Booking</h3>
+          <p>Party halls & venues</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Search Services</h3>
+          <p>Find the service you need using our intuitive search</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Compare Providers</h3>
+          <p>View ratings, reviews, and prices from multiple providers</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Book Instantly</h3>
+          <p>Schedule appointments and make secure payments</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <h2>What Our Customers Say</h2>
+      <div class="testimonial-container">
+        <div class="testimonial-track" id="testimonialTrack">
+          <div class="testimonial">
+            <div class="testimonial-text">
+              Found an excellent plumber within minutes. The app is so easy to use and the professionals are top-notch!
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">R</div>
+              <div class="author-details">
+                <h4>Rajesh Kumar</h4>
+                <p>Delhi</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-text">
+              As a single working parent, Hirewale has been a lifesaver for finding reliable babysitters quickly.
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">P</div>
+              <div class="author-details">
+                <h4>Priya Sharma</h4>
+                <p>Mumbai</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-text">
+              I've used multiple services from cleaning to electrical work. Every time the service has been exceptional.
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">A</div>
+              <div class="author-details">
+                <h4>Amit Patel</h4>
+                <p>Ahmedabad</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-nav" id="testimonialNav">
+          <button class="active" aria-label="Show testimonial 1"></button>
+          <button aria-label="Show testimonial 2"></button>
+          <button aria-label="Show testimonial 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-cta">
+      <div class="app-cta-content">
+        <div class="app-cta-text">
+          <h2>Get the Hirewale App</h2>
+          <p>Book services on the go with our mobile app. Get exclusive app-only discounts and manage all your bookings in one place.</p>
+          <div class="app-badges">
+            <a href="#" class="app-badge">
+              <i class="fab fa-google-play"></i>
+              <div>
+                <div>GET IT ON</div>
+                <div>Google Play</div>
+              </div>
+            </a>
+            <a href="#" class="app-badge">
+              <i class="fab fa-apple"></i>
+              <div>
+                <div>Download on the</div>
+                <div>App Store</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="app-cta-image">
+          <div class="app-mockup"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Hirewale</h3>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="construction.html">Construction</a></li>
+          <li><a href="#">Cleaning</a></li>
+          <li><a href="#">Repairs</a></li>
+          <li><a href="#">Beauty</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Safety Tips</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Copyright Notice</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Hirewale. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- AI Chatbot -->
+  <div class="chatbot-container">
+    <button class="chatbot-btn" id="chatbotBtn" aria-label="Open AI Chatbot">
+      <i class="fas fa-robot"></i>
+    </button>
+    
+    <div class="chatbot-modal" id="chatbotModal">
+      <div class="chatbot-header">
+        <i class="fas fa-robot"></i>
+        <div>
+          <h3>Hirewale AI Assistant</h3>
+          <p>Here to help you</p>
+        </div>
+        <p style="font-size: 12px; opacity: 0.7;">Online</p>
+      </div>
+      
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+          Hello! I'm your AI assistant. How can I help you find services today?
+        </div>
+        <div class="message bot">
+          I can help you:
+          • Find the right service provider
+          • Compare prices and ratings
+          • Schedule appointments
+          • Answer any questions
+        </div>
+      </div>
+      
+      <div class="chatbot-input">
+        <input type="text" placeholder="Type your message..." id="chatbotInput">
+        <button id="chatbotSend">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile Navigation
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileNav.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    mobileNavClose.addEventListener('click', () => {
+      mobileNav.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileNav.contains(e.target) && e.target !== menuBtn && mobileNav.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Language Selector
+    const languageBtn = document.getElementById('languageBtn');
+    const languageDropdown = document.getElementById('languageDropdown');
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    languageBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      languageDropdown.classList.toggle('active');
+    });
+    
+    // Close language dropdown when clicking outside
+    document.addEventListener('click', () => {
+      languageDropdown.classList.remove('active');
+    });
+    
+    // Handle language selection
+    document.querySelectorAll('.language-dropdown div, .language-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const lang = option.getAttribute('data-lang');
+        const langText = option.textContent;
+        
+        // Update button text
+        languageBtn.innerHTML = `
+          <i class="fas fa-globe"></i>
+          ${langText.split(' ')[0]}
+          <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+        `;
+        
+        // Close dropdown
+        languageDropdown.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Show confirmation
+        showToast(`Language changed to ${langText}`, 'success');
+        
+        // In real app, you would update the page content here
+      });
+    });
+    
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      header.style.boxShadow = window.scrollY > 10 
+        ? '0 2px 10px rgba(0, 0, 0, 0.1)' 
+        : '0 2px 10px rgba(0, 0, 0, 0.05)';
+    });
+    
+    // Toast Notification
+    const toast = document.getElementById('toast');
+    
+    function showToast(message, type = 'success') {
+      toast.innerHTML = `
+        <i class="${type === 'success' ? 'fas fa-check-circle' : type === 'error' ? 'fas fa-exclamation-circle' : type === 'warning' ? 'fas fa-exclamation-triangle' : 'fas fa-info-circle'}"></i>
+        <span>${message}</span>
+      `;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Search Functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const searchSpinner = document.getElementById('searchSpinner');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    
+    searchBtn.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      
+      if (query === '') {
+        showToast('Please enter a service to search', 'error');
+        searchInput.focus();
+        return;
+      }
+      
+      // Show loading
+      searchSpinner.style.display = 'block';
+      searchBtn.disabled = true;
+      
+      // Simulate search
+      setTimeout(() => {
+        searchSpinner.style.display = 'none';
+        searchBtn.disabled = false;
+        showToast(`Found providers for "${query}"`, 'success');
+        searchSuggestions.classList.remove('active');
+        
+        // In real app, redirect to search results
+      }, 1500);
+    });
+    
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.length > 1) {
+        searchSuggestions.classList.add('active');
+      } else {
+        searchSuggestions.classList.remove('active');
+      }
+    });
+    
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+    
+    // Search suggestions
+    document.querySelectorAll('.search-suggestions div').forEach(item => {
+      item.addEventListener('click', () => {
+        searchInput.value = item.textContent.trim();
+        searchSuggestions.classList.remove('active');
+        searchBtn.click();
+      });
+    });
+    
+    // Trending tags
+    document.querySelectorAll('.trending-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        searchInput.value = tag.textContent;
+        searchBtn.click();
+      });
+    });
+    
+    // Section Navigation
+    const heroNavButtons = document.querySelectorAll('.hero-nav-btn');
+    const sections = {
+      services: document.getElementById('services-section'),
+      transportation: document.getElementById('transportation-section'),
+      bookings: document.getElementById('bookings-section')
+    };
+    
+    heroNavButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Update active button
+        heroNavButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Get target section
+        const target = button.getAttribute('data-target');
+        
+        // Hide all sections
+        Object.values(sections).forEach(section => {
+          section.style.display = 'none';
+          section.classList.remove('active');
+        });
+        
+        // Show target section
+        if (sections[target]) {
+          sections[target].style.display = 'block';
+          sections[target].classList.add('active');
+          
+          // Scroll to section
+          sections[target].scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    
+    // Testimonial Carousel
+    const testimonialTrack = document.getElementById('testimonialTrack');
+    const testimonialDots = document.querySelectorAll('.testimonial-nav button');
+    let currentTestimonial = 0;
+    
+    function showTestimonial(index) {
+      const testimonialWidth = document.querySelector('.testimonial').offsetWidth + 30;
+      testimonialTrack.scrollTo({
+        left: index * testimonialWidth,
+        behavior: 'smooth'
+      });
+      
+      testimonialDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      
+      currentTestimonial = index;
+    }
+    
+    testimonialDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        showTestimonial(index);
+      });
+    });
+    
+    // Auto-advance testimonials
+    setInterval(() => {
+      currentTestimonial = (currentTestimonial + 1) % testimonialDots.length;
+      showTestimonial(currentTestimonial);
+    }, 5000);
+    
+    // AI Chatbot
+    const chatbotBtn = document.getElementById('chatbotBtn');
+    const chatbotModal = document.getElementById('chatbotModal');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+    
+    chatbotBtn.addEventListener('click', () => {
+      chatbotModal.classList.toggle('active');
+      if (chatbotModal.classList.contains('active')) {
+        chatbotInput.focus();
+      }
+    });
+    
+    // Close chatbot when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!chatbotModal.contains(e.target) && 
+          !chatbotBtn.contains(e.target) && 
+          chatbotModal.classList.contains('active')) {
+        chatbotModal.classList.remove('active');
+      }
+    });
+    
+    // Send message function
+    function sendChatbotMessage() {
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+      
+      // Add user message
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user';
+      userMessage.textContent = message;
+      chatbotMessages.appendChild(userMessage);
+      
+      chatbotInput.value = '';
+      
+      // Show typing indicator
+      const typingIndicator = document.createElement('div');
+      typingIndicator.className = 'typing-indicator';
+      typingIndicator.id = 'typingIndicator';
+      typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+      chatbotMessages.appendChild(typingIndicator);
+      
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      
+      // Simulate AI response
+      setTimeout(() => {
+        typingIndicator.remove();
+        
+        const responses = [
+          "I can help you find the best service providers in your area. Could you tell me what specific service you're looking for?",
+          "Our platform connects you with verified professionals. Would you like me to show you available service providers?",
+          "I understand you're looking for help. We have skilled professionals ready to assist you. What service do you need?",
+          "Great question! Let me help you find the right solution. What type of service are you interested in?"
+        ];
+        
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot';
+        botMessage.textContent = responses[Math.floor(Math.random() * responses.length)];
+        chatbotMessages.appendChild(botMessage);
+        
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 1000 + Math.random() * 1000);
+    }
+    
+    chatbotSend.addEventListener('click', sendChatbotMessage);
+    
+    chatbotInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendChatbotMessage();
+      }
+    });
+    
+    // Initialize app mockup animation
+    document.addEventListener('DOMContentLoaded', () => {
+      const appMockup = document.querySelector('.app-mockup');
+      if (appMockup) {
+        appMockup.style.animation = 'float 5s ease-in-out infinite';
+      }
+    });
+    
+    // Card interactions
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (card.querySelector('h3')) {
+          const serviceName = card.querySelector('h3').textContent;
+          showToast(`Browsing ${serviceName} services`, 'info');
+        }
+      });
+      
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          card.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electricians · Hirewale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --brand-600: #f59e0b;
+      --brand-700: #d97706;
+      --brand-500: #fbbf24;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --muted-light: #94a3b8;
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --transition: all 0.3s ease;
+      --electrician-primary: #f59e0b;
+      --electrician-secondary: #fbbf24;
+      --electrician-light: #fef3c7;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --header-height: 80px;
+      --success: #10b981;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f8fafc;
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--electrician-primary);
+      color: white;
+      padding: 8px;
+      z-index: 1000;
+      transition: top 0.3s;
+    }
+
+    .skip-to-content:focus {
+      top: 0;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: var(--transition);
+      height: var(--header-height);
+    }
+
+    header.scrolled {
+      padding: 12px 32px;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .brand i {
+      font-size: 28px;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--electrician-primary);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      transition: var(--transition);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(245, 158, 11, 0.25);
+    }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--ink);
+      z-index: 1001;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      background: var(--electrician-light);
+    }
+
+    /* Hero Section */
+    .workers-hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1e293b, #334155);
+    }
+
+    .workers-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .workers-hero h1 {
+      font-size: clamp(36px, 6vw, 52px);
+      margin-bottom: 20px;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.2s;
+      line-height: 1.2;
+    }
+
+    .workers-hero h1 span {
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .workers-hero p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.4s;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta-btn {
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Modal Styles for Job Menu */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .job-modal {
+      background: white;
+      border-radius: var(--radius-lg);
+      max-width: 800px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      padding: 25px 30px;
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      color: white;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .modal-description {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--muted);
+      font-style: italic;
+      padding: 0 10px;
+    }
+
+    .modal-pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .modal-pricing-table thead {
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      color: white;
+    }
+
+    .modal-pricing-table th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .modal-pricing-table th:first-child {
+      border-radius: var(--radius) 0 0 0;
+    }
+
+    .modal-pricing-table th:last-child {
+      border-radius: 0 var(--radius) 0 0;
+    }
+
+    .modal-pricing-table tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: var(--transition);
+    }
+
+    .modal-pricing-table tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .modal-pricing-table td {
+      padding: 14px 20px;
+      color: var(--ink);
+    }
+
+    .modal-pricing-table td:first-child {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .modal-pricing-table td:last-child {
+      font-weight: 600;
+      color: var(--electrician-primary);
+      text-align: right;
+    }
+
+    .modal-footer-note {
+      margin-top: 25px;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: var(--radius);
+      border-left: 4px solid var(--electrician-primary);
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .modal-footer-note i {
+      color: var(--electrician-primary);
+      margin-top: 2px;
+    }
+
+    /* Workers Grid */
+    .workers-section {
+      padding: 60px 20px 100px;
+      background: #f8fafc;
+    }
+
+    .section-title {
+      font-size: 36px;
+      margin-bottom: 16px;
+      color: var(--ink);
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      width: 40%;
+      height: 3px;
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      bottom: -8px;
+      left: 30%;
+      border-radius: 3px;
+    }
+
+    .workers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .worker-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .worker-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.1);
+    }
+
+    .worker-card.featured::before {
+      content: 'FEATURED';
+      position: absolute;
+      top: 15px;
+      right: -30px;
+      background: var(--electrician-primary);
+      color: white;
+      padding: 5px 30px;
+      font-size: 12px;
+      font-weight: 600;
+      transform: rotate(45deg);
+      z-index: 2;
+    }
+
+    .worker-header {
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      padding: 30px;
+      color: white;
+      text-align: center;
+      position: relative;
+    }
+
+    .worker-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid white;
+      margin: 0 auto 20px;
+      overflow: hidden;
+      background: var(--electrician-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: var(--electrician-primary);
+    }
+
+    .worker-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .worker-header h3 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .worker-header p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    .worker-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .worker-rating i {
+      color: #ffd700;
+    }
+
+    .worker-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .worker-body {
+      padding: 25px;
+    }
+
+    .worker-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-item i {
+      color: var(--electrician-primary);
+      width: 20px;
+    }
+
+    .worker-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .skill-tag {
+      background: var(--electrician-light);
+      color: var(--electrician-primary);
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .worker-footer {
+      padding: 20px 25px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hire-btn {
+      background: linear-gradient(135deg, var(--electrician-primary), var(--electrician-secondary));
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .hire-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    /* How it works */
+    .how-it-works {
+      padding: 80px 20px;
+      background: #f1f5f9;
+      text-align: center;
+    }
+
+    .steps-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 60px auto 0;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 250px;
+      max-width: 300px;
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 40px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(245, 158, 11, 0.1);
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--electrician-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 24px;
+      margin: 0 auto 25px;
+    }
+
+    .step h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #fff;
+      padding: 60px 20px 30px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background: var(--electrician-primary);
+      bottom: -8px;
+      left: 0;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-column a:hover {
+      color: var(--electrician-primary);
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--electrician-primary);
+      transform: translateY(-3px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 70px;
+      }
+      
+      header {
+        padding: 12px 20px;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: var(--transition);
+        z-index: 999;
+        gap: 30px;
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      .workers-hero {
+        padding: 60px 20px 40px;
+      }
+      
+      .workers-hero h1 {
+        font-size: 32px;
+      }
+      
+      .modal-pricing-table {
+        display: block;
+        overflow-x: auto;
+      }
+      
+      .modal-pricing-table th,
+      .modal-pricing-table td {
+        padding: 12px 15px;
+        font-size: 14px;
+      }
+      
+      .workers-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .steps-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%); 
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 20px;
+      }
+      
+      .workers-hero h1 {
+        font-size: 28px;
+      }
+      
+      .section-title {
+        font-size: 28px;
+      }
+      
+      .worker-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .hire-btn {
+        padding: 10px 20px;
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header>
+    <a href="http://127.0.0.1:5500/index.html" class="brand">
+      <i class="fas fa-hands-helping"></i>
+      Hirewale
+    </a>
+    <nav id="nav">
+      <a href="index.html">Home</a>
+      <a href="#">How It Works</a>
+      <a href="electricians.html" class="active">Electricians</a>
+      <a href="#">About Us</a>
+      <a href="#" class="nav-cta">Post a Job</a>
+    </nav>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle navigation menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <main id="main-content">
+    <section class="workers-hero">
+      <div class="hero-content">
+        <h1>Certified <span>Electricians</span></h1>
+        <p>Find licensed electricians for all your electrical needs. From wiring to complete electrical installations.</p>
+        <button class="hero-cta-btn" id="viewJobMenuBtn">
+          <i class="fas fa-clipboard-list"></i> View Electrical Job Menu
+        </button>
+      </div>
+    </section>
+
+    <!-- Job Menu Modal -->
+    <div class="modal-overlay" id="jobMenuModal">
+      <div class="job-modal">
+        <div class="modal-header">
+          <h2><i class="fas fa-bolt"></i> Electrical Job Menu</h2>
+          <button class="close-modal" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-description">Hirewale provides standardized task-based pricing for electrical work. These prices are controlled by the system and shown to both customers and workers.</p>
+          
+          <table class="modal-pricing-table">
+            <thead>
+              <tr>
+                <th>Electrical Task</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fan Installation</td>
+                <td>₹150</td>
+              </tr>
+              <tr>
+                <td>Switch Repair</td>
+                <td>₹80</td>
+              </tr>
+              <tr>
+                <td>Wiring per meter</td>
+                <td>₹20</td>
+              </tr>
+              <tr>
+                <td>New Socket Installation</td>
+                <td>₹120</td>
+              </tr>
+              <tr>
+                <td>Light Fixture Installation</td>
+                <td>₹100</td>
+              </tr>
+              <tr>
+                <td>Circuit Breaker Repair</td>
+                <td>₹250</td>
+              </tr>
+              <tr>
+                <td>Wiring Fault Diagnosis</td>
+                <td>₹150</td>
+              </tr>
+              <tr>
+                <td>MCB Box Installation</td>
+                <td>₹400</td>
+              </tr>
+              <tr>
+                <td>Electric Meter Installation</td>
+                <td>₹500</td>
+              </tr>
+              <tr>
+                <td>Chandelier Installation</td>
+                <td>₹300</td>
+              </tr>
+              <tr>
+                <td>Inverter Installation</td>
+                <td>₹800</td>
+              </tr>
+              <tr>
+                <td>Solar Panel Wiring</td>
+                <td>₹600</td>
+              </tr>
+              <tr>
+                <td>Three-Phase Connection</td>
+                <td>₹1200</td>
+              </tr>
+              <tr>
+                <td>Emergency Electrical Repair</td>
+                <td>₹400</td>
+              </tr>
+              <tr>
+                <td>Whole House Rewiring (per room)</td>
+                <td>₹1000</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div class="modal-footer-note">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              <strong>How it works:</strong> After completing the job, electricians select completed tasks from this menu. The system generates the bill automatically. Customers pay electricians directly, and Hirewale calculates commission from the system-verified bill. For work not listed, use "Extra Job" option with customer approval.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="workers-section">
+      <h2 class="section-title" style="text-align: center;">Available Electricians</h2>
+      
+      <div class="workers-grid">
+        <!-- Electrician 1 -->
+        <div class="worker-card featured">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Vikram Singh</h3>
+            <p>Master Electrician</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <span>5.0 (89 reviews)</span>
+            </div>
+            <div class="worker-verified">
+              <i class="fas fa-check-circle"></i> Certified
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Mangalore, Karnataka</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>12 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Today</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Insured</span>
+              </div>
+            </div>
+            <p>Expert in industrial and residential electrical systems. Certified for smart home automation and solar installations.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Industrial Wiring</span>
+              <span class="skill-tag">Solar Systems</span>
+              <span class="skill-tag">Smart Homes</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Electrician 2 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-plug"></i>
+            </div>
+            <h3>Rajesh Kumar</h3>
+            <p>Industrial Electrician</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.8 (67 reviews)</span>
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kasargod, Kerala</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>15 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-industry"></i>
+                <span>Industrial Expert</span>
+              </div>
+            </div>
+            <p>Specialized in industrial electrical systems, three-phase connections, and heavy machinery wiring.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Three-Phase Systems</span>
+              <span class="skill-tag">Industrial Wiring</span>
+              <span class="skill-tag">Machine Installation</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Electrician 3 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-solar-panel"></i>
+            </div>
+            <h3>Anil Sharma</h3>
+            <p>Solar Energy Specialist</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <span>5.0 (52 reviews)</span>
+            </div>
+            <div class="worker-verified">
+              <i class="fas fa-check-circle"></i> Solar Certified
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Mangalore, Karnataka</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>8 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-sun"></i>
+                <span>Renewable Energy</span>
+              </div>
+            </div>
+            <p>Expert in solar panel installation, inverter systems, and complete solar energy solutions for homes and businesses.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Solar Panel Installation</span>
+              <span class="skill-tag">Inverter Systems</span>
+              <span class="skill-tag">Energy Solutions</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Electrician 4 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-home"></i>
+            </div>
+            <h3>Suresh Patel</h3>
+            <p>Residential Electrician</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.7 (48 reviews)</span>
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kasargod, Kerala</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>10 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Tomorrow</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-house-user"></i>
+                <span>Home Wiring</span>
+              </div>
+            </div>
+            <p>Specialized in home electrical wiring, lighting installations, and residential electrical maintenance.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Home Wiring</span>
+              <span class="skill-tag">Lighting Installation</span>
+              <span class="skill-tag">Residential Maintenance</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Electrician 5 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>Manoj Reddy</h3>
+            <p>Emergency Electrician</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <span>5.0 (41 reviews)</span>
+            </div>
+            <div class="worker-verified">
+              <i class="fas fa-check-circle"></i> 24/7 Service
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Mangalore, Karnataka</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>7 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-bolt"></i>
+                <span>Quick Response</span>
+              </div>
+            </div>
+            <p>Specialized in emergency electrical repairs, short circuit fixes, and urgent electrical issues with rapid response time.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Emergency Repair</span>
+              <span class="skill-tag">Short Circuit Fix</span>
+              <span class="skill-tag">Quick Response</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Electrician 6 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-laptop-house"></i>
+            </div>
+            <h3>Arun Kumar</h3>
+            <p>Smart Home Specialist</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.9 (36 reviews)</span>
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kasargod, Kerala</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>6 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-robot"></i>
+                <span>Automation Expert</span>
+              </div>
+            </div>
+            <p>Expert in smart home installations, home automation systems, and integrated electrical solutions.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Smart Home Automation</span>
+              <span class="skill-tag">Home Security Systems</span>
+              <span class="skill-tag">IoT Integration</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Simple steps to hire the right electrician</p>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Select an Electrician</h3>
+          <p>Choose from our verified electricians based on skills, ratings, and availability.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>View Job Menu</h3>
+          <p>Check our predefined electrical tasks with fixed prices before hiring.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Contact & Schedule</h3>
+          <p>Contact the electrician directly to discuss your requirements and schedule.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Hire & Pay</h3>
+          <p>Pay directly to the electrician based on completed tasks from our job menu.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Hirewale Electricians</h3>
+        <ul>
+          <li><a href="#">elctrician.html</a></li>
+          <li><a href="#">Electrical Services</a></li>
+          <li><a href="#">Pricing Guide</a></li>
+          <li><a href="#">Emergency Services</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>For Electricians</h3>
+        <ul>
+          <li><a href="#">Join as Electrician</a></li>
+          <li><a href="#">Electrician Benefits</a></li>
+          <li><a href="#">Training Programs</a></li>
+          <li><a href="#">Safety Standards</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Contact Support</a></li>
+          <li><a href="#">Dispute Resolution</a></li>
+          <li><a href="#">Emergency Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="#"><i class="fas fa-phone"></i> +91 98765 43210</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> electricians@hirewale.com</a></li>
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> Office: Kasargod, Mangalore, Bangalore</a></li>
+          <li><a href="#"><i class="fas fa-clock"></i> 24/7 Emergency Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Hirewale Electricians. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const nav = document.getElementById('nav');
+    
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = nav.classList.toggle('active');
+      menuBtn.setAttribute('aria-expanded', isExpanded);
+      menuBtn.innerHTML = isExpanded 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('active') && 
+          !nav.contains(e.target) && 
+          e.target !== menuBtn) {
+        nav.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Job Menu Modal Functionality
+    const viewJobMenuBtn = document.getElementById('viewJobMenuBtn');
+    const jobMenuModal = document.getElementById('jobMenuModal');
+    const closeModal = document.getElementById('closeModal');
+
+    viewJobMenuBtn.addEventListener('click', () => {
+      jobMenuModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeModal.addEventListener('click', () => {
+      jobMenuModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+
+    // Close modal when clicking outside
+    jobMenuModal.addEventListener('click', (e) => {
+      if (e.target === jobMenuModal) {
+        jobMenuModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && jobMenuModal.classList.contains('active')) {
+        jobMenuModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Hire buttons
+    const hireButtons = document.querySelectorAll('.hire-btn');
+    hireButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const workerCard = this.closest('.worker-card');
+        const workerName = workerCard.querySelector('h3').textContent;
+        const workerRole = workerCard.querySelector('.worker-header p').textContent;
+        
+        const confirmHire = confirm(`Hire ${workerName} - ${workerRole}?\n\nAll work will be billed using our electrical job menu with fixed prices.`);
+        
+        if (confirmHire) {
+          alert(`Great! We're connecting you with ${workerName}. They'll contact you within 15 minutes.\n\nRemember: All work will be billed using Hirewale's electrical task menu.`);
+        }
+      });
+    });
+
+    // Initialize animations on scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Animate worker cards on scroll
+      document.querySelectorAll('.worker-card, .step').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(card);
+      });
+    });
+  </script>
+</body>
+</html>

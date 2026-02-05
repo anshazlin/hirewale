@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Transportation Services · Hirewale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --brand-600: #0ea5e9;
+      --brand-700: #0284c7;
+      --brand-500: #38bdf8;
+      --brand-400: #7dd3fc;
+      --brand-300: #bae6fd;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --muted-light: #94a3b8;
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(2, 132, 199, 0.1);
+      --transition: all 0.3s ease;
+      --transition-slow: all 0.5s ease;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --header-height: 80px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8, #90e0ef);
+      color: var(--ink);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Skip to content for accessibility */
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--brand-600);
+      color: white;
+      padding: 8px;
+      z-index: 1000;
+      transition: top 0.3s;
+    }
+
+    .skip-to-content:focus {
+      top: 0;
+    }
+
+    /* Header Styles */
+    header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--glass-shadow);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: var(--transition);
+      height: var(--header-height);
+    }
+
+    header.scrolled {
+      padding: 12px 32px;
+      box-shadow: 0 4px 20px rgba(2, 132, 199, 0.15);
+    }
+
+    .brand {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand i {
+      font-size: 28px;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--brand-700);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      transition: var(--transition);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    .nav-icon-btn {
+      background: transparent;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .nav-icon-btn:hover {
+      background: var(--brand-300);
+      color: var(--brand-700);
+    }
+
+    .nav-icon-btn .badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--error);
+      color: white;
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--ink);
+      z-index: 1001;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      background: var(--brand-300);
+    }
+
+    /* Hero Section for Transport */
+    .transport-hero {
+      text-align: center;
+      padding: 120px 20px 100px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(rgba(2, 132, 199, 0.9), rgba(14, 165, 233, 0.9)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .transport-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 80%);
+      pointer-events: none;
+    }
+
+    .transport-hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .transport-hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.2s;
+      line-height: 1.2;
+    }
+
+    .transport-hero p {
+      font-size: 22px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.4s;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Stats Section */
+    .transport-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards 0.6s;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      text-align: center;
+      min-width: 180px;
+      transition: var(--transition);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .stat-number {
+      font-size: 42px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .stat-label {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Transportation Categories */
+    .transport-categories {
+      padding: 100px 20px;
+      background: #f8fafc;
+      text-align: center;
+      position: relative;
+    }
+
+    .transport-categories::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%230ea5e9' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .transport-categories h2 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+      position: relative;
+      display: inline-block;
+    }
+
+    .transport-categories h2::after {
+      content: '';
+      position: absolute;
+      width: 40%;
+      height: 4px;
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
+      bottom: -12px;
+      left: 30%;
+      border-radius: 3px;
+    }
+
+    .transport-categories > p {
+      color: var(--muted);
+      margin-bottom: 50px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.2s;
+      font-size: 18px;
+    }
+
+    .transport-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Enhanced Transport Card */
+    .transport-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 40px 30px;
+      border-radius: var(--radius-lg);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      animation: glassEntrance 0.8s ease forwards;
+      animation-delay: calc(var(--i) * 0.1s);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .transport-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%);
+      opacity: 0;
+      transition: var(--transition-slow);
+      z-index: 0;
+    }
+
+    .transport-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--brand-600), var(--brand-700));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+      z-index: 1;
+    }
+
+    .transport-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 
+        0 20px 40px rgba(14, 165, 233, 0.15),
+        0 15px 30px rgba(14, 165, 233, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .transport-card:hover::before {
+      opacity: 1;
+    }
+
+    .transport-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .transport-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.4s ease;
+      width: 100%;
+    }
+
+    .transport-card:hover .transport-card-content {
+      transform: translateY(-6px);
+    }
+
+    .transport-icon-wrapper {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      background: linear-gradient(135deg, var(--brand-300) 0%, var(--brand-400) 100%);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(14, 165, 233, 0.25);
+    }
+
+    .transport-icon-wrapper::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .transport-card:hover .transport-icon-wrapper {
+      transform: scale(1.15) rotate(8deg);
+      box-shadow: 0 12px 25px rgba(14, 165, 233, 0.35);
+    }
+
+    .transport-card:hover .transport-icon-wrapper::before {
+      opacity: 1;
+    }
+
+    .transport-card i {
+      font-size: 36px;
+      color: var(--brand-600);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .transport-card:hover i {
+      color: white;
+      transform: scale(1.2);
+    }
+
+    .transport-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .transport-card:hover h3 {
+      color: var(--brand-700);
+    }
+
+    .transport-card p {
+      font-size: 15px;
+      color: var(--muted);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      transition: var(--transition);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .transport-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    .transport-feature {
+      background: rgba(14, 165, 233, 0.1);
+      color: var(--brand-700);
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .transport-card-cta {
+      margin-top: 15px;
+      font-size: 14px;
+      color: var(--brand-600);
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .transport-card:hover .transport-card-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* How Transport Works */
+    .transport-how {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transport-how::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 40c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm96 50c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-86-14c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm126 62c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM68 180c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm112-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM24 120c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zm56-130c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm46 110c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-12-22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm58 44c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM64 126c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm114-26c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-18-42c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM120 182c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM70 82c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM24 120c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .transport-how h2 {
+      font-size: 42px;
+      margin-bottom: 50px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+      position: relative;
+      display: inline-block;
+    }
+
+    .transport-how h2::after {
+      content: '';
+      position: absolute;
+      width: 40%;
+      height: 4px;
+      background: white;
+      bottom: -15px;
+      left: 30%;
+      border-radius: 3px;
+    }
+
+    .transport-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .transport-step {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: var(--radius-lg);
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transport-step:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .transport-step-number {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: white;
+      color: var(--brand-600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: var(--transition);
+    }
+
+    .transport-step:hover .transport-step-number {
+      transform: scale(1.1) rotate(360deg);
+    }
+
+    .transport-step h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: white;
+    }
+
+    .transport-step p {
+      opacity: 0.9;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* Transport Features */
+    .transport-features-section {
+      padding: 100px 20px;
+      background: #f8fafc;
+      text-align: center;
+    }
+
+    .transport-features-section h2 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .transport-features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 50px auto 0;
+    }
+
+    .feature-item {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 40px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+      border: 1px solid rgba(14, 165, 233, 0.1);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+      border-color: rgba(14, 165, 233, 0.2);
+    }
+
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-300), var(--brand-400));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      font-size: 28px;
+      color: var(--brand-700);
+      transition: var(--transition);
+    }
+
+    .feature-item:hover .feature-icon {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
+      color: white;
+    }
+
+    .feature-item h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: var(--ink);
+    }
+
+    .feature-item p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* CTA Section */
+    .transport-cta {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transport-cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .transport-cta h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .transport-cta p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.2s;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards 0.4s;
+    }
+
+    .cta-btn {
+      padding: 18px 36px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .cta-btn-primary {
+      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
+      color: white;
+      border: none;
+    }
+
+    .cta-btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(2, 132, 199, 0.35);
+    }
+
+    .cta-btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .cta-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #fff;
+      padding: 60px 20px 30px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background: var(--brand-500);
+      bottom: -8px;
+      left: 0;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-column a:hover {
+      color: var(--brand-500);
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--brand-500);
+      transform: translateY(-3px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glassEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+      }
+      50% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.01);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+     100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Focus styles for accessibility */
+    button:focus,
+    input:focus,
+    a:focus {
+      outline: 2px solid var(--brand-600);
+      outline-offset: 2px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .transport-stats {
+        gap: 20px;
+      }
+      
+      .stat-item {
+        min-width: 150px;
+        padding: 20px;
+      }
+      
+      .transport-steps {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --header-height: 70px;
+      }
+      
+      header {
+        padding: 12px 20px;
+      }
+      
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: var(--transition);
+        z-index: 999;
+        gap: 30px;
+      }
+      
+      nav.active {
+        right: 0;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+      
+      .transport-hero {
+        padding: 100px 20px 80px;
+      }
+      
+      .transport-hero h1 {
+        font-size: 32px;
+      }
+      
+      .transport-hero p {
+        font-size: 18px;
+      }
+      
+      .transport-stats {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .stat-item {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .transport-categories h2,
+      .transport-how h2,
+      .transport-features-section h2,
+      .transport-cta h2 {
+        font-size: 32px;
+      }
+      
+      .transport-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+      
+      .transport-card {
+        padding: 30px 20px;
+      }
+      
+      .transport-features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%); 
+      }
+      
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 20px;
+      }
+      
+      .transport-hero h1 {
+        font-size: 28px;
+      }
+      
+      .transport-categories h2,
+      .transport-how h2,
+      .transport-features-section h2,
+      .transport-cta h2 {
+        font-size: 28px;
+      }
+      
+      .transport-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .transport-card h3 {
+        font-size: 22px;
+      }
+      
+      .transport-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header>
+    <div class="brand">
+      <i class="fas fa-hands-helping"></i>
+      Hirewale
+    </div>
+    <nav id="nav">
+      <a href="index.html">Home</a>
+      <a href="#" class="active">Transportation</a>
+      <a href="booking.html">Booking</a>
+      <a href="#">About Us</a>
+      <button class="nav-icon-btn" id="chatBtn" aria-label="Open chat">
+        <i class="fas fa-comment-dots"></i>
+        <span class="badge">3</span>
+      </button>
+      <a href="#" class="nav-cta" id="logoutBtn">Logout</a>
+    </nav>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle navigation menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="transport-hero">
+      <div class="transport-hero-content">
+        <h1>Premium Transportation Services</h1>
+        <p>Reliable, safe, and efficient transport solutions for all your needs. From personal travel to cargo logistics, we've got you covered.</p>
+        <div class="transport-stats">
+          <div class="stat-item">
+            <div class="stat-number">5,000+</div>
+            <div class="stat-label">Vehicles Available</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">98.7%</div>
+            <div class="stat-label">On-time Rate</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Service Available</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transportation Categories -->
+    <section class="transport-categories">
+      <h2>Transportation Services</h2>
+      <p>Choose from our wide range of transportation solutions designed for every need</p>
+      <div class="transport-grid">
+        <!-- Taxi Services -->
+        <div class="transport-card" style="--i: 1" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-taxi"></i>
+            </div>
+            <h3>Taxi Services</h3>
+            <p>Comfortable and reliable taxi services for city travel, airport transfers, and more</p>
+            <div class="transport-features">
+              <span class="transport-feature">24/7 Available</span>
+              <span class="transport-feature">AC Cars</span>
+              <span class="transport-feature">GPS Tracking</span>
+            </div>
+            <div class="transport-card-cta">
+              Book Now <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Car Rental -->
+        <div class="transport-card" style="--i: 2" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-car"></i>
+            </div>
+            <h3>Car Rental</h3>
+            <p>Self-drive or chauffeur-driven cars for daily, weekly, or monthly rentals</p>
+            <div class="transport-features">
+              <span class="transport-feature">Multiple Categories</span>
+              <span class="transport-feature">Insurance Included</span>
+              <span class="transport-feature">Flexible Duration</span>
+            </div>
+            <div class="transport-card-cta">
+              Rent Now <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goods Transport -->
+        <div class="transport-card" style="--i: 3" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-truck"></i>
+            </div>
+            <h3>Goods Transport</h3>
+            <p>Secure transportation for goods, furniture, and commercial cargo</p>
+            <div class="transport-features">
+              <span class="transport-feature">Loading/Unloading</span>
+              <span class="transport-feature">Package Protection</span>
+              <span class="transport-feature">Same Day Delivery</span>
+            </div>
+            <div class="transport-card-cta">
+              Schedule Pickup <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bus Services -->
+        <div class="transport-card" style="--i: 4" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-bus"></i>
+            </div>
+            <h3>Bus Services</h3>
+            <p>Comfortable bus services for group travel, tours, and corporate events</p>
+            <div class="transport-features">
+              <span class="transport-feature">Luxury Buses</span>
+              <span class="transport-feature">Experienced Drivers</span>
+              <span class="transport-feature">Custom Routes</span>
+            </div>
+            <div class="transport-card-cta">
+              Book Bus <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bike Rental -->
+        <div class="transport-card" style="--i: 5" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-motorcycle"></i>
+            </div>
+            <h3>Bike Rental</h3>
+            <p>Affordable motorcycle and scooter rentals for quick city commutes</p>
+            <div class="transport-features">
+              <span class="transport-feature">Hourly/Daily</span>
+              <span class="transport-feature">Helmet Included</span>
+              <span class="transport-feature">Easy Returns</span>
+            </div>
+            <div class="transport-card-cta">
+              Rent Bike <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logistics -->
+        <div class="transport-card" style="--i: 6" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-shipping-fast"></i>
+            </div>
+            <h3>Logistics & Courier</h3>
+            <p>Professional logistics solutions for businesses and personal deliveries</p>
+            <div class="transport-features">
+              <span class="transport-feature">Express Delivery</span>
+              <span class="transport-feature">Real-time Tracking</span>
+              <span class="transport-feature">Nationwide Coverage</span>
+            </div>
+            <div class="transport-card-cta">
+              Send Package <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Airport Transfer -->
+        <div class="transport-card" style="--i: 7" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-plane"></i>
+            </div>
+            <h3>Airport Transfer</h3>
+            <p>Timely and comfortable airport pickups and drop-offs</p>
+            <div class="transport-features">
+              <span class="transport-feature">Flight Tracking</span>
+              <span class="transport-feature">Meet & Greet</span>
+              <span class="transport-feature">Luggage Assistance</span>
+            </div>
+            <div class="transport-card-cta">
+              Book Transfer <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corporate Transport -->
+        <div class="transport-card" style="--i: 8" tabindex="0">
+          <div class="transport-card-content">
+            <div class="transport-icon-wrapper">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Corporate Transport</h3>
+            <p>Dedicated transport solutions for businesses and employee commute</p>
+            <div class="transport-features">
+              <span class="transport-feature">Monthly Contracts</span>
+              <span class="transport-feature">Dedicated Fleet</span>
+              <span class="transport-feature">Corporate Rates</span>
+            </div>
+            <div class="transport-card-cta">
+              Get Quote <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="transport-how">
+      <h2>How It Works</h2>
+      <div class="transport-steps">
+        <div class="transport-step">
+          <div class="transport-step-number">1</div>
+          <h3>Choose Service</h3>
+          <p>Select the transportation service that fits your needs - taxi, rental, goods transport, or logistics</p>
+        </div>
+        <div class="transport-step">
+          <div class="transport-step-number">2</div>
+          <h3>Book & Confirm</h3>
+          <p>Enter details, choose vehicle, and confirm booking with instant confirmation</p>
+        </div>
+        <div class="transport-step">
+          <div class="transport-step-number">3</div>
+          <h3>Track & Travel</h3>
+          <p>Track your vehicle in real-time and enjoy a safe, comfortable journey</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="transport-features-section">
+      <h2>Why Choose Our Transport Services</h2>
+      <div class="transport-features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Safety First</h3>
+          <p>All vehicles undergo regular maintenance and drivers are thoroughly vetted with proper documentation</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>Instant Booking</h3>
+          <p>Book your transportation in less than 2 minutes with instant confirmation and real-time availability</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h3>Live Tracking</h3>
+          <p>Track your vehicle in real-time on the map with accurate ETA and driver details</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-rupee-sign"></i>
+          </div>
+          <h3>Transparent Pricing</h3>
+          <p>No hidden charges. See the exact fare before booking with multiple payment options</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>24/7 Support</h3>
+          <p>Round-the-clock customer support for any queries, changes, or emergencies</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <h3>Verified Partners</h3>
+          <p>All transport providers are verified, rated, and insured for your peace of mind</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="transport-cta">
+      <div class="transport-cta-content">
+        <h2>Ready to Move?</h2>
+        <p>Download our app for faster booking, exclusive discounts, and real-time tracking of your transportation</p>
+        <div class="cta-buttons">
+          <a href="#" class="cta-btn cta-btn-primary">
+            <i class="fas fa-download"></i>
+            Download App
+          </a>
+          <a href="#" class="cta-btn cta-btn-secondary">
+            <i class="fas fa-phone-alt"></i>
+            Call for Booking
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Hirewale Transport</h3>
+        <ul>
+          <li><a href="#">About Transport Services</a></li>
+          <li><a href="#">Our Fleet</a></li>
+          <li><a href="#">Safety Standards</a></li>
+          <li><a href="#">Partner With Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Taxi Services</a></li>
+          <li><a href="#">Car Rental</a></li>
+          <li><a href="#">Goods Transport</a></li>
+          <li><a href="#">Bus Services</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Support</h3>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Track Booking</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Insurance Policy</a></li>
+          <li><a href="#">Cancellation Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Hirewale Transport. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const nav = document.getElementById('nav');
+    const chatBtn = document.getElementById('chatBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = nav.classList.toggle('active');
+      menuBtn.setAttribute('aria-expanded', isExpanded);
+      menuBtn.innerHTML = isExpanded 
+        ? '<i class="fas fa-times"></i>' 
+        : '<i class="fas fa-bars"></i>';
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('active') && 
+          !nav.contains(e.target) && 
+          e.target !== menuBtn) {
+        nav.classList.remove('active');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Chat button functionality
+    chatBtn.addEventListener('click', () => {
+      showToast('Transport support chat coming soon!', 'info');
+    });
+
+    // Logout button functionality
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showToast('You have been successfully logged out', 'success');
+    });
+
+    // Header scroll effect
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const header = document.querySelector('header');
+          header.classList.toggle('scrolled', window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Transport card interactions
+    const transportCards = document.querySelectorAll('.transport-card');
+    
+    transportCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const serviceName = card.querySelector('h3').textContent;
+        showToast(`Booking ${serviceName}...`, 'success');
+        // In a real app, this would navigate to booking page
+      });
+      
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          card.click();
+        }
+      });
+      
+      // Add hover effects programmatically
+      card.addEventListener('mouseenter', () => {
+        card.style.zIndex = '10';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.zIndex = '1';
+      });
+    });
+
+    // CTA buttons functionality
+    const ctaButtons = document.querySelectorAll('.cta-btn');
+    ctaButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (btn.classList.contains('cta-btn-primary')) {
+          showToast('Redirecting to app download...', 'success');
+        } else {
+          showToast('Calling booking hotline...', 'info');
+        }
+      });
+    });
+
+    // Toast notification
+    function showToast(message, type = 'success') {
+      // Create toast if it doesn't exist
+      let toast = document.getElementById('toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.className = 'toast';
+        toast.setAttribute('role', 'alert');
+        document.body.appendChild(toast);
+      }
+      
+      const icon = type === 'success' ? 'fas fa-check-circle' : 
+                   type === 'error' ? 'fas fa-exclamation-circle' : 
+                   'fas fa-info-circle';
+      
+      toast.innerHTML = `
+        <i class="${icon}"></i>
+        <span>${message}</span>
+      `;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Initialize animations when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set initial ARIA states
+      menuBtn.setAttribute('aria-expanded', 'false');
+      
+      // Add animation to transport steps
+      const transportSteps = document.querySelectorAll('.transport-step');
+      transportSteps.forEach((step, index) => {
+        step.style.animationDelay = `${index * 0.2}s`;
+      });
+    });
+  </script>
+</body>
+</html>
