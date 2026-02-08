@@ -3,133 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hirewale · User Login</title>
+  <title>Hirewale · Login</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --brand-600: #0ea5e9;
-      --brand-700: #0284c7;
-      --brand-500: #38bdf8;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --muted-light: #94a3b8;
-      --bg: #f8fafc;
+      --primary-teal: #0FB9B1;
+      --primary-teal-dark: #0da59e;
+      --soft-mint: #E8F8F7;
+      --white: #FFFFFF;
+      --dark-text: #263238;
+      --light-text: #546E7A;
+      --light-border: #E0E0E0;
+      --cta-orange: #FF9F43;
       --success: #16a34a;
       --danger: #dc2626;
-      --warning: #f59e0b;
-      --border: #e2e8f0;
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --glass-shadow: 0 8px 32px rgba(2, 132, 199, 0.1);
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
       --transition: all 0.3s ease;
+      --radius: 12px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Helvetica, Arial, sans-serif;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
     }
 
     body {
       min-height: 100svh;
       display: grid;
       place-items: center;
-      color: var(--ink);
-      background: radial-gradient(1200px 600px at 10% 10%, #e0f2fe 0%, transparent 60%),
-                  radial-gradient(1000px 500px at 90% 20%, #bae6fd 0%, transparent 60%),
-                  linear-gradient(180deg, #f0f9ff 0%, #ffffff 40%, #f8fafc 100%);
+      color: var(--dark-text);
+      background: linear-gradient(135deg, var(--soft-mint) 0%, #ffffff 100%);
       padding: 20px;
     }
 
     .shell {
-      width: min(100%, 480px);
+      width: min(100%, 500px);
       padding: 20px;
     }
 
     header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 30px;
     }
 
     .brand {
       font-weight: 700;
-      font-size: clamp(24px, 4vw, 36px);
-      letter-spacing: 0.2px;
-      background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
+      font-size: 32px;
+      color: var(--primary-teal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .tag {
-      color: var(--muted);
-      font-size: clamp(14px, 2.5vw, 16px);
+      color: var(--light-text);
+      font-size: 16px;
       font-weight: 500;
     }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      box-shadow: var(--glass-shadow);
-      padding: clamp(24px, 5vw, 36px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--white);
+      border: 1px solid var(--light-border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px;
+      transition: var(--transition);
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(2, 132, 199, 0.15);
+      box-shadow: var(--card-shadow-hover);
     }
 
     form {
       display: grid;
-      gap: 24px;
+      gap: 20px;
     }
 
     .row {
       display: grid;
-      gap: 14px;
+      gap: 10px;
     }
 
     label {
       font-weight: 600;
-      font-size: 15px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-
-    .help {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 400;
+      color: var(--dark-text);
     }
 
     .field {
       display: flex;
       align-items: center;
       gap: 12px;
-      background: var(--glass-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: var(--white);
+      border: 1px solid var(--light-border);
+      border-radius: 10px;
       padding: 14px 18px;
       transition: var(--transition);
     }
 
     .field:focus-within {
-      border-color: var(--brand-500);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 0 3px rgba(15, 185, 177, 0.1);
     }
 
     .field i {
-      color: var(--muted);
-      font-size: 18px;
+      color: var(--light-text);
+      font-size: 16px;
     }
 
     .field input {
@@ -138,18 +129,18 @@
       border: 0;
       outline: 0;
       background: transparent;
-      color: var(--ink);
-      font-size: 16px;
+      color: var(--dark-text);
+      font-size: 15px;
     }
 
     .field input::placeholder {
-      color: var(--muted-light);
+      color: #90A4AE;
     }
 
     .btn {
       border: 0;
       padding: 14px 24px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
@@ -157,34 +148,40 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      font-size: 16px;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+      background: var(--primary-teal);
       color: #fff;
       width: 100%;
+      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.3);
     }
 
     .btn-primary:hover {
-      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+      background: var(--primary-teal-dark);
+      box-shadow: 0 6px 16px rgba(15, 185, 177, 0.4);
     }
 
-    .btn-primary:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+    .btn-secondary {
+      background: var(--soft-mint);
+      color: var(--primary-teal);
+      border: 1px solid var(--light-border);
+      width: 100%;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(15, 185, 177, 0.1);
     }
 
     .password-toggle {
       background: none;
       border: none;
-      color: var(--muted);
+      color: var(--light-text);
       cursor: pointer;
       font-size: 16px;
       padding: 4px;
@@ -192,7 +189,7 @@
     }
 
     .password-toggle:hover {
-      color: var(--brand-600);
+      color: var(--primary-teal);
     }
 
     .extra-links {
@@ -201,70 +198,206 @@
       align-items: center;
       margin-top: 20px;
       padding-top: 20px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--light-border);
       font-size: 14px;
+      gap: 8px;
+      color: var(--light-text);
     }
 
     .extra-links a {
-      color: var(--brand-600);
+      color: var(--primary-teal);
       text-decoration: none;
       font-weight: 500;
       transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .extra-links a:hover {
-      color: var(--brand-700);
+      color: var(--primary-teal-dark);
       text-decoration: underline;
     }
 
-    .status {
-      font-size: 13px;
-      font-weight: 600;
+    /* Loading spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: var(--radius);
+      color: var(--dark-text);
+      font-weight: 500;
+      box-shadow: var(--card-shadow);
+      transform: translateX(100px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1000;
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 8px;
+      gap: 12px;
+      max-width: 350px;
+      background: var(--white);
+      border: 1px solid var(--light-border);
     }
 
-    .status.ok {
-      color: var(--success);
+    .toast.success {
+      border-left: 4px solid var(--primary-teal);
     }
 
-    .status.err {
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast.info {
+      border-left: 4px solid var(--cta-orange);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      font-size: 20px;
+    }
+
+    .toast.success i {
+      color: var(--primary-teal);
+    }
+
+    .toast.error i {
       color: var(--danger);
     }
 
-    .hint-box {
-      background: #f8fafc;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 8px;
-      border-left: 4px solid var(--brand-500);
+    .toast.info i {
+      color: var(--cta-orange);
+    }
+
+    /* Modal for Forgot Password */
+    .modal-overlay {
       display: none;
-    }
-
-    .hint-box.show {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .hint-title {
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--brand-700);
-      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
     }
 
-    .hint-content {
-      font-size: 13px;
-      color: var(--muted);
+    .modal-overlay.active {
+      display: flex;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      max-width: 450px;
+      width: 90%;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--light-border);
+      overflow: hidden;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 25px 30px;
+      background: var(--primary-teal);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .close-modal:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .modal-description {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--light-text);
+      font-size: 15px;
+    }
+
+    .modal-footer {
+      margin-top: 25px;
+      padding: 15px;
+      background: var(--soft-mint);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--primary-teal);
+      font-size: 14px;
+      color: var(--light-text);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1px solid var(--light-border);
+    }
+
+    .modal-footer i {
+      color: var(--primary-teal);
+      margin-top: 2px;
+    }
+
+    /* Focus styles for accessibility */
+    button:focus,
+    input:focus {
+      outline: 2px solid var(--primary-teal);
+      outline-offset: 2px;
     }
 
     /* Responsive adjustments */
@@ -274,13 +407,30 @@
       }
       
       .card {
-        padding: 20px;
+        padding: 24px;
+      }
+      
+      .brand {
+        font-size: 28px;
+      }
+      
+      .tag {
+        font-size: 14px;
       }
       
       .extra-links {
         flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .modal {
+        width: 95%;
+      }
+      
+      .modal-header,
+      .modal-body {
+        padding: 20px;
       }
     }
   </style>
@@ -289,23 +439,23 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <i style="font-size: 25px;" class="fas fa-hands-helping"></i>
+        <i class="fas fa-hands-helping"></i>
         Hirewale
       </div>
-      <div class="tag">User Login</div>
+      <div class="tag">Login to Your Account</div>
     </header>
 
     <section class="card">
       <form id="loginForm" autocomplete="off">
-        <!-- Email -->
+        <!-- Email/Username -->
         <div class="row">
           <label for="email">
             <i class="fas fa-envelope"></i>
-            Email Address
+            Email or Username
           </label>
           <div class="field">
-            <i class="fas fa-at"></i>
-            <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" required />
+            <i class="fas fa-user"></i>
+            <input id="email" name="email" type="text" placeholder="Enter your email or username" />
           </div>
         </div>
 
@@ -317,12 +467,11 @@
           </label>
           <div class="field">
             <i class="fas fa-lock"></i>
-            <input id="password" name="password" type="password" placeholder="Enter your password" required />
+            <input id="password" name="password" type="password" placeholder="Enter your password" />
             <button type="button" class="password-toggle" id="passwordToggle">
               <i class="fas fa-eye"></i>
             </button>
           </div>
-          <div class="status" id="loginStatus" aria-live="polite"></div>
         </div>
 
         <button type="submit" id="loginBtn" class="btn btn-primary">
@@ -330,25 +479,89 @@
         </button>
         
         <div class="extra-links">
-          <a href="sign-up-page.html"><i class="fas fa-user-plus"></i> Create Account</a>
-          <a href="user-reset-password.html"><i class="fas fa-key"></i> Forgot Password?</a>
+          <a href="#" id="forgotPasswordLink">
+            <i class="fas fa-key"></i> Forgot Password?
+          </a>
+          <a href="sign-up-page.html">
+            <i class="fas fa-user-plus"></i> Create New Account
+          </a>
         </div>
-        
-        <div class="tiny" style="margin-top: 24px; font-size: 12px; color: var(--muted-light); text-align: center;">
-          By logging in, you agree to our <a href="#" style="color: var(--brand-600);">Terms of Service</a> and <a href="#" style="color: var(--brand-600);">Privacy Policy</a>.
+
+        <div class="row">
+          <div style="text-align: center; margin-top: 20px;">
+            <p style="color: var(--light-text); font-size: 14px; margin-bottom: 10px;">Or continue as</p>
+            <button type="button" id="guestLoginBtn" class="btn btn-secondary">
+              <i class="fas fa-user-clock"></i> Guest User
+            </button>
+          </div>
         </div>
       </form>
     </section>
   </div>
 
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2><i class="fas fa-key"></i> Reset Password</h2>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-description">Enter your email address and we'll send you a link to reset your password.</p>
+        
+        <div class="row">
+          <label for="resetEmail">
+            <i class="fas fa-envelope"></i>
+            Email Address
+          </label>
+          <div class="field">
+            <i class="fas fa-at"></i>
+            <input id="resetEmail" name="resetEmail" type="email" placeholder="you@example.com" />
+          </div>
+        </div>
+
+        <button type="button" id="sendResetBtn" class="btn btn-primary" style="margin-top: 20px;">
+          <i class="fas fa-paper-plane"></i> Send Reset Link
+        </button>
+        
+        <div class="modal-footer">
+          <i class="fas fa-info-circle"></i>
+          <div>
+            <strong>Note:</strong> This is a prototype. In a real application, this would send an email with password reset instructions to the provided email address.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
   <script>
     // Elements
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const passwordToggle = document.getElementById('passwordToggle');
     const loginBtn = document.getElementById('loginBtn');
-    const loginStatus = document.getElementById('loginStatus');
     const loginForm = document.getElementById('loginForm');
+    const passwordToggle = document.getElementById('passwordToggle');
+    const password = document.getElementById('password');
+    const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+    const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+    const closeModal = document.getElementById('closeModal');
+    const sendResetBtn = document.getElementById('sendResetBtn');
+    const resetEmail = document.getElementById('resetEmail');
+    const guestLoginBtn = document.getElementById('guestLoginBtn');
+    const toast = document.getElementById('toast');
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      toast.innerHTML = `
+        <i class="${type === 'success' ? 'fas fa-check-circle' : type === 'error' ? 'fas fa-exclamation-circle' : 'fas fa-info-circle'}"></i>
+        <span>${message}</span>
+      `;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
 
     // Password visibility toggle
     passwordToggle.addEventListener('click', () => {
@@ -357,63 +570,113 @@
       passwordToggle.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
     });
 
-    // Form submission
-    loginForm.addEventListener('submit', async (e) => {
+    // Forgot Password Modal
+    forgotPasswordLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      forgotPasswordModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      resetEmail.focus();
+    });
+
+    closeModal.addEventListener('click', () => {
+      forgotPasswordModal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+
+    // Close modal when clicking outside
+    forgotPasswordModal.addEventListener('click', (e) => {
+      if (e.target === forgotPasswordModal) {
+        forgotPasswordModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && forgotPasswordModal.classList.contains('active')) {
+        forgotPasswordModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Send Reset Link
+    sendResetBtn.addEventListener('click', () => {
+      const email = resetEmail.value.trim();
+      
+      if (!email) {
+        showToast('Please enter your email address', 'error');
+        return;
+      }
+      
+      // Show loading
+      const originalText = sendResetBtn.innerHTML;
+      sendResetBtn.innerHTML = '<div class="spinner"></div> Sending...';
+      sendResetBtn.disabled = true;
+      
+      // Simulate API call
+      setTimeout(() => {
+        // Reset button
+        sendResetBtn.innerHTML = originalText;
+        sendResetBtn.disabled = false;
+        
+        // Close modal
+        forgotPasswordModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        
+        // Clear field
+        resetEmail.value = '';
+        
+        // Show success message
+        showToast('Password reset link sent! Check your email.', 'success');
+      }, 1500);
+    });
+
+    // Login Form Submission - NO VALIDATION
+    loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Validate inputs
-      if (!email.value || !password.value) {
-        loginStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please fill in all fields';
-        loginStatus.className = 'status err';
-        return;
-      }
-      
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email.value)) {
-        loginStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid email address';
-        loginStatus.className = 'status err';
-        return;
-      }
-      
       // Show loading state
-      loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+      const originalText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<div class="spinner"></div> Logging in...';
       loginBtn.disabled = true;
       
       // Simulate API call
-      try {
-        // In a real application, this would be an API call to your backend
-        await new Promise(resolve => setTimeout(resolve, 1500));
+      setTimeout(() => {
         
-        // Mock successful login
-        loginStatus.innerHTML = '<i class="fas fa-check-circle"></i> Login successful! Redirecting...';
-        loginStatus.className = 'status ok';
-        
-        // Redirect to dashboard after successful login
+        // Redirect to user dashboard after a short delay
         setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 1000);
-      } catch (error) {
-        // Handle login error
-        loginStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid email or password';
-        loginStatus.className = 'status err';
-        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-        loginBtn.disabled = false;
-      }
+        window.location.href = '../index.html';
+        }, 1500);
+      }, 1000);
     });
 
-    // Clear error status when user starts typing
-    email.addEventListener('input', () => {
-      if (loginStatus.textContent) {
-        loginStatus.textContent = '';
-        loginStatus.className = 'status';
-      }
+    // Guest Login
+    guestLoginBtn.addEventListener('click', () => {
+      // Show loading state
+      const originalText = guestLoginBtn.innerHTML;
+      guestLoginBtn.innerHTML = '<div class="spinner"></div> Logging in as guest...';
+      guestLoginBtn.disabled = true;
+      
+      // Simulate API call
+      setTimeout(() => {
+        
+        // Reset button
+        guestLoginBtn.innerHTML = originalText;
+        guestLoginBtn.disabled = false;
+        
+        // Redirect to user dashboard after a short delay
+        setTimeout(() => {
+           window.location.href = '../index.html';
+        }, 1500);
+      }, 1000);
     });
 
-    password.addEventListener('input', () => {
-      if (loginStatus.textContent) {
-        loginStatus.textContent = '';
-        loginStatus.className = 'status';
+    // Demo data for testing (optional)
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pre-fill with demo data for easier testing
+      if (window.location.search.includes('demo=true')) {
+        document.getElementById('email').value = 'demo@hirewale.com';
+        document.getElementById('password').value = 'demo123';
       }
     });
   </script>

@@ -3,1691 +3,1051 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Jobs · Hirewale</title>
+  <title>Hirewale · View Jobs</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root{
       --brand-600:#0ea5e9;
       --brand-700:#0284c7;
-      --brand-success:#10b981;
+      --brand-success:#16a34a;
       --brand-warning:#f59e0b;
-      --brand-danger:#ef4444;
-      --brand-purple:#8b5cf6;
+      --brand-danger:#dc2626;
       --ink:#0f172a;
       --card-bg:#ffffff;
-      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-bg: rgba(255, 255, 255, 0.85);
       --glass-border: rgba(0, 0, 0, 0.08);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      --radius-xl: 28px;
+      --transition-speed: 0.3s;
     }
-    
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto;}
     body{
       min-height:100vh;
-      background: var(--bg-gradient);
+      background:
+        radial-gradient(1200px 600px at 10% 10%, #e0f2fe 0%, transparent 60%),
+        radial-gradient(1000px 500px at 90% 20%, #bae6fd 0%, transparent 60%),
+        linear-gradient(180deg, #f0f9ff 0%, #ffffff 40%, #f8fafc 100%);
       color:var(--ink);
       display:flex;
-      flex-direction:column;
-      padding-bottom: 80px;
+      justify-content:center;
+      padding:32px 0;
+    }
+    .dashboard{
+      width:min(100%,1200px);
+      display:grid;
+      gap:24px;
+      padding:0 16px;
+      grid-template-areas: 
+        "header"
+        "filters"
+        "jobs";
     }
     
-    /* Top Navigation */
-    .top-nav {
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(20px);
-      padding: 18px 24px;
-      border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+    .header {
+      grid-area: header;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(14, 165, 233, 0.08);
     }
     
-    .nav-left {
+    .card{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius:20px;
+      padding:24px;
+      box-shadow: var(--glass-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    h1 {
+      font-size: 28px;
+      margin: 0;
       display: flex;
       align-items: center;
+      gap: 12px;
+    }
+    
+    .filters {
+      grid-area: filters;
+      display: flex;
+      flex-wrap: wrap;
       gap: 16px;
-    }
-    
-    .back-btn {
-      background: transparent;
-      border: none;
-      color: var(--brand-600);
-      font-size: 20px;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
       align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
     }
     
-    .back-btn:hover {
-      background: #f0f9ff;
-      transform: translateX(-2px);
-    }
-    
-    .nav-title {
+    .filter-group {
       display: flex;
       flex-direction: column;
-    }
-    
-    .nav-title h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-    
-    .nav-title p {
-      font-size: 14px;
-      color: #64748b;
-      font-weight: 500;
-    }
-    
-    .filter-btn {
-      background: var(--brand-600);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: var(--radius-md);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
       gap: 8px;
-      transition: all 0.3s ease;
     }
     
-    .filter-btn:hover {
-      background: var(--brand-700);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
-    }
-    
-    /* Main Content */
-    .main-content {
-      flex: 1;
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-    
-    /* Stats Overview */
-    .stats-overview {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    
-    .stat-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      border: 1px solid #f1f5f9;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(14, 165, 233, 0.15);
-    }
-    
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: var(--brand-600);
-    }
-    
-    .stat-card:nth-child(2)::before {
-      background: var(--brand-success);
-    }
-    
-    .stat-card:nth-child(3)::before {
-      background: var(--brand-warning);
-    }
-    
-    .stat-card:nth-child(4)::before {
-      background: var(--brand-purple);
-    }
-    
-    .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-md);
-      background: #f0f9ff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      color: var(--brand-600);
-      font-size: 20px;
-    }
-    
-    .stat-card:nth-child(2) .stat-icon {
-      background: #f0fdf4;
-      color: var(--brand-success);
-    }
-    
-    .stat-card:nth-child(3) .stat-icon {
-      background: #fffbeb;
-      color: var(--brand-warning);
-    }
-    
-    .stat-card:nth-child(4) .stat-icon {
-      background: #f5f3ff;
-      color: var(--brand-purple);
-    }
-    
-    .stat-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--ink);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    
-    .stat-label {
+    .filter-group label {
       font-size: 14px;
-      color: #64748b;
-      font-weight: 500;
-    }
-    
-    .stat-change {
-      font-size: 12px;
-      color: var(--brand-success);
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .stat-change.down {
-      color: var(--brand-danger);
-    }
-    
-    /* Tabs Navigation */
-    .tabs-container {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 8px;
-      margin-bottom: 24px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      display: flex;
-      position: sticky;
-      top: 80px;
-      z-index: 10;
-    }
-    
-    .tab {
-      flex: 1;
-      padding: 16px 24px;
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-md);
-      font-size: 16px;
       font-weight: 600;
       color: #64748b;
-      cursor: pointer;
+    }
+    
+    .filter-select, .search-input {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      font-size: 14px;
+      min-width: 180px;
       transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
     }
     
-    .tab:hover {
-      color: var(--brand-600);
-      background: #f8fafc;
+    .filter-select:focus, .search-input:focus {
+      outline: none;
+      border-color: var(--brand-600);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
     }
     
-    .tab.active {
-      color: var(--brand-600);
-      background: #f0f9ff;
-      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.1);
+    .search-input {
+      padding-left: 40px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 16px center;
     }
     
-    .tab-badge {
-      background: var(--brand-600);
-      color: white;
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      min-width: 24px;
-      text-align: center;
-    }
-    
-    .tab:nth-child(2) .tab-badge {
-      background: var(--brand-success);
-    }
-    
-    .tab:nth-child(3) .tab-badge {
-      background: var(--brand-warning);
-    }
-    
-    .tab:nth-child(4) .tab-badge {
-      background: var(--brand-purple);
-    }
-    
-    /* Job Cards Container */
     .jobs-container {
+      grid-area: jobs;
       display: grid;
       gap: 20px;
     }
     
-    /* Job Card */
-    .job-card {
+    .job-card{
       background: white;
-      border-radius: var(--radius-lg);
-      padding: 0;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      border: 1px solid #f1f5f9;
-      transition: all 0.4s ease;
-      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      border-radius:16px;
+      padding:24px;
+      box-shadow:0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: all 0.3s ease;
       position: relative;
     }
     
     .job-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
-      border-color: var(--brand-600);
-    }
-    
-    .job-card.featured {
-      border: 2px solid var(--brand-600);
-      box-shadow: 0 8px 30px rgba(14, 165, 233, 0.2);
-    }
-    
-    .job-card.featured::before {
-      content: 'FEATURED';
-      position: absolute;
-      top: 16px;
-      right: -32px;
-      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
-      color: white;
-      padding: 6px 40px;
-      font-size: 11px;
-      font-weight: 800;
-      transform: rotate(45deg);
-      letter-spacing: 1px;
-      z-index: 2;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-    }
-    
-    .job-card.urgent {
-      border-left: 4px solid var(--brand-danger);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
     
     .job-card-header {
-      padding: 24px;
-      border-bottom: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
     }
     
-    .job-basic-info {
-      flex: 1;
-    }
-    
-    .job-title {
-      font-size: 20px;
-      font-weight: 700;
+    .job-title{
+      font-weight:700;
+      font-size:18px;
       color: var(--ink);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .job-title i {
-      color: var(--brand-600);
-      font-size: 18px;
-    }
-    
-    .job-client {
-      font-size: 15px;
-      color: #475569;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .job-client i {
-      color: #94a3b8;
-      font-size: 14px;
+      margin: 0;
     }
     
     .job-price {
-      text-align: right;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--brand-success);
     }
     
-    .price-label {
-      font-size: 14px;
-      color: #64748b;
-      margin-bottom: 4px;
-      font-weight: 500;
-    }
-    
-    .price-amount {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--brand-600);
-      line-height: 1;
-    }
-    
-    .price-note {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-top: 4px;
-      font-weight: 500;
-    }
-    
-    .job-card-body {
-      padding: 24px;
+    .job-details{
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      font-size:14px;
+      color:#64748b;
     }
     
     .job-detail {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
     
-    .detail-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--radius-md);
-      background: #f8fafc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .job-detail i {
+      width: 20px;
       color: var(--brand-600);
-      font-size: 18px;
-      flex-shrink: 0;
     }
     
-    .detail-content h4 {
-      font-size: 13px;
-      color: #64748b;
-      font-weight: 500;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .job-description {
+      color: #334155;
+      line-height: 1.5;
+      margin: 8px 0;
     }
     
-    .detail-content p {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--ink);
-    }
-    
-    .job-skills {
-      padding: 0 24px 24px;
-    }
-    
-    .skills-label {
-      font-size: 14px;
-      color: #64748b;
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-    
-    .skills-tags {
+    .job-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
     
-    .skill-tag {
-      background: #f0f9ff;
-      color: var(--brand-600);
-      padding: 6px 14px;
+    .job-tag {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 6px 12px;
       border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .skill-tag i {
       font-size: 12px;
+      font-weight: 500;
     }
     
     .job-card-footer {
-      padding: 20px 24px;
-      background: #f8fafc;
-      border-top: 1px solid #f1f5f9;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-top: 8px;
     }
     
-    .job-status {
+    .job-posted {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    
+    .actions{
+      display:flex;
+      gap:12px;
+    }
+    
+    .btn{
+      padding:12px 20px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
+      transition: all 0.3s ease;
+      color:white;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
     
-    .status-badge {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(0,0,0,0.15);
     }
     
-    .status-available {
-      background: #dcfce7;
-      color: #166534;
+    .accept{
+      background:var(--brand-success);
     }
     
-    .status-pending {
-      background: #fef3c7;
-      color: #92400e;
+    .accept:hover{
+      background:#15803d;
+      box-shadow:0 6px 16px rgba(22, 163, 74, 0.4);
     }
     
-    .status-inprogress {
-      background: #e0f2fe;
-      color: #075985;
+    .reject{
+      background:var(--brand-danger);
     }
     
-    .status-completed {
-      background: #f5f3ff;
-      color: #5b21b6;
+    .reject:hover{
+      background:#b91c1c;
+      box-shadow:0 6px 16px rgba(220, 38, 38, 0.4);
     }
     
-    .status-urgent {
-      background: #fee2e2;
-      color: #991b1b;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
-    
-    .job-actions {
-      display: flex;
-      gap: 12px;
-    }
-    
-    .action-btn {
+    .back-btn{
+      background:var(--brand-600);
       padding: 12px 24px;
-      border-radius: var(--radius-md);
-      font-size: 15px;
+    }
+    
+    .back-btn:hover{
+      background:var(--brand-700);
+      box-shadow:0 6px 16px rgba(14, 165, 233, 0.4);
+    }
+    
+    .no-jobs {
+      text-align: center;
+      padding: 40px;
+      color: #64748b;
+    }
+    
+    .no-jobs i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: #cbd5e1;
+    }
+    
+    .no-jobs p {
+      margin: 0;
+      font-size: 18px;
+    }
+    
+    /* Modal */
+    .modal-overlay{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.5);
+      justify-content:center;
+      align-items:center;
+      z-index:1000;
+      backdrop-filter: blur(4px);
+    }
+    
+    .modal-content{
+      background:var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      padding:32px;
+      border-radius:20px;
+      max-width:500px;
+      text-align:center;
+      animation:bounceIn 0.45s ease;
+      box-shadow: var(--glass-shadow);
+    }
+    
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      60% { opacity: 1; transform: scale(1.05); }
+      80% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+    
+    .modal-header {
+      margin-bottom: 20px;
+    }
+    
+    .modal-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    
+    .modal-icon.accept {
+      color: var(--brand-success);
+    }
+    
+    .modal-icon.reject {
+      color: var(--brand-danger);
+    }
+    
+    .modal-title {
+      font-size: 24px;
+      margin: 0 0 8px 0;
+    }
+    
+    .modal-message {
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    
+    .modal-job-details {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    
+    .modal-job-detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .modal-job-detail:last-child {
+      margin-bottom: 0;
+    }
+    
+    .modal-job-detail .label {
+      color: #64748b;
+    }
+    
+    .modal-job-detail .value {
       font-weight: 600;
-      cursor: pointer;
+    }
+    
+    .modal-actions{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+    }
+    
+    .modal-btn{
+      padding:12px 24px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 8px;
-      border: none;
     }
     
-    .action-btn.primary {
-      background: linear-gradient(135deg, var(--brand-600), var(--brand-700));
-      color: white;
-      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    .modal-btn.confirm{
+      background:var(--brand-success);
+      color:white;
     }
     
-    .action-btn.primary:hover {
+    .modal-btn.confirm:hover {
+      background:#15803d;
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+      box-shadow:0 6px 16px rgba(22, 163, 74, 0.4);
     }
     
-    .action-btn.secondary {
-      background: white;
-      color: var(--brand-600);
-      border: 2px solid var(--brand-600);
+    .modal-btn.cancel{
+      background:var(--brand-600);
+      color:white;
     }
     
-    .action-btn.secondary:hover {
-      background: var(--brand-600);
-      color: white;
+    .modal-btn.cancel:hover {
+      background:var(--brand-700);
       transform: translateY(-2px);
+      box-shadow:0 6px 16px rgba(14, 165, 233, 0.4);
     }
     
-    .action-btn.outline {
-      background: transparent;
-      color: #64748b;
-      border: 2px solid #e2e8f0;
+    .modal-btn.reject{
+      background:var(--brand-danger);
+      color:white;
     }
     
-    .action-btn.outline:hover {
-      border-color: var(--brand-600);
-      color: var(--brand-600);
+    .modal-btn.reject:hover {
+      background:#b91c1c;
       transform: translateY(-2px);
+      box-shadow:0 6px 16px rgba(220, 38, 38, 0.4);
     }
     
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      background: white;
-      border-radius: var(--radius-lg);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      border: 2px dashed #e2e8f0;
-      margin-top: 20px;
-    }
-    
-    .empty-icon {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    .pagination {
       display: flex;
-      align-items: center;
       justify-content: center;
-      margin: 0 auto 24px;
-      font-size: 40px;
-      color: var(--brand-600);
+      gap: 8px;
+      margin-top: 24px;
     }
     
-    .empty-state h3 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 12px;
-    }
-    
-    .empty-state p {
-      font-size: 16px;
-      color: #64748b;
-      max-width: 500px;
-      margin: 0 auto 32px;
-      line-height: 1.6;
-    }
-    
-    .refresh-btn {
-      background: var(--brand-600);
-      color: white;
-      border: none;
-      padding: 14px 32px;
-      border-radius: var(--radius-md);
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-    }
-    
-    .refresh-btn:hover {
-      background: var(--brand-700);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
-    }
-    
-    /* Bottom Navigation */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 12px 24px;
-      display: flex;
-      justify-content: space-around;
-      z-index: 100;
-    }
-    
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: #64748b;
-      padding: 8px 16px;
-      border-radius: var(--radius-md);
-      transition: all 0.3s ease;
-    }
-    
-    .nav-item.active {
-      color: var(--brand-600);
-      background: #f0f9ff;
-    }
-    
-    .nav-icon {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-    
-    .nav-label {
-      font-size: 12px;
-      font-weight: 600;
-    }
-    
-    .nav-item:hover {
-      color: var(--brand-600);
-      transform: translateY(-2px);
-    }
-    
-    /* Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      backdrop-filter: blur(8px);
-    }
-    
-    .modal-content {
-      background: white;
-      border-radius: var(--radius-xl);
-      padding: 40px;
-      max-width: 500px;
-      width: 90%;
-      animation: slideUp 0.4s ease;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-    }
-    
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-    }
-    
-    .modal-header h2 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--ink);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .close-modal {
-      background: #f1f5f9;
-      border: none;
+    .pagination-btn {
       width: 40px;
       height: 40px;
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #64748b;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: white;
       cursor: pointer;
       transition: all 0.3s ease;
     }
     
-    .close-modal:hover {
-      background: var(--brand-danger);
+    .pagination-btn:hover {
+      border-color: var(--brand-600);
+      color: var(--brand-600);
+    }
+    
+    .pagination-btn.active {
+      background: var(--brand-600);
       color: white;
-      transform: rotate(90deg);
+      border-color: var(--brand-600);
     }
     
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .stats-overview {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .job-card-body {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .main-content {
-        padding: 16px;
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
       }
       
-      .top-nav {
-        padding: 16px;
+      .filters {
+        flex-direction: column;
+        align-items: flex-start;
       }
       
-      .nav-title h1 {
-        font-size: 20px;
+      .filter-group {
+        width: 100%;
       }
       
-      .stats-overview {
-        grid-template-columns: 1fr;
+      .filter-select, .search-input {
+        width: 100%;
       }
       
-      .tabs-container {
-        flex-wrap: wrap;
-      }
-      
-      .tab {
-        flex: 1 0 calc(50% - 8px);
-        margin-bottom: 4px;
-      }
-      
-      .job-card-body {
-        grid-template-columns: 1fr;
+      .job-card-header {
+        flex-direction: column;
+        gap: 12px;
       }
       
       .job-card-footer {
         flex-direction: column;
         gap: 16px;
-        align-items: stretch;
+        align-items: flex-start;
       }
       
-      .job-actions {
-        flex-direction: column;
+      .actions {
+        width: 100%;
+        justify-content: space-between;
       }
       
-      .bottom-nav {
-        padding: 12px;
-      }
-      
-      .nav-item {
-        padding: 8px 12px;
-      }
-      
-      .nav-label {
-        font-size: 11px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .tab {
-        flex: 1 0 100%;
-      }
-      
-      .filter-btn {
-        padding: 8px 16px;
-        font-size: 13px;
+      .btn {
+        flex: 1;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Top Navigation -->
-  <div class="top-nav">
-    <div class="nav-left">
-      <button class="back-btn" onclick="window.history.back()">
-        <i class="fas fa-arrow-left"></i>
+  <div class="dashboard">
+    <div class="header">
+      <h1><i class="fas fa-briefcase"></i> Available Jobs</h1>
+      <button class="btn back-btn" onclick="window.location.href='W-dashboard.html'">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
       </button>
-      <div class="nav-title">
-        <h1>Available Jobs</h1>
-        <p>Find your next service opportunity</p>
+    </div>
+
+    <div class="card filters">
+      <div class="filter-group">
+        <label for="categoryFilter">Category</label>
+        <select id="categoryFilter" class="filter-select">
+          <option value="all">All Categories</option>
+          <option value="electrical">Electrical</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="carpentry">Carpentry</option>
+          <option value="cleaning">Cleaning</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="locationFilter">Location</label>
+        <select id="locationFilter" class="filter-select">
+          <option value="all">All Locations</option>
+          <option value="mangalore">Mangalore</option>
+          <option value="udupi">Udupi</option>
+          <option value="banglore">Bangalore</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="sortBy">Sort By</label>
+        <select id="sortBy" class="filter-select">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="price-low">Price: Low to High</option>
+        </select>
+      </div>
+      
+      <div class="filter-group">
+        <label for="searchInput">Search</label>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search jobs...">
       </div>
     </div>
-    <button class="filter-btn" id="filterBtn">
-      <i class="fas fa-sliders-h"></i>
-      Filter & Sort
-    </button>
+
+    <div class="jobs-container" id="jobsContainer">
+      <!-- Job cards will be populated by JavaScript -->
+    </div>
+
+    <div class="pagination" id="pagination">
+      <!-- Pagination will be populated by JavaScript -->
+    </div>
   </div>
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Stats Overview -->
-    <div class="stats-overview">
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-briefcase"></i>
-        </div>
-        <div class="stat-value">24</div>
-        <div class="stat-label">Jobs Available</div>
-        <div class="stat-change">
-          <i class="fas fa-arrow-up"></i>
-          <span>12% from last week</span>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-clock"></i>
-        </div>
-        <div class="stat-value">8</div>
-        <div class="stat-label">Pending Response</div>
-        <div class="stat-change">
-          <i class="fas fa-arrow-down"></i>
-          <span>2 less than yesterday</span>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-calendar-check"></i>
-        </div>
-        <div class="stat-value">3</div>
-        <div class="stat-label">Scheduled Today</div>
-        <div class="stat-change">
-          <i class="fas fa-arrow-up"></i>
-          <span>1 more to go</span>
-        </div>
-      </div>
-      
-      <div class="stat-card">
-        <div class="stat-icon">
-          <i class="fas fa-bolt"></i>
-        </div>
-        <div class="stat-value">6</div>
-        <div class="stat-label">Urgent Jobs</div>
-        <div class="stat-change">
-          <i class="fas fa-exclamation-circle"></i>
-          <span>High priority</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabs Navigation -->
-    <div class="tabs-container">
-      <button class="tab active" data-tab="available">
-        <i class="fas fa-search"></i>
-        Available
-        <span class="tab-badge">24</span>
-      </button>
-      <button class="tab" data-tab="pending">
-        <i class="fas fa-clock"></i>
-        Pending
-        <span class="tab-badge">8</span>
-      </button>
-      <button class="tab" data-tab="scheduled">
-        <i class="fas fa-calendar-alt"></i>
-        Scheduled
-        <span class="tab-badge">12</span>
-      </button>
-      <button class="tab" data-tab="history">
-        <i class="fas fa-history"></i>
-        History
-        <span class="tab-badge">48</span>
-      </button>
-    </div>
-
-    <!-- Available Jobs -->
-    <div id="available-jobs" class="jobs-container tab-content">
-      <!-- Job Card 1 -->
-      <div class="job-card featured">
-        <div class="job-card-header">
-          <div class="job-basic-info">
-            <h3 class="job-title">
-              <i class="fas fa-faucet"></i>
-              Emergency Pipe Repair
-            </h3>
-            <p class="job-client">
-              <i class="fas fa-user"></i>
-              Mrs. Priya Sharma
-            </p>
-          </div>
-          <div class="job-price">
-            <div class="price-label">Fixed Price</div>
-            <div class="price-amount">₹1,200</div>
-            <div class="price-note">+ tips possible</div>
-          </div>
-        </div>
-        
-        <div class="job-card-body">
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-calendar-day"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Date & Time</h4>
-              <p>Today, 2:30 PM</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Location</h4>
-              <p>MG Road, 4km away</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-clock"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Duration</h4>
-              <p>2-3 hours</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Insurance</h4>
-              <p>Covered</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="job-skills">
-          <div class="skills-label">Required Skills</div>
-          <div class="skills-tags">
-            <span class="skill-tag">
-              <i class="fas fa-wrench"></i>
-              Pipe Repair
-            </span>
-            <span class="skill-tag">
-              <i class="fas fa-tools"></i>
-              Emergency Fix
-            </span>
-            <span class="skill-tag">
-              <i class="fas fa-water"></i>
-              Leak Detection
-            </span>
-          </div>
-        </div>
-        
-        <div class="job-card-footer">
-          <div class="job-status">
-            <span class="status-badge status-urgent">
-              <i class="fas fa-exclamation-circle"></i>
-              Urgent
-            </span>
-            <span style="color: #64748b; font-size: 14px;">
-              <i class="fas fa-eye"></i>
-              12 other plumbers viewing
-            </span>
-          </div>
-          <div class="job-actions">
-            <button class="action-btn outline">
-              <i class="fas fa-eye"></i>
-              View Details
-            </button>
-            <button class="action-btn primary">
-              <i class="fas fa-bolt"></i>
-              Quick Apply
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Job Card 2 -->
-      <div class="job-card urgent">
-        <div class="job-card-header">
-          <div class="job-basic-info">
-            <h3 class="job-title">
-              <i class="fas fa-toilet"></i>
-              Bathroom Installation
-            </h3>
-            <p class="job-client">
-              <i class="fas fa-user"></i>
-              Mr. Rajesh Kumar
-            </p>
-          </div>
-          <div class="job-price">
-            <div class="price-label">Fixed Price</div>
-            <div class="price-amount">₹3,500</div>
-            <div class="price-note">Materials provided</div>
-          </div>
-        </div>
-        
-        <div class="job-card-body">
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-calendar-day"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Date & Time</h4>
-              <p>Tomorrow, 10:00 AM</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Location</h4>
-              <p>Kadri Hills, 8km away</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-clock"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Duration</h4>
-              <p>Full day</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-home"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Property</h4>
-              <p>3 BHK Apartment</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="job-skills">
-          <div class="skills-label">Required Skills</div>
-          <div class="skills-tags">
-            <span class="skill-tag">
-              <i class="fas fa-bath"></i>
-              Bathroom Fitting
-            </span>
-            <span class="skill-tag">
-              <i class="fas fa-tile"></i>
-              Tiling
-            </span>
-            <span class="skill-tag">
-              <i class="fas fa-pipe"></i>
-              Pipeline
-            </span>
-          </div>
-        </div>
-        
-        <div class="job-card-footer">
-          <div class="job-status">
-            <span class="status-badge status-available">
-              <i class="fas fa-check-circle"></i>
-              Available
-            </span>
-            <span style="color: #64748b; font-size: 14px;">
-              <i class="fas fa-star"></i>
-              Premium client - 4.9 rating
-            </span>
-          </div>
-          <div class="job-actions">
-            <button class="action-btn outline">
-              <i class="fas fa-eye"></i>
-              View Details
-            </button>
-            <button class="action-btn primary">
-              <i class="fas fa-paper-plane"></i>
-              Apply Now
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Job Card 3 -->
-      <div class="job-card">
-        <div class="job-card-header">
-          <div class="job-basic-info">
-            <h3 class="job-title">
-              <i class="fas fa-tint"></i>
-              Water Tank Cleaning
-            </h3>
-            <p class="job-client">
-              <i class="fas fa-user"></i>
-              Ocean View Apartments
-            </p>
-          </div>
-          <div class="job-price">
-            <div class="price-label">Fixed Price</div>
-            <div class="price-amount">₹2,800</div>
-            <div class="price-note">For 3 tanks</div>
-          </div>
-        </div>
-        
-        <div class="job-card-body">
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-calendar-day"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Date & Time</h4>
-              <p>Jun 20, Flexible</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Location</h4>
-              <p>City Center, 12km away</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-clock"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Duration</h4>
-              <p>4-5 hours</p>
-            </div>
-          </div>
-          
-          <div class="job-detail">
-            <div class="detail-icon">
-              <i class="fas fa-building"></i>
-            </div>
-            <div class="detail-content">
-              <h4>Property</h4>
-              <p>Commercial Building</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="job-skills">
-          <div class="skills-label">Required Skills</div>
-          <div class="skills-tags">
-            <span class="skill-tag">
-              <i class="fas fa-pump-soap"></i>
-              Tank Cleaning
-            </span>
-            <span class="skill-tag">
-              <i class="fas fa-water"></i>
-              Water Systems
-            </span>
-            <span class="skill-tag">
-              <i class="fas fa-industry"></i>
-              Commercial
-            </span>
-          </div>
-        </div>
-        
-        <div class="job-card-footer">
-          <div class="job-status">
-            <span class="status-badge status-available">
-              <i class="fas fa-check-circle"></i>
-              Available
-            </span>
-            <span style="color: #64748b; font-size: 14px;">
-              <i class="fas fa-users"></i>
-              Recurring contract possible
-            </span>
-          </div>
-          <div class="job-actions">
-            <button class="action-btn outline">
-              <i class="fas fa-eye"></i>
-              View Details
-            </button>
-            <button class="action-btn primary">
-              <i class="fas fa-paper-plane"></i>
-              Apply Now
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Pending Jobs (Hidden by default) -->
-    <div id="pending-jobs" class="jobs-container tab-content" style="display: none;">
-      <div class="empty-state">
-        <div class="empty-icon">
-          <i class="fas fa-clock"></i>
-        </div>
-        <h3>No Pending Jobs</h3>
-        <p>All your job applications have been responded to. Check back later for new responses or browse available jobs to apply for more.</p>
-        <button class="refresh-btn" onclick="switchTab('available')">
-          <i class="fas fa-search"></i>
-          Browse Available Jobs
-        </button>
-      </div>
-    </div>
-
-    <!-- Scheduled Jobs (Hidden by default) -->
-    <div id="scheduled-jobs" class="jobs-container tab-content" style="display: none;">
-      <div class="empty-state">
-        <div class="empty-icon">
-          <i class="fas fa-calendar-alt"></i>
-        </div>
-        <h3>No Scheduled Jobs</h3>
-        <p>You don't have any jobs scheduled for the coming days. Apply for available jobs to get started.</p>
-        <button class="refresh-btn" onclick="switchTab('available')">
-          <i class="fas fa-briefcase"></i>
-          Find Jobs to Apply
-        </button>
-      </div>
-    </div>
-
-    <!-- History Jobs (Hidden by default) -->
-    <div id="history-jobs" class="jobs-container tab-content" style="display: none;">
-      <div class="empty-state">
-        <div class="empty-icon">
-          <i class="fas fa-history"></i>
-        </div>
-        <h3>Job History</h3>
-        <p>Your completed job history will appear here once you start accepting and completing jobs.</p>
-        <button class="refresh-btn" onclick="switchTab('available')">
-          <i class="fas fa-rocket"></i>
-          Start Your First Job
-        </button>
-      </div>
-    </div>
-  </main>
-
-  <!-- Bottom Navigation -->
-  <nav class="bottom-nav">
-    <a href="W-dashboard.html" class="nav-item">
-      <i class="fas fa-home nav-icon"></i>
-      <span class="nav-label">Home</span>
-    </a>
-    <a href="W-jobs.html" class="nav-item active">
-      <i class="fas fa-briefcase nav-icon"></i>
-      <span class="nav-label">Jobs</span>
-    </a>
-    <a href="W-earnings.html" class="nav-item">
-      <i class="fas fa-wallet nav-icon"></i>
-      <span class="nav-label">Earnings</span>
-    </a>
-    <a href="W-notifications.html" class="nav-item">
-      <i class="fas fa-bell nav-icon"></i>
-      <span class="nav-label">Notifications</span>
-    </a>
-    <a href="W-settings.html" class="nav-item">
-      <i class="fas fa-cog nav-icon"></i>
-      <span class="nav-label">Settings</span>
-    </a>
-  </nav>
-
-  <!-- Filter Modal -->
-  <div id="filterModal" class="modal-overlay">
+  <!-- Job Action Modal -->
+  <div id="actionModal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>
-          <i class="fas fa-sliders-h"></i>
-          Filter & Sort Jobs
-        </h2>
-        <button class="close-modal" id="closeFilterModal">
-          <i class="fas fa-times"></i>
+        <div class="modal-icon" id="modalIcon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+        <p class="modal-message" id="modalMessage">Are you sure you want to perform this action?</p>
+      </div>
+      
+      <div class="modal-job-details" id="modalJobDetails">
+        <!-- Job details will be populated by JavaScript -->
+      </div>
+      
+      <div class="modal-actions">
+        <button id="confirmAction" class="modal-btn confirm">
+          <i class="fas fa-check"></i> Confirm
+        </button>
+        <button id="cancelAction" class="modal-btn cancel">
+          <i class="fas fa-times"></i> Cancel
         </button>
       </div>
-      
-      <div style="margin-bottom: 32px;">
-        <h3 style="font-size: 18px; color: var(--ink); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-          <i class="fas fa-filter"></i>
-          Filter By
-        </h3>
-        
-        <div style="display: grid; gap: 16px;">
-          <div>
-            <label style="display: block; font-size: 14px; color: #64748b; margin-bottom: 8px; font-weight: 500;">Job Type</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-              <button class="filter-chip active">All</button>
-              <button class="filter-chip">Emergency</button>
-              <button class="filter-chip">Scheduled</button>
-              <button class="filter-chip">Commercial</button>
-              <button class="filter-chip">Residential</button>
-            </div>
-          </div>
-          
-          <div>
-            <label style="display: block; font-size: 14px; color: #64748b; margin-bottom: 8px; font-weight: 500;">Price Range</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-              <button class="filter-chip">Under ₹1,000</button>
-              <button class="filter-chip active">₹1,000 - ₹5,000</button>
-              <button class="filter-chip">₹5,000+</button>
-              <button class="filter-chip">Any</button>
-            </div>
-          </div>
-          
-          <div>
-            <label style="display: block; font-size: 14px; color: #64748b; margin-bottom: 8px; font-weight: 500;">Distance</label>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-              <button class="filter-chip active">Within 10km</button>
-              <button class="filter-chip">10-20km</button>
-              <button class="filter-chip">20km+</button>
-              <button class="filter-chip">Any</button>
-            </div>
-          </div>
-        </div>
+    </div>
+  </div>
+
+  <!-- Job Detail Modal -->
+  <div id="detailModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 600px; text-align: left;">
+      <div class="modal-header" style="text-align: center;">
+        <h3 class="modal-title" id="detailTitle">Job Details</h3>
       </div>
       
-      <div>
-        <h3 style="font-size: 18px; color: var(--ink); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-          <i class="fas fa-sort-amount-down"></i>
-          Sort By
-        </h3>
-        
-        <div style="display: flex; flex-direction: column; gap: 12px;">
-          <label class="radio-option">
-            <input type="radio" name="sort" checked>
-            <span>Newest First</span>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="sort">
-            <span>Price: High to Low</span>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="sort">
-            <span>Distance: Nearest First</span>
-          </label>
-          <label class="radio-option">
-            <input type="radio" name="sort">
-            <span>Urgent Jobs First</span>
-          </label>
-        </div>
+      <div id="detailContent">
+        <!-- Job details will be populated by JavaScript -->
       </div>
       
-      <div style="display: flex; gap: 16px; margin-top: 32px;">
-        <button class="action-btn secondary" style="flex: 1;" id="resetFilters">
-          <i class="fas fa-redo"></i>
-          Reset
+      <div class="modal-actions">
+        <button id="closeDetail" class="modal-btn cancel">
+          <i class="fas fa-times"></i> Close
         </button>
-        <button class="action-btn primary" style="flex: 1;" id="applyFilters">
-          <i class="fas fa-check"></i>
-          Apply Filters
+        <button id="acceptFromDetail" class="modal-btn confirm">
+          <i class="fas fa-check"></i> Accept Job
         </button>
       </div>
     </div>
   </div>
 
   <script>
+    // Enhanced View Jobs functionality
     document.addEventListener('DOMContentLoaded', function() {
-      // Tab Switching
-      const tabs = document.querySelectorAll('.tab');
-      const tabContents = document.querySelectorAll('.tab-content');
+      // Load jobs from sessionStorage or create defaults
+      let jobs = JSON.parse(sessionStorage.getItem("jobs")) || [
+        {
+          id: 1, 
+          title: "Fix kitchen wiring", 
+          location: "Mangalore", 
+          pay: 500, 
+          status: "pending",
+          category: "electrical",
+          description: "Need to fix kitchen wiring that's causing frequent short circuits. All materials will be provided.",
+          client: "Rahul Sharma",
+          posted: "2023-06-10T14:30:00",
+          duration: "2-3 hours",
+          urgency: "high",
+          tags: ["wiring", "kitchen", "electrical"]
+        },
+        {
+          id: 2, 
+          title: "Install ceiling fan", 
+          location: "Udupi", 
+          pay: 400, 
+          status: "pending",
+          category: "electrical",
+          description: "Need to install a new ceiling fan in living room. Existing wiring is in place.",
+          client: "Priya Patel",
+          posted: "2023-06-12T09:15:00",
+          duration: "1-2 hours",
+          urgency: "medium",
+          tags: ["fan installation", "ceiling", "electrical"]
+        },
+        {
+          id: 3, 
+          title: "Repair water heater", 
+          location: "Mangalore", 
+          pay: 600, 
+          status: "pending",
+          category: "plumbing",
+          description: "Water heater not heating properly. Needs diagnosis and repair.",
+          client: "Vikram Malhotra",
+          posted: "2023-06-13T16:45:00",
+          duration: "2-3 hours",
+          urgency: "high",
+          tags: ["water heater", "repair", "plumbing"]
+        },
+        {
+          id: 4, 
+          title: "Fix leaking pipe", 
+          location: "Bangalore", 
+          pay: 350, 
+          status: "pending",
+          category: "plumbing",
+          description: "Kitchen sink pipe is leaking and needs to be fixed or replaced.",
+          client: "Ananya Reddy",
+          posted: "2023-06-14T11:20:00",
+          duration: "1-2 hours",
+          urgency: "medium",
+          tags: ["pipe repair", "leak", "plumbing"]
+        },
+        {
+          id: 5, 
+          title: "Assemble furniture", 
+          location: "Mangalore", 
+          pay: 450, 
+          status: "pending",
+          category: "carpentry",
+          description: "Need help assembling IKEA furniture (bed frame and wardrobe).",
+          client: "Nitin Desai",
+          posted: "2023-06-15T13:10:00",
+          duration: "3-4 hours",
+          urgency: "low",
+          tags: ["furniture assembly", "carpentry"]
+        }
+      ];
+      sessionStorage.setItem("jobs", JSON.stringify(jobs));
       
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const tabId = tab.getAttribute('data-tab');
+      // DOM Elements
+      const jobsContainer = document.getElementById("jobsContainer");
+      const actionModal = document.getElementById("actionModal");
+      const detailModal = document.getElementById("detailModal");
+      const categoryFilter = document.getElementById("categoryFilter");
+      const locationFilter = document.getElementById("locationFilter");
+      const sortBy = document.getElementById("sortBy");
+      const searchInput = document.getElementById("searchInput");
+      const paginationContainer = document.getElementById("pagination");
+      
+      // State variables
+      let selectedJob = null;
+      let selectedAction = null;
+      let currentPage = 1;
+      const jobsPerPage = 4;
+      let filteredJobs = [];
+      
+      // Initialize the page
+      function init() {
+        filteredJobs = [...jobs.filter(job => job.status === "pending")];
+        applyFilters();
+        setupEventListeners();
+      }
+      
+      // Set up event listeners
+      function setupEventListeners() {
+        // Filter event listeners
+        categoryFilter.addEventListener('change', applyFilters);
+        locationFilter.addEventListener('change', applyFilters);
+        sortBy.addEventListener('change', applyFilters);
+        searchInput.addEventListener('input', applyFilters);
+        
+        // Modal event listeners
+        document.getElementById('cancelAction').addEventListener('click', closeModal);
+        document.getElementById('confirmAction').addEventListener('click', confirmAction);
+        document.getElementById('closeDetail').addEventListener('click', closeDetailModal);
+        document.getElementById('acceptFromDetail').addEventListener('click', acceptFromDetail);
+      }
+      
+      // Apply all filters and render jobs
+      function applyFilters() {
+        const category = categoryFilter.value;
+        const location = locationFilter.value;
+        const sort = sortBy.value;
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        // Filter jobs
+        filteredJobs = jobs.filter(job => {
+          if (job.status !== "pending") return false;
+          if (category !== "all" && job.category !== category) return false;
+          if (location !== "all" && job.location.toLowerCase() !== location) return false;
+          if (searchTerm && !(
+            job.title.toLowerCase().includes(searchTerm) ||
+            job.description.toLowerCase().includes(searchTerm) ||
+            job.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+          )) return false;
           
-          // Update active tab
-          tabs.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
+          return true;
+        });
+        
+        // Sort jobs
+        switch(sort) {
+          case 'newest':
+            filteredJobs.sort((a, b) => new Date(b.posted) - new Date(a.posted));
+            break;
+          case 'oldest':
+            filteredJobs.sort((a, b) => new Date(a.posted) - new Date(b.posted));
+            break;
+          case 'price-high':
+            filteredJobs.sort((a, b) => b.pay - a.pay);
+            break;
+          case 'price-low':
+            filteredJobs.sort((a, b) => a.pay - b.pay);
+            break;
+        }
+        
+        // Reset to first page
+        currentPage = 1;
+        renderJobs();
+        renderPagination();
+      }
+      
+      // Render jobs for current page
+      function renderJobs() {
+        jobsContainer.innerHTML = '';
+        
+        if (filteredJobs.length === 0) {
+          jobsContainer.innerHTML = `
+            <div class="no-jobs">
+              <i class="fas fa-search"></i>
+              <p>No jobs found matching your criteria</p>
+            </div>
+          `;
+          paginationContainer.innerHTML = '';
+          return;
+        }
+        
+        // Calculate pagination
+        const startIndex = (currentPage - 1) * jobsPerPage;
+        const endIndex = Math.min(startIndex + jobsPerPage, filteredJobs.length);
+        const jobsToRender = filteredJobs.slice(startIndex, endIndex);
+        
+        jobsToRender.forEach(job => {
+          const jobCard = document.createElement('div');
+          jobCard.className = 'job-card';
           
-          // Show corresponding content
-          tabContents.forEach(content => {
-            content.style.display = 'none';
-          });
+          const postedDate = new Date(job.posted);
+          const timeAgo = getTimeAgo(postedDate);
           
-          document.getElementById(`${tabId}-jobs`).style.display = 'grid';
+          jobCard.innerHTML = `
+            <div class="job-card-header">
+              <h3 class="job-title">${job.title}</h3>
+              <div class="job-price">₹${job.pay}</div>
+            </div>
+            
+            <div class="job-details">
+              <div class="job-detail">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>${job.location}</span>
+              </div>
+              <div class="job-detail">
+                <i class="fas fa-clock"></i>
+                <span>${job.duration}</span>
+              </div>
+              <div class="job-detail">
+                <i class="fas fa-bolt"></i>
+                <span>${job.urgency.charAt(0).toUpperCase() + job.urgency.slice(1)} urgency</span>
+              </div>
+              <div class="job-detail">
+                <i class="fas fa-user"></i>
+                <span>${job.client}</span>
+              </div>
+            </div>
+            
+            <p class="job-description">${job.description}</p>
+            
+            <div class="job-tags">
+              ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+            </div>
+            
+            <div class="job-card-footer">
+              <div class="job-posted">Posted ${timeAgo}</div>
+              <div class="actions">
+                <button class="btn reject" onclick="openModal(${job.id}, 'reject')">
+                  <i class="fas fa-times"></i> Reject
+                </button>
+                <button class="btn accept" onclick="openModal(${job.id}, 'accept')">
+                  <i class="fas fa-check"></i> Accept
+                </button>
+                <button class="btn" style="background: var(--brand-600);" onclick="viewJobDetails(${job.id})">
+                  <i class="fas fa-eye"></i> Details
+                </button>
+              </div>
+            </div>
+          `;
+          
+          jobsContainer.appendChild(jobCard);
         });
-      });
+      }
       
-      // Filter Modal
-      const filterBtn = document.getElementById('filterBtn');
-      const filterModal = document.getElementById('filterModal');
-      const closeFilterModal = document.getElementById('closeFilterModal');
-      const applyFilters = document.getElementById('applyFilters');
-      const resetFilters = document.getElementById('resetFilters');
-      
-      filterBtn.addEventListener('click', () => {
-        filterModal.style.display = 'flex';
-      });
-      
-      closeFilterModal.addEventListener('click', () => {
-        filterModal.style.display = 'none';
-      });
-      
-      applyFilters.addEventListener('click', () => {
-        filterModal.style.display = 'none';
-        showNotification('Filters applied successfully', 'success');
-      });
-      
-      resetFilters.addEventListener('click', () => {
-        document.querySelectorAll('.filter-chip').forEach(chip => {
-          chip.classList.remove('active');
-        });
-        document.querySelectorAll('.radio-option input').forEach(radio => {
-          radio.checked = false;
-        });
-        document.querySelector('.filter-chip').classList.add('active');
-        document.querySelector('.radio-option input').checked = true;
-      });
-      
-      // Filter Chips
-      const filterChips = document.querySelectorAll('.filter-chip');
-      filterChips.forEach(chip => {
-        chip.addEventListener('click', function() {
-          if (this.textContent === 'All') {
-            filterChips.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
+      // Render pagination controls
+      function renderPagination() {
+        const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+        
+        if (totalPages <= 1) {
+          paginationContainer.innerHTML = '';
+          return;
+        }
+        
+        let paginationHTML = '';
+        
+        // Previous button
+        if (currentPage > 1) {
+          paginationHTML += `<button class="pagination-btn" onclick="changePage(${currentPage - 1})"><i class="fas fa-chevron-left"></i></button>`;
+        }
+        
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === currentPage) {
+            paginationHTML += `<button class="pagination-btn active">${i}</button>`;
           } else {
-            document.querySelector('.filter-chip:first-child').classList.remove('active');
-            this.classList.toggle('active');
+            paginationHTML += `<button class="pagination-btn" onclick="changePage(${i})">${i}</button>`;
           }
-        });
-      });
+        }
+        
+        // Next button
+        if (currentPage < totalPages) {
+          paginationHTML += `<button class="pagination-btn" onclick="changePage(${currentPage + 1})"><i class="fas fa-chevron-right"></i></button>`;
+        }
+        
+        paginationContainer.innerHTML = paginationHTML;
+      }
       
-      // Job Application
-      const applyButtons = document.querySelectorAll('.action-btn.primary');
-      applyButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const jobCard = this.closest('.job-card');
-          const jobTitle = jobCard.querySelector('.job-title').textContent.trim();
-          
-          showNotification(`Applied for "${jobTitle}" successfully!`, 'success');
-          
-          // Simulate application process
-          setTimeout(() => {
-            jobCard.style.opacity = '0.5';
-            jobCard.style.pointerEvents = 'none';
-            const statusBadge = jobCard.querySelector('.status-badge');
-            statusBadge.className = 'status-badge status-pending';
-            statusBadge.innerHTML = '<i class="fas fa-clock"></i> Applied';
-            
-            const actions = jobCard.querySelector('.job-actions');
-            actions.innerHTML = `
-              <button class="action-btn outline" onclick="showJobDetails()">
-                <i class="fas fa-eye"></i>
-                View Details
-              </button>
-              <button class="action-btn secondary" onclick="withdrawApplication(this)">
-                <i class="fas fa-times"></i>
-                Withdraw
-              </button>
-            `;
-            
-            // Fade back in
-            setTimeout(() => {
-              jobCard.style.opacity = '1';
-            }, 300);
-          }, 500);
-        });
-      });
+      // Change page
+      window.changePage = function(page) {
+        currentPage = page;
+        renderJobs();
+        renderPagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
       
-      // Add filter chip styles
-      const style = document.createElement('style');
-      style.textContent = `
-        .filter-chip {
-          padding: 8px 16px;
-          background: #f1f5f9;
-          border: none;
-          border-radius: 20px;
-          font-size: 14px;
-          font-weight: 500;
-          color: #64748b;
-          cursor: pointer;
-          transition: all 0.3s ease;
+      // Open action modal
+      window.openModal = function(jobId, action) {
+        selectedJob = jobs.find(j => j.id === jobId);
+        selectedAction = action;
+        
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalJobDetails = document.getElementById('modalJobDetails');
+        const confirmBtn = document.getElementById('confirmAction');
+        
+        if (action === 'accept') {
+          modalIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+          modalIcon.className = 'modal-icon accept';
+          modalTitle.textContent = 'Accept Job';
+          modalMessage.textContent = `Are you sure you want to accept this job?`;
+          confirmBtn.className = 'modal-btn confirm';
+          confirmBtn.innerHTML = '<i class="fas fa-check"></i> Accept Job';
+        } else {
+          modalIcon.innerHTML = '<i class="fas fa-times-circle"></i>';
+          modalIcon.className = 'modal-icon reject';
+          modalTitle.textContent = 'Reject Job';
+          modalMessage.textContent = `Are you sure you want to reject this job?`;
+          confirmBtn.className = 'modal-btn reject';
+          confirmBtn.innerHTML = '<i class="fas fa-times"></i> Reject Job';
         }
         
-        .filter-chip:hover {
-          background: #e2e8f0;
-          color: var(--ink);
+        modalJobDetails.innerHTML = `
+          <div class="modal-job-detail">
+            <span class="label">Job:</span>
+            <span class="value">${selectedJob.title}</span>
+          </div>
+          <div class="modal-job-detail">
+            <span class="label">Location:</span>
+            <span class="value">${selectedJob.location}</span>
+          </div>
+          <div class="modal-job-detail">
+            <span class="label">Pay:</span>
+            <span class="value">₹${selectedJob.pay}</span>
+          </div>
+        `;
+        
+        actionModal.style.display = 'flex';
+      };
+      
+      // Close modal
+      function closeModal() {
+        actionModal.style.display = 'none';
+        selectedJob = null;
+        selectedAction = null;
+      }
+      
+      // Confirm action
+      function confirmAction() {
+        if (selectedJob && selectedAction) {
+          if (selectedAction === 'accept') {
+            selectedJob.status = 'accepted';
+            addNotification(`✅ Accepted job: ${selectedJob.title}`, 'success');
+          } else {
+            selectedJob.status = 'rejected';
+            addNotification(`❌ Rejected job: ${selectedJob.title}`, 'danger');
+          }
+          
+          sessionStorage.setItem('jobs', JSON.stringify(jobs));
+          applyFilters(); // Refresh the job list
         }
         
-        .filter-chip.active {
-          background: var(--brand-600);
-          color: white;
-          box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
+        closeModal();
+      }
+      
+      // View job details
+      window.viewJobDetails = function(jobId) {
+        const job = jobs.find(j => j.id === jobId);
+        const detailTitle = document.getElementById('detailTitle');
+        const detailContent = document.getElementById('detailContent');
         
-        .radio-option {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 12px 16px;
-          background: #f8fafc;
-          border-radius: var(--radius-md);
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
+        detailTitle.textContent = job.title;
         
-        .radio-option:hover {
-          background: #f1f5f9;
-        }
+        const postedDate = new Date(job.posted);
+        const formattedDate = postedDate.toLocaleDateString('en-IN', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
         
-        .radio-option input {
-          width: 18px;
-          height: 18px;
-          accent-color: var(--brand-600);
-        }
+        detailContent.innerHTML = `
+          <div class="modal-job-details">
+            <div class="modal-job-detail">
+              <span class="label">Client:</span>
+              <span class="value">${job.client}</span>
+            </div>
+            <div class="modal-job-detail">
+              <span class="label">Location:</span>
+              <span class="value">${job.location}</span>
+            </div>
+            <div class="modal-job-detail">
+              <span class="label">Pay:</span>
+              <span class="value">₹${job.pay}</span>
+            </div>
+            <div class="modal-job-detail">
+              <span class="label">Duration:</span>
+              <span class="value">${job.duration}</span>
+            </div>
+            <div class="modal-job-detail">
+              <span class="label">Urgency:</span>
+              <span class="value">${job.urgency.charAt(0).toUpperCase() + job.urgency.slice(1)}</span>
+            </div>
+            <div class="modal-job-detail">
+              <span class="label">Posted:</span>
+              <span class="value">${formattedDate}</span>
+            </div>
+          </div>
+          
+          <h4>Job Description</h4>
+          <p>${job.description}</p>
+          
+          <h4>Required Skills</h4>
+          <div class="job-tags">
+            ${job.tags.map(tag => `<span class="job-tag">${tag}</span>`).join('')}
+          </div>
+        `;
         
-        .radio-option span {
-          font-size: 15px;
-          color: var(--ink);
-          font-weight: 500;
+        // Set up the accept button to work with this job
+        const acceptBtn = document.getElementById('acceptFromDetail');
+        acceptBtn.onclick = function() {
+          openModal(jobId, 'accept');
+          closeDetailModal();
+        };
+        
+        detailModal.style.display = 'flex';
+      };
+      
+      // Close detail modal
+      function closeDetailModal() {
+        detailModal.style.display = 'none';
+      }
+      
+      // Accept job from detail modal
+      function acceptFromDetail() {
+        if (selectedJob) {
+          openModal(selectedJob.id, 'accept');
+          closeDetailModal();
         }
-      `;
-      document.head.appendChild(style);
+      }
+      
+      // Get time ago string
+      function getTimeAgo(date) {
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+        
+        if (diffMins < 1) return 'just now';
+        if (diffMins < 60) return `${diffMins} minutes ago`;
+        if (diffHours < 24) return `${diffHours} hours ago`;
+        if (diffDays === 1) return 'yesterday';
+        return `${diffDays} days ago`;
+      }
+      
+      // Notifications persistence
+      function addNotification(message, type = 'info') {
+        const saved = JSON.parse(sessionStorage.getItem('notifications')) || [];
+        saved.unshift({
+          message,
+          type,
+          time: Date.now()
+        });
+        sessionStorage.setItem('notifications', JSON.stringify(saved));
+      }
+      
+      // Initialize the page
+      init();
     });
-    
-    // Helper Functions
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.getAttribute('data-tab') === tabName) {
-          tab.classList.add('active');
-        }
-      });
-      
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.style.display = 'none';
-      });
-      
-      document.getElementById(`${tabName}-jobs`).style.display = 'grid';
-    }
-    
-    function showJobDetails() {
-      alert('Job details would open in a full screen view with complete information.');
-    }
-    
-    function withdrawApplication(button) {
-      const jobCard = button.closest('.job-card');
-      const jobTitle = jobCard.querySelector('.job-title').textContent.trim();
-      
-      if (confirm(`Withdraw application for "${jobTitle}"?`)) {
-        showNotification('Application withdrawn successfully', 'info');
-        
-        const statusBadge = jobCard.querySelector('.status-badge');
-        statusBadge.className = 'status-badge status-available';
-        statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> Available';
-        
-        const actions = jobCard.querySelector('.job-actions');
-        actions.innerHTML = `
-          <button class="action-btn outline">
-            <i class="fas fa-eye"></i>
-            View Details
-          </button>
-          <button class="action-btn primary">
-            <i class="fas fa-paper-plane"></i>
-            Apply Now
-          </button>
-        `;
-        
-        // Reattach event listeners
-        actions.querySelector('.action-btn.primary').addEventListener('click', function() {
-          const jobCard = this.closest('.job-card');
-          const jobTitle = jobCard.querySelector('.job-title').textContent.trim();
-          showNotification(`Applied for "${jobTitle}" successfully!`, 'success');
-        });
-      }
-    }
-    
-    function showNotification(message, type = 'info') {
-      const notification = document.createElement('div');
-      notification.className = `notification notification-${type}`;
-      notification.style.cssText = `
-        position: fixed;
-        top: 24px;
-        right: 24px;
-        background: ${type === 'success' ? '#dcfce7' : type === 'warning' ? '#fef3c7' : '#e0f2fe'};
-        color: ${type === 'success' ? '#166534' : type === 'warning' ? '#92400e' : '#075985'};
-        padding: 16px 24px;
-        border-radius: var(--radius-md);
-        border-left: 4px solid ${type === 'success' ? '#10b981' : type === 'warning' ? '#f59e0b' : '#0ea5e9'};
-        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        max-width: 400px;
-        animation: slideIn 0.3s ease;
-        font-weight: 500;
-      `;
-      
-      const icon = type === 'success' ? 'fas fa-check-circle' : 
-                   type === 'warning' ? 'fas fa-exclamation-triangle' : 
-                   'fas fa-info-circle';
-      
-      notification.innerHTML = `
-        <i class="${icon}" style="font-size: 20px;"></i>
-        <span>${message}</span>
-      `;
-      
-      document.body.appendChild(notification);
-      
-      // Remove notification after 3 seconds
-      setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-          if (notification.parentNode) {
-            notification.parentNode.removeChild(notification);
-          }
-        }, 300);
-      }, 3000);
-      
-      // Add CSS for animations
-      if (!document.querySelector('#notification-animations')) {
-        const style = document.createElement('style');
-        style.id = 'notification-animations';
-        style.textContent = `
-          @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-          }
-          @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-          }
-        `;
-        document.head.appendChild(style);
-      }
-    }
   </script>
 </body>
 </html>

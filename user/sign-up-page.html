@@ -10,126 +10,117 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --brand-600: #0ea5e9;
-      --brand-700: #0284c7;
-      --brand-500: #38bdf8;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --muted-light: #94a3b8;
-      --bg: #f8fafc;
+      --primary-teal: #0FB9B1;
+      --primary-teal-dark: #0da59e;
+      --soft-mint: #E8F8F7;
+      --white: #FFFFFF;
+      --dark-text: #263238;
+      --light-text: #546E7A;
+      --light-border: #E0E0E0;
+      --cta-orange: #FF9F43;
       --success: #16a34a;
       --danger: #dc2626;
-      --warning: #f59e0b;
-      --border: #e2e8f0;
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --glass-shadow: 0 8px 32px rgba(2, 132, 199, 0.1);
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
       --transition: all 0.3s ease;
+      --radius: 12px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Helvetica, Arial, sans-serif;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
     }
 
     body {
       min-height: 100svh;
       display: grid;
       place-items: center;
-      color: var(--ink);
-      background: radial-gradient(1200px 600px at 10% 10%, #e0f2fe 0%, transparent 60%),
-                  radial-gradient(1000px 500px at 90% 20%, #bae6fd 0%, transparent 60%),
-                  linear-gradient(180deg, #f0f9ff 0%, #ffffff 40%, #f8fafc 100%);
+      color: var(--dark-text);
+      background: linear-gradient(135deg, var(--soft-mint) 0%, #ffffff 100%);
       padding: 20px;
     }
 
     .shell {
-      width: min(100%, 520px);
+      width: min(100%, 500px);
       padding: 20px;
     }
 
     header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 30px;
     }
 
     .brand {
       font-weight: 700;
-      font-size: clamp(24px, 4vw, 36px);
-      letter-spacing: 0.2px;
-      background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
+      font-size: 32px;
+      color: var(--primary-teal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
     }
 
     .tag {
-      color: var(--muted);
-      font-size: clamp(14px, 2.5vw, 16px);
+      color: var(--light-text);
+      font-size: 16px;
       font-weight: 500;
     }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      box-shadow: var(--glass-shadow);
-      padding: clamp(24px, 5vw, 36px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--white);
+      border: 1px solid var(--light-border);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow);
+      padding: 32px;
+      transition: var(--transition);
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(2, 132, 199, 0.15);
+      box-shadow: var(--card-shadow-hover);
     }
 
     form {
       display: grid;
-      gap: 24px;
+      gap: 20px;
     }
 
     .row {
       display: grid;
-      gap: 14px;
+      gap: 10px;
     }
 
     label {
       font-weight: 600;
-      font-size: 15px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-
-    .help {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 400;
+      color: var(--dark-text);
     }
 
     .field {
       display: flex;
       align-items: center;
       gap: 12px;
-      background: var(--glass-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
+      background: var(--white);
+      border: 1px solid var(--light-border);
+      border-radius: 10px;
       padding: 14px 18px;
       transition: var(--transition);
     }
 
     .field:focus-within {
-      border-color: var(--brand-500);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 0 3px rgba(15, 185, 177, 0.1);
     }
 
     .field i {
-      color: var(--muted);
-      font-size: 18px;
+      color: var(--light-text);
+      font-size: 16px;
     }
 
     .field input {
@@ -138,18 +129,18 @@
       border: 0;
       outline: 0;
       background: transparent;
-      color: var(--ink);
-      font-size: 16px;
+      color: var(--dark-text);
+      font-size: 15px;
     }
 
     .field input::placeholder {
-      color: var(--muted-light);
+      color: #90A4AE;
     }
 
     .btn {
       border: 0;
       padding: 14px 24px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
       transition: var(--transition);
@@ -157,34 +148,29 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      font-size: 16px;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+      background: var(--primary-teal);
       color: #fff;
       width: 100%;
+      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.3);
     }
 
     .btn-primary:hover {
-      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
+      background: var(--primary-teal-dark);
+      box-shadow: 0 6px 16px rgba(15, 185, 177, 0.4);
     }
 
     .password-toggle {
       background: none;
       border: none;
-      color: var(--muted);
+      color: var(--light-text);
       cursor: pointer;
       font-size: 16px;
       padding: 4px;
@@ -192,7 +178,7 @@
     }
 
     .password-toggle:hover {
-      color: var(--brand-600);
+      color: var(--primary-teal);
     }
 
     .extra-links {
@@ -201,20 +187,24 @@
       align-items: center;
       margin-top: 20px;
       padding-top: 20px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--light-border);
       font-size: 14px;
       gap: 8px;
+      color: var(--light-text);
     }
 
     .extra-links a {
-      color: var(--brand-600);
+      color: var(--primary-teal);
       text-decoration: none;
       font-weight: 500;
       transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .extra-links a:hover {
-      color: var(--brand-700);
+      color: var(--primary-teal-dark);
       text-decoration: underline;
     }
 
@@ -244,16 +234,18 @@
 
     .terms input {
       margin-top: 4px;
+      cursor: pointer;
     }
 
     .terms label {
       font-weight: 400;
       font-size: 14px;
       line-height: 1.5;
+      cursor: pointer;
     }
 
     .terms a {
-      color: var(--brand-600);
+      color: var(--primary-teal);
       text-decoration: none;
     }
 
@@ -261,53 +253,68 @@
       text-decoration: underline;
     }
 
-    .strength {
-      display: grid;
-      gap: 10px;
-      margin-top: 8px;
+    /* Loading spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
     }
 
-    .bar {
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 99px;
-      overflow: hidden;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    .bar > span {
-      display: block;
-      height: 100%;
-      width: 0%;
-      border-radius: 99px;
-      transition: width 0.5s ease, background 0.5s ease;
-    }
-
-    .checks {
-      display: grid;
-      gap: 8px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .checks div {
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: var(--radius);
+      color: var(--dark-text);
+      font-weight: 500;
+      box-shadow: var(--card-shadow);
+      transform: translateX(100px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1000;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 12px;
+      max-width: 350px;
+      background: var(--white);
+      border: 1px solid var(--light-border);
     }
 
-    .checks .ok {
-      color: var(--success);
-      font-weight: 600;
+    .toast.success {
+      border-left: 4px solid var(--primary-teal);
     }
 
-    .checks i {
-      font-size: 14px;
+    .toast.error {
+      border-left: 4px solid var(--danger);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      font-size: 20px;
+    }
+
+    .toast.success i {
+      color: var(--primary-teal);
+    }
+
+    /* Focus styles for accessibility */
+    button:focus,
+    input:focus {
+      outline: 2px solid var(--primary-teal);
+      outline-offset: 2px;
     }
 
     /* Responsive adjustments */
@@ -317,23 +324,24 @@
       }
       
       .card {
-        padding: 20px;
+        padding: 24px;
       }
       
-      .checks {
-        grid-template-columns: 1fr;
+      .brand {
+        font-size: 28px;
+      }
+      
+      .tag {
+        font-size: 14px;
       }
     }
-
-
-    
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
       <div class="brand">
-        <i style="font-size: 25px;" class="fas fa-hands-helping"></i>
+        <i class="fas fa-hands-helping"></i>
         Hirewale
       </div>
       <div class="tag">Create Your Account</div>
@@ -349,7 +357,7 @@
           </label>
           <div class="field">
             <i class="fas fa-user-circle"></i>
-            <input id="fullName" name="fullName" type="text" placeholder="e.g., John Smith" required />
+            <input id="fullName" name="fullName" type="text" placeholder="e.g., John Smith" />
           </div>
         </div>
 
@@ -361,9 +369,8 @@
           </label>
           <div class="field">
             <i class="fas fa-at"></i>
-            <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" required />
+            <input id="email" name="email" type="email" inputmode="email" placeholder="you@example.com" />
           </div>
-          <div class="status" id="emailStatus" aria-live="polite"></div>
         </div>
 
         <!-- Mobile Number -->
@@ -375,7 +382,7 @@
           <div class="field">
             <i class="fas fa-flag"></i>
             <span>+91</span>
-            <input id="mobile" name="mobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" minlength="10" maxlength="10" placeholder="9876543210" required />
+            <input id="mobile" name="mobile" type="tel" inputmode="numeric" placeholder="9876543210" />
           </div>
         </div>
 
@@ -387,21 +394,10 @@
           </label>
           <div class="field">
             <i class="fas fa-lock"></i>
-            <input id="password" name="password" type="password" placeholder="At least 8 characters" required />
+            <input id="password" name="password" type="password" placeholder="At least 8 characters" />
             <button type="button" class="password-toggle" id="passwordToggle">
               <i class="fas fa-eye"></i>
             </button>
-          </div>
-          <div class="strength">
-            <div class="bar" aria-hidden="true">
-              <span id="pwBar"></span>
-            </div>
-            <div class="checks">
-              <div id="chkLen"><i class="fas fa-check-circle"></i> 8+ characters</div>
-              <div id="chkUp"><i class="fas fa-check-circle"></i> Uppercase letter</div>
-              <div id="chkNum"><i class="fas fa-check-circle"></i> Number</div>
-              <div id="chkSym"><i class="fas fa-check-circle"></i> Special character</div>
-            </div>
           </div>
         </div>
 
@@ -413,18 +409,17 @@
           </label>
           <div class="field">
             <i class="fas fa-lock"></i>
-            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Re-type password" required />
+            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Re-type password" />
             <button type="button" class="password-toggle" id="confirmToggle">
               <i class="fas fa-eye"></i>
             </button>
           </div>
-          <div id="matchMsg" class="status" aria-live="polite"></div>
         </div>
 
         <!-- Terms and Conditions -->
         <div class="row">
           <div class="terms">
-            <input type="checkbox" id="terms" name="terms" required />
+            <input type="checkbox" id="terms" name="terms" />
             <label for="terms">
               I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. 
               I confirm that I am at least 18 years old.
@@ -443,24 +438,30 @@
     </section>
   </div>
 
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
   <script>
     // Elements
-    const fullName = document.getElementById('fullName');
-    const email = document.getElementById('email');
-    const mobile = document.getElementById('mobile');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
+    const signupBtn = document.getElementById('signupBtn');
+    const signupForm = document.getElementById('signupForm');
     const passwordToggle = document.getElementById('passwordToggle');
     const confirmToggle = document.getElementById('confirmToggle');
-    const signupBtn = document.getElementById('signupBtn');
-    const emailStatus = document.getElementById('emailStatus');
-    const matchMsg = document.getElementById('matchMsg');
-    const signupForm = document.getElementById('signupForm');
-    const pwBar = document.getElementById('pwBar');
-    const chkLen = document.getElementById('chkLen');
-    const chkUp = document.getElementById('chkUp');
-    const chkNum = document.getElementById('chkNum');
-    const chkSym = document.getElementById('chkSym');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const toast = document.getElementById('toast');
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      toast.innerHTML = `
+        <i class="${type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}"></i>
+        <span>${message}</span>
+      `;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
 
     // Password visibility toggles
     passwordToggle.addEventListener('click', () => {
@@ -475,131 +476,37 @@
       confirmToggle.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
     });
 
-    // Update checklist with better visual feedback
-    function updateChecklist(ok, el) {
-      if (ok) {
-        el.classList.add('ok');
-        el.innerHTML = el.innerHTML.replace('fa-check-circle', 'fa-check-circle').replace('fa-times-circle', 'fa-check-circle');
-      } else {
-        el.classList.remove('ok');
-        el.innerHTML = el.innerHTML.replace('fa-check-circle', 'fa-times-circle').replace('fa-times-circle', 'fa-times-circle');
-      }
-    }
-
-    // Enhanced password strength evaluation
-    function evaluatePassword(p) {
-      const hasLen = p.length >= 8;
-      const hasUp = /[A-Z]/.test(p);
-      const hasNum = /[0-9]/.test(p);
-      const hasSym = /[^A-Za-z0-9]/.test(p);
-      
-      // Calculate a more granular score (0-100)
-      let score = 0;
-      if (hasLen) score += 25;
-      if (hasUp) score += 25;
-      if (hasNum) score += 25;
-      if (hasSym) score += 25;
-      
-      // Additional points for longer passwords
-      if (p.length >= 12) score += 10;
-      if (p.length >= 16) score += 10;
-      
-      // Cap at 100
-      score = Math.min(score, 100);
-
-      updateChecklist(hasLen, chkLen);
-      updateChecklist(hasUp, chkUp);
-      updateChecklist(hasNum, chkNum);
-      updateChecklist(hasSym, chkSym);
-
-      // Visual feedback for password strength
-      pwBar.style.width = score + '%';
-      
-      if (score < 40) {
-        pwBar.style.background = 'var(--danger)';
-      } else if (score < 70) {
-        pwBar.style.background = 'var(--warning)';
-      } else {
-        pwBar.style.background = 'var(--success)';
-      }
-
-      return score >= 70; // Considered strong
-    }
-
-    // Email validation
-    function validateEmail(email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
-    }
-
-    // Update form state based on validation
-    function updateFormState() {
-      const nameOk = fullName.value.trim().length >= 2;
-      const emailOk = validateEmail(email.value);
-      const mobileOk = /^[6-9][0-9]{9}$/.test(mobile.value);
-      const pwOk = evaluatePassword(password.value);
-      const match = password.value && (password.value === confirmPassword.value);
-      
-      // Update email status
-      if (email.value && !emailOk) {
-        emailStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid email address';
-        emailStatus.className = 'status err';
-      } else {
-        emailStatus.innerHTML = '';
-        emailStatus.className = 'status';
-      }
-      
-      // Update password match status
-      if (confirmPassword.value && !match) {
-        matchMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Passwords do not match';
-        matchMsg.className = 'status err';
-      } else if (confirmPassword.value && match) {
-        matchMsg.innerHTML = '<i class="fas fa-check-circle"></i> Passwords match';
-        matchMsg.className = 'status ok';
-      } else {
-        matchMsg.innerHTML = '';
-        matchMsg.className = 'status';
-      }
-
-      // Enable/disable signup button
-      signupBtn.disabled = !(nameOk && emailOk && mobileOk && pwOk && match);
-    }
-
-    // Add event listeners for form fields
-    fullName.addEventListener('input', updateFormState);
-    email.addEventListener('input', updateFormState);
-    mobile.addEventListener('input', updateFormState);
-    password.addEventListener('input', updateFormState);
-    confirmPassword.addEventListener('input', updateFormState);
-
-    // Form submission
-    signupForm.addEventListener('submit', async (e) => {
+    // Form submission - NO VALIDATION, just redirect
+    signupForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
       // Show loading state
-      signupBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+      const originalText = signupBtn.innerHTML;
+      signupBtn.innerHTML = '<div class="spinner"></div> Creating Account...';
       signupBtn.disabled = true;
       
       // Simulate API call
-      try {
-        // In a real application, this would be an API call to your backend
-        await new Promise(resolve => setTimeout(resolve, 1500));
+      setTimeout(() => {
         
-        // Mock successful signup
-        alert('Account created successfully! You can now login with your credentials.');
-        
-        // Redirect to login page
-        window.location.href = 'URS-1.html';
-      } catch (error) {
-        // Handle signup error
-        alert('There was an error creating your account. Please try again.');
-        signupBtn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
-        signupBtn.disabled = false;
-      }
+        // Redirect to user dashboard after a short delay
+        setTimeout(() => {
+           window.location.href = '../index.html';
+        }, 1500);
+      }, 1000);
     });
 
-    // Initialize UI state
-    updateFormState();
+    // Demo data for testing (optional - you can remove this)
+    document.addEventListener('DOMContentLoaded', () => {
+      // Pre-fill with demo data for easier testing (optional)
+      if (window.location.search.includes('demo=true')) {
+        document.getElementById('fullName').value = 'Demo User';
+        document.getElementById('email').value = 'demo@hirewale.com';
+        document.getElementById('mobile').value = '9876543210';
+        document.getElementById('password').value = 'demo123';
+        document.getElementById('confirmPassword').value = 'demo123';
+        document.getElementById('terms').checked = true;
+      }
+    });
   </script>
 </body>
 </html>

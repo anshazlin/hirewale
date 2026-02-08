@@ -10,21 +10,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
-      --brand-600: #f97316;
-      --brand-700: #ea580c;
-      --brand-500: #fb923c;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --muted-light: #94a3b8;
-      --bg: #f8fafc;
-      --card-bg: rgba(255, 255, 255, 0.95);
+      --primary-teal: #0FB9B1;
+      --primary-teal-dark: #0da59e;
+      --soft-mint: #E8F8F7;
+      --white: #FFFFFF;
+      --dark-text: #263238;
+      --light-text: #546E7A;
+      --light-border: #E0E0E0;
+      --cta-orange: #FF9F43;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
       --transition: all 0.3s ease;
-      --construction-primary: #f97316;
-      --construction-secondary: #fb923c;
-      --construction-light: #fed7aa;
       --radius: 12px;
       --radius-lg: 16px;
-      --header-height: 80px;
+      --header-height: 70px;
       --success: #10b981;
     }
 
@@ -36,8 +35,8 @@
     }
 
     body {
-      background: #f8fafc;
-      color: var(--ink);
+      background: var(--white);
+      color: var(--dark-text);
       line-height: 1.6;
       min-height: 100vh;
       display: flex;
@@ -48,7 +47,7 @@
       position: absolute;
       top: -40px;
       left: 0;
-      background: var(--construction-primary);
+      background: var(--primary-teal);
       color: white;
       padding: 8px;
       z-index: 1000;
@@ -59,34 +58,25 @@
       top: 0;
     }
 
-    /* Header */
+    /* Header - Light Theme */
     header {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(249, 115, 22, 0.1);
-      padding: 16px 32px;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 0 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
-      transition: var(--transition);
       height: var(--header-height);
-    }
-
-    header.scrolled {
-      padding: 12px 32px;
-      box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
+      border-bottom: 1px solid var(--light-border);
     }
 
     .brand {
       font-size: 24px;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--primary-teal);
       transition: var(--transition);
       display: flex;
       align-items: center;
@@ -95,88 +85,171 @@
     }
 
     .brand i {
-      font-size: 28px;
+      font-size: 24px;
+      color: var(--primary-teal);
     }
 
-    nav {
+    .header-right {
       display: flex;
-      gap: 24px;
       align-items: center;
+      gap: 18px;
+      margin-left: auto;
     }
 
-    nav a {
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: 500;
-      transition: var(--transition);
-      position: relative;
-      padding: 6px 0;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
-      transition: var(--transition);
-    }
-
-    nav a:hover {
-      color: var(--construction-primary);
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    .nav-cta {
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+    .worker-cta {
+      background: #FF9F43;
       color: white;
-      padding: 8px 20px;
-      border-radius: 50px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+      box-shadow: 0 4px 12px rgba(255, 159, 67, 0.35);
+    }
+
+    .worker-cta:hover {
+      transform: translateY(-2px);
+      background: #e8892f;
+    }
+
+    .language-wrap {
+      position: relative;
+    }
+
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid var(--light-border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--light-text);
       transition: var(--transition);
     }
 
-    .nav-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(249, 115, 22, 0.25);
+    .language-selector:hover {
+      border-color: var(--primary-teal);
+      color: var(--primary-teal);
     }
 
-    .nav-cta::after {
+    .language-dropdown {
       display: none;
+      position: absolute;
+      background: white;
+      border: 1px solid var(--light-border);
+      border-radius: 6px;
+      box-shadow: var(--card-shadow);
+      margin-top: 8px;
+      min-width: 150px;
+      z-index: 100;
+    }
+
+    .language-dropdown.active {
+      display: block;
+    }
+
+    .language-dropdown div {
+      padding: 10px 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .language-dropdown div:hover {
+      background: var(--soft-mint);
+      color: var(--primary-teal);
     }
 
     .mobile-menu-btn {
       display: none;
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 20px;
       cursor: pointer;
-      color: var(--ink);
-      z-index: 1001;
+      color: var(--dark-text);
       width: 40px;
       height: 40px;
-      border-radius: 50%;
+      border-radius: 6px;
       justify-content: center;
       align-items: center;
       transition: var(--transition);
     }
 
     .mobile-menu-btn:hover {
-      background: var(--construction-light);
+      background: rgba(0, 0, 0, 0.05);
     }
 
-    /* Hero Section */
+    /* Mobile Navigation Menu */
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 300px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+      transition: 0.35s ease;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      padding: 90px 24px 24px;
+    }
+
+    .mobile-nav.active {
+      right: 0;
+    }
+
+    .mobile-nav a {
+      padding: 14px 0;
+      text-decoration: none;
+      color: var(--dark-text);
+      font-weight: 500;
+      border-bottom: 1px solid var(--light-border);
+      transition: var(--transition);
+    }
+
+    .mobile-nav a:hover {
+      color: var(--primary-teal);
+      padding-left: 10px;
+    }
+
+    .mobile-nav-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--dark-text);
+      cursor: pointer;
+    }
+
+    .nav-cta {
+      background: var(--primary-teal);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 6px;
+      transition: var(--transition);
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary-teal-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section - Light Theme */
     .workers-hero {
       text-align: center;
       padding: 80px 20px 60px;
-      color: #fff;
+      color: var(--dark-text);
       position: relative;
       overflow: hidden;
-      background: linear-gradient(135deg, #1e293b, #334155);
+      background: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
     }
 
     .workers-hero::before {
@@ -186,9 +259,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
+      background: rgba(255, 255, 255, 0.85);
       pointer-events: none;
     }
 
@@ -203,32 +274,25 @@
       font-size: clamp(36px, 6vw, 52px);
       margin-bottom: 20px;
       font-weight: 700;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease forwards 0.2s;
       line-height: 1.2;
+      color: var(--dark-text);
     }
 
     .workers-hero h1 span {
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--primary-teal);
     }
 
     .workers-hero p {
       font-size: 18px;
       margin-bottom: 40px;
-      opacity: 0.9;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease forwards 0.4s;
+      color: var(--light-text);
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
     }
 
     .hero-cta-btn {
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+      background: var(--primary-teal);
       color: white;
       border: none;
       padding: 15px 30px;
@@ -241,17 +305,16 @@
       align-items: center;
       gap: 10px;
       margin-top: 20px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease forwards 0.6s;
+      box-shadow: 0 6px 20px rgba(15, 185, 177, 0.25);
     }
 
     .hero-cta-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+      box-shadow: 0 8px 25px rgba(15, 185, 177, 0.35);
+      background: var(--primary-teal-dark);
     }
 
-    /* Modal Styles for Job Menu */
+    /* Modal Styles - Light Theme */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -279,11 +342,12 @@
       overflow-y: auto;
       animation: slideIn 0.3s ease;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--light-border);
     }
 
     .modal-header {
       padding: 25px 30px;
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+      background: var(--primary-teal);
       color: white;
       border-radius: var(--radius-lg) var(--radius-lg) 0 0;
       display: flex;
@@ -319,13 +383,13 @@
 
     .modal-body {
       padding: 30px;
+      background: var(--white);
     }
 
     .modal-description {
       text-align: center;
       margin-bottom: 25px;
-      color: var(--muted);
-      font-style: italic;
+      color: var(--light-text);
       padding: 0 10px;
     }
 
@@ -333,13 +397,14 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--card-shadow);
       border-radius: var(--radius);
       overflow: hidden;
+      border: 1px solid var(--light-border);
     }
 
     .modal-pricing-table thead {
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+      background: var(--primary-teal);
       color: white;
     }
 
@@ -350,67 +415,60 @@
       font-size: 16px;
     }
 
-    .modal-pricing-table th:first-child {
-      border-radius: var(--radius) 0 0 0;
-    }
-
-    .modal-pricing-table th:last-child {
-      border-radius: 0 var(--radius) 0 0;
-    }
-
     .modal-pricing-table tbody tr {
       border-bottom: 1px solid #f1f5f9;
       transition: var(--transition);
     }
 
     .modal-pricing-table tbody tr:hover {
-      background: #f8fafc;
+      background: var(--soft-mint);
     }
 
     .modal-pricing-table td {
       padding: 14px 20px;
-      color: var(--ink);
+      color: var(--dark-text);
     }
 
     .modal-pricing-table td:first-child {
       font-weight: 500;
-      color: var(--ink);
+      color: var(--dark-text);
     }
 
     .modal-pricing-table td:last-child {
       font-weight: 600;
-      color: var(--construction-primary);
+      color: var(--primary-teal);
       text-align: right;
     }
 
     .modal-footer-note {
       margin-top: 25px;
       padding: 15px;
-      background: #f8fafc;
+      background: var(--soft-mint);
       border-radius: var(--radius);
-      border-left: 4px solid var(--construction-primary);
+      border-left: 4px solid var(--primary-teal);
       font-size: 14px;
-      color: var(--muted);
+      color: var(--light-text);
       display: flex;
       align-items: flex-start;
       gap: 10px;
     }
 
     .modal-footer-note i {
-      color: var(--construction-primary);
+      color: var(--primary-teal);
       margin-top: 2px;
     }
 
-    /* Workers Grid */
+    /* Workers Section */
     .workers-section {
-      padding: 60px 20px 100px;
-      background: #f8fafc;
+      padding: 80px 20px;
+      background: var(--white);
+      text-align: center;
     }
 
     .section-title {
       font-size: 36px;
       margin-bottom: 16px;
-      color: var(--ink);
+      color: var(--dark-text);
       position: relative;
       display: inline-block;
     }
@@ -418,12 +476,21 @@
     .section-title::after {
       content: '';
       position: absolute;
-      width: 40%;
+      width: 60px;
       height: 3px;
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+      background: var(--primary-teal);
       bottom: -8px;
-      left: 30%;
+      left: 50%;
+      transform: translateX(-50%);
       border-radius: 3px;
+    }
+
+    .section-subtitle {
+      color: var(--light-text);
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .workers-grid {
@@ -438,14 +505,16 @@
       background: white;
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--card-shadow);
       transition: var(--transition);
       position: relative;
+      border: 1px solid var(--light-border);
     }
 
     .worker-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--primary-teal);
     }
 
     .worker-card.featured::before {
@@ -453,7 +522,7 @@
       position: absolute;
       top: 15px;
       right: -30px;
-      background: var(--construction-primary);
+      background: var(--primary-teal);
       color: white;
       padding: 5px 30px;
       font-size: 12px;
@@ -463,7 +532,7 @@
     }
 
     .worker-header {
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+      background: var(--primary-teal);
       padding: 30px;
       color: white;
       text-align: center;
@@ -477,12 +546,12 @@
       border: 4px solid white;
       margin: 0 auto 20px;
       overflow: hidden;
-      background: var(--construction-light);
+      background: var(--soft-mint);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 40px;
-      color: var(--construction-primary);
+      color: var(--primary-teal);
     }
 
     .worker-avatar img {
@@ -527,6 +596,7 @@
 
     .worker-body {
       padding: 25px;
+      background: var(--white);
     }
 
     .worker-info {
@@ -540,12 +610,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--muted);
+      color: var(--light-text);
       font-size: 14px;
     }
 
     .info-item i {
-      color: var(--construction-primary);
+      color: var(--primary-teal);
       width: 20px;
     }
 
@@ -557,24 +627,26 @@
     }
 
     .skill-tag {
-      background: var(--construction-light);
-      color: var(--construction-primary);
+      background: var(--soft-mint);
+      color: var(--primary-teal);
       padding: 6px 12px;
       border-radius: 50px;
       font-size: 12px;
       font-weight: 500;
+      border: 1px solid rgba(15, 185, 177, 0.2);
     }
 
     .worker-footer {
       padding: 20px 25px;
-      border-top: 1px solid #f1f5f9;
+      border-top: 1px solid var(--light-border);
       display: flex;
       justify-content: center;
       align-items: center;
+      background: var(--white);
     }
 
     .hire-btn {
-      background: linear-gradient(135deg, var(--construction-primary), var(--construction-secondary));
+      background: var(--primary-teal);
       color: white;
       border: none;
       padding: 12px 25px;
@@ -588,18 +660,22 @@
       font-size: 16px;
       width: 100%;
       justify-content: center;
+      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.25);
     }
 
     .hire-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+      box-shadow: 0 8px 20px rgba(15, 185, 177, 0.35);
+      background: var(--primary-teal-dark);
     }
 
-    /* How it works */
+    /* How it works section */
     .how-it-works {
       padding: 80px 20px;
-      background: #f1f5f9;
+      background: var(--soft-mint);
+      color: var(--dark-text);
       text-align: center;
+      border-top: 1px solid var(--light-border);
     }
 
     .steps-container {
@@ -618,20 +694,21 @@
       background: white;
       border-radius: var(--radius-lg);
       padding: 40px 30px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--card-shadow);
       transition: var(--transition);
+      border: 1px solid var(--light-border);
     }
 
     .step:hover {
       transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .step-number {
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: var(--construction-primary);
+      background: var(--primary-teal);
       color: white;
       display: flex;
       align-items: center;
@@ -644,15 +721,21 @@
     .step h3 {
       font-size: 20px;
       margin-bottom: 15px;
+      color: var(--dark-text);
+    }
+
+    .step p {
+      color: var(--light-text);
     }
 
     /* Footer */
     footer {
-      background: #0f172a;
-      color: #fff;
+      background: var(--white);
+      color: var(--dark-text);
       padding: 60px 20px 30px;
       text-align: center;
       margin-top: auto;
+      border-top: 1px solid var(--light-border);
     }
 
     .footer-content {
@@ -670,6 +753,7 @@
       margin-bottom: 20px;
       position: relative;
       display: inline-block;
+      color: var(--dark-text);
     }
 
     .footer-column h3::after {
@@ -677,7 +761,7 @@
       position: absolute;
       width: 30px;
       height: 2px;
-      background: var(--construction-primary);
+      background: var(--primary-teal);
       bottom: -8px;
       left: 0;
     }
@@ -691,19 +775,19 @@
     }
 
     .footer-column a {
-      color: #94a3b8;
+      color: var(--light-text);
       text-decoration: none;
       transition: var(--transition);
       display: inline-block;
     }
 
     .footer-column a:hover {
-      color: var(--construction-primary);
+      color: var(--primary-teal);
       transform: translateX(5px);
     }
 
     .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid var(--light-border);
       padding-top: 30px;
       display: flex;
       flex-wrap: wrap;
@@ -721,17 +805,19 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--soft-mint);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: var(--light-text);
       transition: var(--transition);
+      border: 1px solid var(--light-border);
     }
 
     .social-links a:hover {
-      background: var(--construction-primary);
-      transform: translateY(-3px);
+      background: var(--primary-teal);
+      color: white;
+      border-color: var(--primary-teal);
     }
 
     /* Animations */
@@ -766,34 +852,264 @@
       }
     }
 
+    /* AI Chatbot Styles - Light Theme */
+    .chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9998;
+    }
+
+    .chatbot-btn {
+      background: var(--primary-teal);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15, 185, 177, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .chatbot-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(15, 185, 177, 0.4);
+    }
+
+    .chatbot-modal {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--card-shadow-hover);
+      border: 1px solid var(--light-border);
+      overflow: hidden;
+      transform: translateY(20px) scale(0.9);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      z-index: 9997;
+    }
+
+    .chatbot-modal.active {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .chatbot-header {
+      background: var(--primary-teal);
+      padding: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chatbot-header i {
+      font-size: 24px;
+    }
+
+    .chatbot-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .chatbot-header p {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-left: auto;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .message.bot {
+      background: var(--soft-mint);
+      color: var(--dark-text);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .message.user {
+      background: var(--primary-teal);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chatbot-input {
+      padding: 20px;
+      border-top: 1px solid var(--light-border);
+      display: flex;
+      gap: 10px;
+      background: var(--white);
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      background: var(--soft-mint);
+      border: 1px solid var(--light-border);
+      border-radius: 25px;
+      padding: 12px 20px;
+      color: var(--dark-text);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .chatbot-input input:focus {
+      border-color: var(--primary-teal);
+    }
+
+    .chatbot-input button {
+      background: var(--primary-teal);
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chatbot-input button:hover {
+      background: var(--primary-teal-dark);
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 10px 16px;
+      background: var(--soft-mint);
+      border-radius: 18px;
+      align-self: flex-start;
+      width: 60px;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background: var(--primary-teal);
+      border-radius: 50%;
+      animation: typing 1.4s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(1) { animation-delay: 0s; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-8px); }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 16px 24px;
+      border-radius: var(--radius);
+      color: var(--dark-text);
+      font-weight: 500;
+      box-shadow: var(--card-shadow);
+      transform: translateX(100px);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 350px;
+      background: var(--white);
+      border: 1px solid var(--light-border);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--primary-teal);
+    }
+
+    .toast.error {
+      border-left: 4px solid #ff6b6b;
+    }
+
+    .toast.warning {
+      border-left: 4px solid var(--cta-orange);
+    }
+
+    .toast.info {
+      border-left: 4px solid #4dabf7;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast i {
+      font-size: 20px;
+    }
+
+    .toast.success i {
+      color: var(--primary-teal);
+    }
+
+    .toast.error i {
+      color: #ff6b6b;
+    }
+
+    .toast.warning i {
+      color: var(--cta-orange);
+    }
+
+    .toast.info i {
+      color: #4dabf7;
+    }
+
     /* Responsive Design */
+    @media (max-width: 1024px) {
+      .chatbot-modal {
+        width: 320px;
+        height: 450px;
+      }
+    }
+
     @media (max-width: 768px) {
-      :root {
-        --header-height: 70px;
-      }
-      
       header {
-        padding: 12px 20px;
+        padding: 0 16px;
       }
       
-      nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        height: 100vh;
-        background: white;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        transition: var(--transition);
-        z-index: 999;
-        gap: 30px;
-      }
-      
-      nav.active {
-        right: 0;
+      .worker-cta {
+        display: none;
       }
       
       .mobile-menu-btn {
@@ -835,11 +1151,18 @@
       
       .footer-column h3::after {
         left: 50%;
-        transform: translateX(-50%); 
+        transform: translateX(-50%);
       }
       
       .footer-bottom {
         flex-direction: column;
+      }
+      
+      .chatbot-modal {
+        width: calc(100% - 40px);
+        height: 400px;
+        bottom: 80px;
+        right: 20px;
       }
     }
 
@@ -864,6 +1187,16 @@
         padding: 10px 20px;
         font-size: 15px;
       }
+      
+      .chatbot-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .chatbot-modal {
+        height: 350px;
+      }
     }
   </style>
 </head>
@@ -871,27 +1204,66 @@
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
   <header>
-    <a href="http://127.0.0.1:5500/index.html" class="brand">
+    <a href="index.html" class="brand">
       <i class="fas fa-hands-helping"></i>
       Hirewale
     </a>
-    <nav id="nav">
-      <a href="index.html">Home</a>
-      <a href="#">How It Works</a>
-      <a href="construction.html" class="active">Construction</a>
-      <a href="#">About Us</a>
-      <a href="#" class="nav-cta">Post a Job</a>
-    </nav>
-    <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle navigation menu">
-      <i class="fas fa-bars"></i>
-    </button>
+
+    <div class="header-right">
+      <a href="worker/employee.html" class="worker-cta">
+        Become a Worker
+      </a>
+
+      <div class="language-wrap">
+        <button class="language-selector" id="languageBtn">
+          <i class="fas fa-globe"></i> English
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="language-dropdown" id="languageDropdown">
+          <div data-lang="en">English</div>
+          <div data-lang="hi">हिन्दी</div>
+          <div data-lang="bn">বাংলা</div>
+          <div data-lang="ta">தமிழ்</div>
+          <div data-lang="te">తెలుగు</div>
+        </div>
+      </div>
+
+      <button class="mobile-menu-btn" id="menuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
   </header>
+
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileNavClose">
+      <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html">Home</a>
+    <a href="#">How It Works</a>
+    <a href="electricians.html">Electricians</a>
+    <a href="construction.html" class="active">Construction Workers</a>
+    <a href="#">About Us</a>
+    <a href="#" class="nav-cta" style="margin-top: 20px; text-align: center;">Post a Job</a>
+    <a href="worker/employee.html" class="nav-cta-outline" style="margin-top: 10px; text-align: center;">Become a Worker</a>
+    
+    <div style="margin-top: 30px; padding: 15px; border-top: 1px solid var(--light-border);">
+      <p style="font-weight: 600; margin-bottom: 10px;">Select Language:</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="language-option" data-lang="en">English</button>
+        <button class="language-option" data-lang="hi">हिन्दी (Hindi)</button>
+        <button class="language-option" data-lang="bn">বাংলা (Bengali)</button>
+        <button class="language-option" data-lang="ta">தமிழ் (Tamil)</button>
+        <button class="language-option" data-lang="te">తెలుగు (Telugu)</button>
+      </div>
+    </div>
+  </div>
 
   <main id="main-content">
     <section class="workers-hero">
       <div class="hero-content">
-        <h1>Construction <span>Workers</span></h1>
-        <p>Find skilled construction workers for all your building and renovation needs.</p>
+        <h1>Skilled <span>Construction Workers</span></h1>
+        <p>Find experienced construction workers for all your building and renovation needs. From masonry to carpentry and complete home construction.</p>
         <button class="hero-cta-btn" id="viewJobMenuBtn">
           <i class="fas fa-clipboard-list"></i> View Construction Job Menu
         </button>
@@ -917,64 +1289,64 @@
             </thead>
             <tbody>
               <tr>
-                <td>Brick Work (per 100 bricks)</td>
-                <td>₹800</td>
-              </tr>
-              <tr>
-                <td>Concrete Pouring (per cubic meter)</td>
-                <td>₹2,500</td>
-              </tr>
-              <tr>
-                <td>Wall Plastering (per sq.ft)</td>
+                <td>Brick Laying (per sq.ft)</td>
                 <td>₹25</td>
               </tr>
               <tr>
-                <td>Flooring (per sq.ft)</td>
-                <td>₹50</td>
+                <td>Plastering (per sq.ft)</td>
+                <td>₹18</td>
               </tr>
               <tr>
-                <td>Tile Installation (per sq.ft)</td>
+                <td>Concrete Mixing (per bag)</td>
+                <td>₹30</td>
+              </tr>
+              <tr>
+                <td>Wall Painting (per sq.ft)</td>
+                <td>₹12</td>
+              </tr>
+              <tr>
+                <td>Tiling Work (per sq.ft)</td>
                 <td>₹40</td>
               </tr>
               <tr>
-                <td>Foundation Digging (per cubic meter)</td>
-                <td>₹1,200</td>
+                <td>Carpentry (Basic Frame)</td>
+                <td>₹300</td>
               </tr>
               <tr>
-                <td>Roof Slab Construction (per sq.ft)</td>
-                <td>₹120</td>
+                <td>Roofing (per sq.ft)</td>
+                <td>₹45</td>
               </tr>
               <tr>
-                <td>Column Construction (per unit)</td>
-                <td>₹1,500</td>
+                <td>Foundation Digging (per cubic ft)</td>
+                <td>₹50</td>
               </tr>
               <tr>
-                <td>Beam Construction (per meter)</td>
-                <td>₹800</td>
-              </tr>
-              <tr>
-                <td>Wall Construction (per sq.ft)</td>
-                <td>₹60</td>
-              </tr>
-              <tr>
-                <td>Demolition Work (per hour)</td>
-                <td>₹250/hr</td>
-              </tr>
-              <tr>
-                <td>Site Cleaning (per day)</td>
-                <td>₹800/day</td>
-              </tr>
-              <tr>
-                <td>Scaffolding Setup (per day)</td>
-                <td>₹1,000/day</td>
-              </tr>
-              <tr>
-                <td>Waterproofing (per sq.ft)</td>
+                <td>Wall Demolition (per sq.ft)</td>
                 <td>₹35</td>
               </tr>
               <tr>
-                <td>Boundary Wall Construction (per meter)</td>
-                <td>₹900</td>
+                <td>Plumbing Rough-in</td>
+                <td>₹500</td>
+              </tr>
+              <tr>
+                <td>Window Installation</td>
+                <td>₹400</td>
+              </tr>
+              <tr>
+                <td>Door Installation</td>
+                <td>₹450</td>
+              </tr>
+              <tr>
+                <td>Floor Leveling (per sq.ft)</td>
+                <td>₹22</td>
+              </tr>
+              <tr>
+                <td>Waterproofing (per sq.ft)</td>
+                <td>₹28</td>
+              </tr>
+              <tr>
+                <td>Site Cleanup (per day)</td>
+                <td>₹600</td>
               </tr>
             </tbody>
           </table>
@@ -982,7 +1354,7 @@
           <div class="modal-footer-note">
             <i class="fas fa-info-circle"></i>
             <div>
-              <strong>How it works:</strong> After completing the job, workers select completed tasks from this menu. The system generates the bill automatically. Customers pay workers directly, and Hirewale calculates commission from the system-verified bill. For work not listed, use "Extra Job" option with customer approval.
+              <strong>How it works:</strong> After completing the job, construction workers select completed tasks from this menu. The system generates the bill automatically. Customers pay workers directly, and Hirewale calculates commission from the system-verified bill. For work not listed, use "Extra Job" option with customer approval.
             </div>
           </div>
         </div>
@@ -990,180 +1362,28 @@
     </div>
 
     <section class="workers-section">
-      <h2 class="section-title" style="text-align: center;">Available Construction Workers</h2>
+      <h2 class="section-title">Available Construction Workers</h2>
+      <p class="section-subtitle">Browse our skilled and experienced construction professionals</p>
       
       <div class="workers-grid">
-        <!-- Worker 1 -->
+        <!-- Construction Worker 1 -->
         <div class="worker-card featured">
-          <div class="worker-header">
-            <div class="worker-avatar">
-              <i class="fas fa-user-hard-hat"></i>
-            </div>
-            <h3>Rajesh Kumar</h3>
-            <p>Civil Engineer & Contractor</p>
-            <div class="worker-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-              <span>4.8 (124 reviews)</span>
-            </div>
-            <div class="worker-verified">
-              <i class="fas fa-check-circle"></i> ID Verified
-            </div>
-          </div>
-          <div class="worker-body">
-            <div class="worker-info">
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Kasargod, Kerala</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-briefcase"></i>
-                <span>15+ years</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-clock"></i>
-                <span>Available Now</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Background Checked</span>
-              </div>
-            </div>
-            <p>Specialized in residential and commercial construction with expertise in earthquake-resistant structures.</p>
-            <div class="worker-skills">
-              <span class="skill-tag">Structural Design</span>
-              <span class="skill-tag">Project Management</span>
-              <span class="skill-tag">Quality Control</span>
-            </div>
-          </div>
-          <div class="worker-footer">
-            <button class="hire-btn">
-              <i class="fas fa-phone-alt"></i> Hire Now
-            </button>
-          </div>
-        </div>
-
-        <!-- Worker 2 -->
-        <div class="worker-card">
           <div class="worker-header">
             <div class="worker-avatar">
               <i class="fas fa-hard-hat"></i>
             </div>
-            <h3>Ramesh Yadav</h3>
-            <p>Mason & Tile Worker</p>
-            <div class="worker-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-              <span>4.6 (58 reviews)</span>
-            </div>
-          </div>
-          <div class="worker-body">
-            <div class="worker-info">
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Mangalore, Karnataka</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-briefcase"></i>
-                <span>11 years</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-clock"></i>
-                <span>Available Now</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-ruler-combined"></i>
-                <span>Precision Work</span>
-              </div>
-            </div>
-            <p>Expert in brickwork, tiling, marble work, and flooring. Specialized in intricate patterns and designs.</p>
-            <div class="worker-skills">
-              <span class="skill-tag">Brickwork</span>
-              <span class="skill-tag">Tiling</span>
-              <span class="skill-tag">Marble Work</span>
-            </div>
-          </div>
-          <div class="worker-footer">
-            <button class="hire-btn">
-              <i class="fas fa-phone-alt"></i> Hire Now
-            </button>
-          </div>
-        </div>
-
-        <!-- Worker 3 -->
-        <div class="worker-card">
-          <div class="worker-header">
-            <div class="worker-avatar">
-              <i class="fas fa-trowel"></i>
-            </div>
-            <h3>Suresh Patel</h3>
-            <p>Construction Supervisor</p>
+            <h3>Ramesh Kumar</h3>
+            <p>Master Mason</p>
             <div class="worker-rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
-              <span>5.0 (42 reviews)</span>
+              <span>5.0 (92 reviews)</span>
             </div>
             <div class="worker-verified">
-              <i class="fas fa-check-circle"></i> Certified Supervisor
-            </div>
-          </div>
-          <div class="worker-body">
-            <div class="worker-info">
-              <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Kasargod, Kerala</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-briefcase"></i>
-                <span>18 years</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-clock"></i>
-                <span>Available Now</span>
-              </div>
-              <div class="info-item">
-                <i class="fas fa-users"></i>
-                <span>Team Management</span>
-              </div>
-            </div>
-            <p>Expert in supervising large construction projects, managing teams, and ensuring quality standards.</p>
-            <div class="worker-skills">
-              <span class="skill-tag">Site Supervision</span>
-              <span class="skill-tag">Team Leadership</span>
-              <span class="skill-tag">Quality Assurance</span>
-            </div>
-          </div>
-          <div class="worker-footer">
-            <button class="hire-btn">
-              <i class="fas fa-phone-alt"></i> Hire Now
-            </button>
-          </div>
-        </div>
-
-        <!-- Worker 4 -->
-        <div class="worker-card">
-          <div class="worker-header">
-            <div class="worker-avatar">
-              <i class="fas fa-concrete"></i>
-            </div>
-            <h3>Amit Sharma</h3>
-            <p>Concrete Specialist</p>
-            <div class="worker-rating">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <span>4.9 (36 reviews)</span>
+              <i class="fas fa-check-circle"></i> Certified
             </div>
           </div>
           <div class="worker-body">
@@ -1174,22 +1394,22 @@
               </div>
               <div class="info-item">
                 <i class="fas fa-briefcase"></i>
-                <span>9 years</span>
+                <span>15 years</span>
               </div>
               <div class="info-item">
                 <i class="fas fa-clock"></i>
                 <span>Available Today</span>
               </div>
               <div class="info-item">
-                <i class="fas fa-vial"></i>
-                <span>Mix Expert</span>
+                <i class="fas fa-shield-alt"></i>
+                <span>Insured</span>
               </div>
             </div>
-            <p>Specialized in concrete mixing, pouring, and finishing. Expert in different concrete grades and techniques.</p>
+            <p>Expert in brick laying, plastering, and all masonry work. Specialized in traditional and modern construction techniques.</p>
             <div class="worker-skills">
-              <span class="skill-tag">Concrete Mixing</span>
-              <span class="skill-tag">Pouring</span>
-              <span class="skill-tag">Finishing</span>
+              <span class="skill-tag">Masonry</span>
+              <span class="skill-tag">Plastering</span>
+              <span class="skill-tag">Brick Work</span>
             </div>
           </div>
           <div class="worker-footer">
@@ -1199,21 +1419,124 @@
           </div>
         </div>
 
-        <!-- Worker 5 -->
+        <!-- Construction Worker 2 -->
         <div class="worker-card">
           <div class="worker-header">
             <div class="worker-avatar">
-              <i class="fas fa-tools"></i>
+              <i class="fas fa-hammer"></i>
             </div>
-            <h3>Mohammed Ali</h3>
-            <p>Carpenter</p>
+            <h3>Vijay Singh</h3>
+            <p>Carpenter Specialist</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.8 (76 reviews)</span>
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kasargod, Kerala</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>12 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-toolbox"></i>
+                <span>Carpentry Expert</span>
+              </div>
+            </div>
+            <p>Specialized in woodwork, furniture making, door/window installation, and all types of carpentry work.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Woodwork</span>
+              <span class="skill-tag">Furniture Making</span>
+              <span class="skill-tag">Door Installation</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Construction Worker 3 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-paint-roller"></i>
+            </div>
+            <h3>Sunil Patel</h3>
+            <p>Painting & Finishing Expert</p>
             <div class="worker-rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
-              <span>4.9 (67 reviews)</span>
+              <span>5.0 (68 reviews)</span>
+            </div>
+            <div class="worker-verified">
+              <i class="fas fa-check-circle"></i> Certified Painter
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Mangalore, Karnataka</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>10 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-palette"></i>
+                <span>Color Specialist</span>
+              </div>
+            </div>
+            <p>Expert in interior/exterior painting, wall texturing, waterproof painting, and all finishing work.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Interior Painting</span>
+              <span class="skill-tag">Exterior Painting</span>
+              <span class="skill-tag">Wall Texturing</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Construction Worker 4 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>Anand Reddy</h3>
+            <p>Tiling & Flooring Specialist</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.7 (59 reviews)</span>
             </div>
           </div>
           <div class="worker-body">
@@ -1228,18 +1551,18 @@
               </div>
               <div class="info-item">
                 <i class="fas fa-clock"></i>
-                <span>Available Now</span>
+                <span>Available Tomorrow</span>
               </div>
               <div class="info-item">
-                <i class="fas fa-hammer"></i>
-                <span>Custom Furniture</span>
+                <i class="fas fa-layer-group"></i>
+                <span>Flooring Expert</span>
               </div>
             </div>
-            <p>Specialized in custom furniture, kitchen cabinets, doors, and wooden work. Expert in both modern and traditional designs.</p>
+            <p>Specialized in tile installation, marble flooring, granite work, and all types of flooring solutions.</p>
             <div class="worker-skills">
-              <span class="skill-tag">Custom Furniture</span>
-              <span class="skill-tag">Kitchen Cabinets</span>
-              <span class="skill-tag">Wood Carving</span>
+              <span class="skill-tag">Tile Installation</span>
+              <span class="skill-tag">Marble Flooring</span>
+              <span class="skill-tag">Granite Work</span>
             </div>
           </div>
           <div class="worker-footer">
@@ -1249,21 +1572,24 @@
           </div>
         </div>
 
-        <!-- Worker 6 -->
+        <!-- Construction Worker 5 -->
         <div class="worker-card">
           <div class="worker-header">
             <div class="worker-avatar">
-              <i class="fas fa-shovel"></i>
+              <i class="fas fa-truck-pickup"></i>
             </div>
-            <h3>Vijay Kumar</h3>
-            <p>General Labor & Helper</p>
+            <h3>Mahesh Sharma</h3>
+            <p>General Construction Worker</p>
             <div class="worker-rating">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-              <span>4.5 (28 reviews)</span>
+              <i class="fas fa-star"></i>
+              <span>5.0 (47 reviews)</span>
+            </div>
+            <div class="worker-verified">
+              <i class="fas fa-check-circle"></i> Multi-skilled
             </div>
           </div>
           <div class="worker-body">
@@ -1274,22 +1600,72 @@
               </div>
               <div class="info-item">
                 <i class="fas fa-briefcase"></i>
-                <span>6 years</span>
+                <span>8 years</span>
               </div>
               <div class="info-item">
                 <i class="fas fa-clock"></i>
                 <span>Available Now</span>
               </div>
               <div class="info-item">
-                <i class="fas fa-bolt"></i>
-                <span>Quick Learner</span>
+                <i class="fas fa-user-hard-hat"></i>
+                <span>General Labor</span>
               </div>
             </div>
-            <p>Hardworking general labor with experience in material handling, site cleaning, and assisting skilled workers.</p>
+            <p>Multi-skilled worker for digging, mixing concrete, material handling, and general construction labor.</p>
             <div class="worker-skills">
+              <span class="skill-tag">Concrete Mixing</span>
+              <span class="skill-tag">Digging</span>
               <span class="skill-tag">Material Handling</span>
-              <span class="skill-tag">Site Cleaning</span>
-              <span class="skill-tag">Assistant Work</span>
+            </div>
+          </div>
+          <div class="worker-footer">
+            <button class="hire-btn">
+              <i class="fas fa-phone-alt"></i> Hire Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Construction Worker 6 -->
+        <div class="worker-card">
+          <div class="worker-header">
+            <div class="worker-avatar">
+              <i class="fas fa-home"></i>
+            </div>
+            <h3>Rajesh Nair</h3>
+            <p>Roofing Specialist</p>
+            <div class="worker-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span>4.9 (52 reviews)</span>
+            </div>
+          </div>
+          <div class="worker-body">
+            <div class="worker-info">
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kasargod, Kerala</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-briefcase"></i>
+                <span>16 years</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Available Now</span>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-house-damage"></i>
+                <span>Roofing Expert</span>
+              </div>
+            </div>
+            <p>Expert in roof construction, waterproofing, terrace finishing, and all types of roofing solutions.</p>
+            <div class="worker-skills">
+              <span class="skill-tag">Roof Construction</span>
+              <span class="skill-tag">Waterproofing</span>
+              <span class="skill-tag">Terrace Work</span>
             </div>
           </div>
           <div class="worker-footer">
@@ -1303,13 +1679,13 @@
 
     <section class="how-it-works">
       <h2 class="section-title">How It Works</h2>
-      <p class="section-subtitle">Simple steps to hire the right construction worker</p>
+      <p class="section-subtitle">Simple steps to hire construction workers</p>
       
       <div class="steps-container">
         <div class="step">
           <div class="step-number">1</div>
           <h3>Select a Worker</h3>
-          <p>Choose from our verified construction workers based on skills, ratings, and availability.</p>
+          <p>Choose from our skilled construction workers based on their specialization, ratings, and availability.</p>
         </div>
         
         <div class="step">
@@ -1320,8 +1696,8 @@
         
         <div class="step">
           <div class="step-number">3</div>
-          <h3>Contact & Schedule</h3>
-          <p>Contact the worker directly to discuss your requirements and schedule.</p>
+          <h3>Discuss & Schedule</h3>
+          <p>Contact the worker directly to discuss your construction needs and schedule the work.</p>
         </div>
         
         <div class="step">
@@ -1338,19 +1714,19 @@
       <div class="footer-column">
         <h3>Hirewale Construction</h3>
         <ul>
-          <li><a href="#">Browse Workers</a></li>
-          <li><a href="#">Construction Services</a></li>
+          <li><a href="construction.html">Construction Workers</a></li>
+          <li><a href="#">Building Services</a></li>
+          <li><a href="#">Renovation Services</a></li>
           <li><a href="#">Pricing Guide</a></li>
-          <li><a href="#">Safety Standards</a></li>
         </ul>
       </div>
       <div class="footer-column">
-        <h3>For Workers</h3>
+        <h3>For Construction Workers</h3>
         <ul>
-          <li><a href="#">Join as Worker</a></li>
+          <li><a href="worker/employee.html">Join as Construction Worker</a></li>
           <li><a href="#">Worker Benefits</a></li>
-          <li><a href="#">Training Programs</a></li>
-          <li><a href="#">Safety Gear</a></li>
+          <li><a href="#">Safety Training</a></li>
+          <li><a href="#">Tools & Equipment</a></li>
         </ul>
       </div>
       <div class="footer-column">
@@ -1359,21 +1735,21 @@
           <li><a href="#">Help Center</a></li>
           <li><a href="#">Contact Support</a></li>
           <li><a href="#">Dispute Resolution</a></li>
-          <li><a href="#">Emergency Contact</a></li>
+          <li><a href="#">Safety Guidelines</a></li>
         </ul>
       </div>
       <div class="footer-column">
         <h3>Contact</h3>
         <ul>
-          <li><a href="#"><i class="fas fa-phone"></i> +91 98765 43210</a></li>
+          <li><a href="#"><i class="fas fa-phone"></i> +91 98765 43211</a></li>
           <li><a href="#"><i class="fas fa-envelope"></i> construction@hirewale.com</a></li>
           <li><a href="#"><i class="fas fa-map-marker-alt"></i> Office: Kasargod, Mangalore, Bangalore</a></li>
-          <li><a href="#"><i class="fas fa-clock"></i> 24/7 Support Available</a></li>
+          <li><a href="#"><i class="fas fa-clock"></i> Mon-Sat: 7AM-7PM</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2025 Hirewale Construction. All rights reserved.</p>
+      <p>&copy; 2025 Hirewale Construction Workers. All rights reserved.</p>
       <div class="social-links">
         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
         <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
@@ -1383,37 +1759,131 @@
     </div>
   </footer>
 
-  <script>
-    // Mobile menu toggle
-    const menuBtn = document.getElementById('menuBtn');
-    const nav = document.getElementById('nav');
-    
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isExpanded = nav.classList.toggle('active');
-      menuBtn.setAttribute('aria-expanded', isExpanded);
-      menuBtn.innerHTML = isExpanded 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
-    });
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
-    // Close mobile menu when clicking outside
+  <!-- AI Chatbot -->
+  <div class="chatbot-container">
+    <button class="chatbot-btn" id="chatbotBtn" aria-label="Open AI Chatbot">
+      <i class="fas fa-robot"></i>
+    </button>
+    
+    <div class="chatbot-modal" id="chatbotModal">
+      <div class="chatbot-header">
+        <i class="fas fa-robot"></i>
+        <div>
+          <h3>Hirewale AI Assistant</h3>
+          <p>Here to help you</p>
+        </div>
+        <p style="font-size: 12px; opacity: 0.7;">Online</p>
+      </div>
+      
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="message bot">
+          Hello! I'm your AI assistant. How can I help you find construction services today?
+        </div>
+        <div class="message bot">
+          I can help you:
+          • Find the right construction worker for your needs
+          • Explain construction service pricing
+          • Schedule building projects
+          • Answer construction safety questions
+        </div>
+      </div>
+      
+      <div class="chatbot-input">
+        <input type="text" placeholder="Type your message..." id="chatbotInput">
+        <button id="chatbotSend">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile Navigation
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileNavClose = document.getElementById('mobileNavClose');
+    
+    menuBtn.addEventListener('click', () => {
+      mobileNav.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    mobileNavClose.addEventListener('click', () => {
+      mobileNav.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    
+    // Close mobile nav when clicking outside
     document.addEventListener('click', (e) => {
-      if (nav.classList.contains('active') && 
-          !nav.contains(e.target) && 
-          e.target !== menuBtn) {
-        nav.classList.remove('active');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      if (!mobileNav.contains(e.target) && e.target !== menuBtn && mobileNav.classList.contains('active')) {
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
       }
     });
-
+    
+    // Language Selector
+    const languageBtn = document.getElementById('languageBtn');
+    const languageDropdown = document.getElementById('languageDropdown');
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    languageBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      languageDropdown.classList.toggle('active');
+    });
+    
+    // Close language dropdown when clicking outside
+    document.addEventListener('click', () => {
+      languageDropdown.classList.remove('active');
+    });
+    
+    // Handle language selection
+    document.querySelectorAll('.language-dropdown div, .language-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const lang = option.getAttribute('data-lang');
+        const langText = option.textContent;
+        
+        // Update button text
+        languageBtn.innerHTML = `
+          <i class="fas fa-globe"></i>
+          ${langText.split(' ')[0]}
+          <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+        `;
+        
+        // Close dropdown
+        languageDropdown.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Show confirmation
+        showToast(`Language changed to ${langText}`, 'success');
+      });
+    });
+    
     // Header scroll effect
     window.addEventListener('scroll', () => {
       const header = document.querySelector('header');
-      header.classList.toggle('scrolled', window.scrollY > 50);
+      header.style.boxShadow = window.scrollY > 10 
+        ? '0 2px 10px rgba(0, 0, 0, 0.1)' 
+        : '0 2px 10px rgba(0, 0, 0, 0.05)';
     });
-
+    
+    // Toast Notification
+    const toast = document.getElementById('toast');
+    
+    function showToast(message, type = 'success') {
+      toast.innerHTML = `
+        <i class="${type === 'success' ? 'fas fa-check-circle' : type === 'error' ? 'fas fa-exclamation-circle' : type === 'warning' ? 'fas fa-exclamation-triangle' : 'fas fa-info-circle'}"></i>
+        <span>${message}</span>
+      `;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
     // Job Menu Modal Functionality
     const viewJobMenuBtn = document.getElementById('viewJobMenuBtn');
     const jobMenuModal = document.getElementById('jobMenuModal');
@@ -1456,7 +1926,7 @@
         const confirmHire = confirm(`Hire ${workerName} - ${workerRole}?\n\nAll work will be billed using our construction job menu with fixed prices.`);
         
         if (confirmHire) {
-          alert(`Great! We're connecting you with ${workerName}. They'll contact you within 15 minutes.\n\nRemember: All work will be billed using Hirewale's construction task menu.`);
+          showToast(`Great! We're connecting you with ${workerName}. They'll contact you within 15 minutes.`, 'success');
         }
       });
     });
@@ -1484,6 +1954,79 @@
         card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(card);
       });
+    });
+    
+    // AI Chatbot
+    const chatbotBtn = document.getElementById('chatbotBtn');
+    const chatbotModal = document.getElementById('chatbotModal');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+    
+    chatbotBtn.addEventListener('click', () => {
+      chatbotModal.classList.toggle('active');
+      if (chatbotModal.classList.contains('active')) {
+        chatbotInput.focus();
+      }
+    });
+    
+    // Close chatbot when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!chatbotModal.contains(e.target) && 
+          !chatbotBtn.contains(e.target) && 
+          chatbotModal.classList.contains('active')) {
+        chatbotModal.classList.remove('active');
+      }
+    });
+    
+    // Send message function
+    function sendChatbotMessage() {
+      const message = chatbotInput.value.trim();
+      if (!message) return;
+      
+      // Add user message
+      const userMessage = document.createElement('div');
+      userMessage.className = 'message user';
+      userMessage.textContent = message;
+      chatbotMessages.appendChild(userMessage);
+      
+      chatbotInput.value = '';
+      
+      // Show typing indicator
+      const typingIndicator = document.createElement('div');
+      typingIndicator.className = 'typing-indicator';
+      typingIndicator.id = 'typingIndicator';
+      typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+      chatbotMessages.appendChild(typingIndicator);
+      
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      
+      // Simulate AI response
+      setTimeout(() => {
+        typingIndicator.remove();
+        
+        const responses = [
+          "I can help you find the right construction worker for your project. What type of construction work are you planning?",
+          "Our platform connects you with skilled construction professionals. Would you like me to show you available workers in your area?",
+          "I understand you need construction help. We have experienced workers ready to assist. What specific construction task do you need?",
+          "Great question about construction services! Let me help you find the right solution. Are you looking for residential or commercial construction work?"
+        ];
+        
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot';
+        botMessage.textContent = responses[Math.floor(Math.random() * responses.length)];
+        chatbotMessages.appendChild(botMessage);
+        
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 1000 + Math.random() * 1000);
+    }
+    
+    chatbotSend.addEventListener('click', sendChatbotMessage);
+    
+    chatbotInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendChatbotMessage();
+      }
     });
   </script>
 </body>
