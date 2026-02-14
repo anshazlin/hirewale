@@ -216,7 +216,7 @@
       background: rgba(0, 0, 0, 0.05);
     }
 
-    /* Mobile Navigation Menu */
+    /* Mobile Navigation Menu - FIXED: added overflow-y auto for scrolling */
     .mobile-nav {
       position: fixed;
       top: 0;
@@ -229,7 +229,8 @@
       z-index: 2000;
       display: flex;
       flex-direction: column;
-      padding: 90px 24px 24px;
+      padding: 90px 24px 30px;
+      overflow-y: auto; /* ✅ Makes navigation links scrollable */
     }
 
     .mobile-nav.active {
@@ -505,16 +506,15 @@
     /* Transportation & Bookings Sections - HIDDEN BY DEFAULT */
     .transportation-section,
     .bookings-section {
-      display: none;   /* ADD THIS */
+      display: none;
       padding: 80px 20px;
       background: var(--white);
       text-align: center;
       border-top: 1px solid var(--light-border);
     }
 
-    /* Services should be visible first */
     .services-section {
-      display: block;  /* ADD THIS */
+      display: block;
     }
 
     .transportation-section h2,
@@ -536,7 +536,7 @@
       bottom: -8px;
       left: 50%;
       transform: translateX(-50%);
-      border-radius: 3px; /* ADD THIS TO MATCH SERVICES */
+      border-radius: 3px;
     }
 
     .grid {
@@ -1515,7 +1515,7 @@
     </div>
   </header>
 
-  <!-- Mobile Navigation Menu -->
+  <!-- Mobile Navigation Menu - Scrollable now thanks to overflow-y:auto -->
   <div class="mobile-nav" id="mobileNav">
     <button class="mobile-nav-close" id="mobileNavClose">
       <i class="fas fa-times"></i>
@@ -1554,13 +1554,7 @@
   <li><a href="worker/W-withdraw.html">W-withdraw.html</a></li>
   <li><a href="worker/worker-login.html">worker-login.html</a></li>
   <li><a href="worker/worker-reset-password.html">worker-reset-password.html</a></li>
-  <li><a href="worker/WRS-2.html">WRS-2.html</a></li>
-  <li><a href="worker/WRS-3.html">WRS-3.html</a></li>
-  <li><a href="worker/WRS-4.html">WRS-4.html</a></li>
-  <li><a href="worker/WRS-5.html">WRS-5.html</a></li>
-  <li><a href="worker/WRS-6.html">WRS-6.html</a></li>
-  <li><a href="worker/WRS-7.html">WRS-7.html</a></li>
-  <li><a href="worker/WRS-8.html">WRS-8.html</a></li>
+  
 </ul>
 
     <div style="margin-top: 30px; padding: 15px; border-top: 1px solid var(--light-border);">
